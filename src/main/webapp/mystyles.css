@@ -1,0 +1,219 @@
+/* MY COLORS 
+    #F2EDE4 light beige 
+    #D9C9BA lightest brown 
+    #A68F7B brown 
+    #5C3F35 dark brown 
+    #732222 red 
+*/
+
+
+
+body {
+    color: black;
+    letter-spacing: 0.5px;
+}
+
+/*------------------LOGIN PAGE------------------*/
+#createAccLink, #forgotPassLink {
+    text-decoration: none;
+    color: black;
+}
+
+#createAccLink:hover, #forgotPassLink:hover {
+    color: #732222;
+    text-decoration: none;
+}
+
+/*------------------REGISTER------------------*/
+
+/*------------------HOME PAGE------------------*/
+/*my bookshelves*/
+
+.list-group {
+    font-size: 1.2rem;
+    font-weight: 100;
+}
+.listTitleHome, .listTitleShelf, .listBookTitleDisplayShelf {
+    padding: 0px 20px 0px 20px;
+    font-weight: 400;
+}
+.listBookAuthorDisplayShelf {
+    padding-right: 20px;
+}
+.listBookRatingDisplayShelf {
+    font-style: italic;
+}
+
+/*
+.listItemHome, .listItemShelf {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    font-size: 1.2rem;
+}*/
+
+/*
+.listTitleHome, .listTitleShelf {
+    padding-left: 4rem;
+    padding-right: 4rem;
+}*/
+/*
+.listTitleHome, .listNumBooksHome, .listTitleShelf, .listNumBooksShelf {
+    padding-top: 2.4rem;
+    font-size: 1.3rem;
+}*/
+/*
+.listNumBooksHome, .listNumBooksShelf {
+    font-weight: 100;
+}*/
+
+.card-title, .chartTitle {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+}
+.chartTitle {
+    padding-bottom: 10px;
+}
+
+#newGoalBtn, #updateProgBtn, #newGoalDropdown, #addNewGoalBtn {
+    color: #5C3F35;
+    background-color: #D9C9BA;
+    font-weight: 600;
+    border: none;
+    letter-spacing: 1px;
+}
+
+
+/*------------NAVBAR------------*/
+nav {
+    color: #5C3F35;
+    font-weight: 600;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+}
+/*search bar*/
+input.form-control { 
+    width: 300px;
+    color: #5C3F35;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 1px;
+} 
+
+input.form-control:focus { 
+    border-color: #5C3F35;
+    outline: 0;
+    -webkit-box-shadow: 1px 1px 1px 1px #4D4728; 
+    box-shadow: 1px 1px 1px 1px #4D4728; 
+} 
+
+#searchBtn, #registerBtn, #loginBtn, #logOutBtn, #updatePassBtn, #getQuestionBtn {
+    color: #F2EDE4;
+    background-color: #5C3F35;
+    font-weight: 600;
+    border: none;
+    letter-spacing: 1px;
+}
+/*------------------MY ACCOUNT------------------*/
+#accountDetails {
+    color: #4D4728;
+    font-size: 1.2em;
+}
+
+#accountCard {
+    color: black;
+    line-height: 2.2rem;
+    font-size: 1.2rem;
+}
+
+#accountTitle {
+    font-size: 1.5rem;
+
+}
+
+#profilePic {
+    max-width: 300px;
+    max-height: 300px;
+    border-radius: 1rem;
+    margin: 20px;
+}
+
+#logOutBtn {
+    margin-top: 2rem;
+    margin-left: 40%;
+    margin-right: 40%;
+}
+/*------------------MY SHELVES------------------*/
+/*
+.bookTitleShelf, .bookAuthorShelf, .bookRatingShelf {
+    padding-top: 1.1rem;
+    font-size: 1.1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.bookTitleShelf {
+    font-weight: 600;
+}
+
+.bookRatingShelf {
+    font-style: italic;
+}
+
+.listTitleShelf {
+    text-decoration: none;
+    color: black;
+}
+
+.listTitleShelf:hover {
+    text-decoration: none;
+    color: #732222;
+}
+
+.listTitleShelf:visited {
+    text-decoration: none;
+    color: black;
+}
+*/
+/*------------------MY GOALS------------------*/
+.progress-bar {
+    background-color: #732222;
+}
+
+
+canvas {
+    letter-spacing: 1px;
+    font-size: 1rem;
+}
+
+.custom-select {
+	font-family: Arial, Helvetica, sans-serif;
+	position: relative;
+}
+
+select {
+	appearance: none;
+	-webkit-appearance: none;
+	font-size: 1rem;
+	background-color: #D9C9BA;
+	color: #5C3F35;
+}
+
+.goalTypeLabel {
+	font-weight: 500;
+	font-size: 1rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

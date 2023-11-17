@@ -100,7 +100,6 @@ public class DisplayUserInfo extends HttpServlet {
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		ServletContext servletContext = getServletContext();
     	int id = (int) servletContext.getAttribute("userID");
     	System.out.println(id);
@@ -146,8 +145,6 @@ public class DisplayUserInfo extends HttpServlet {
     				+ "<div class=\"form-outline mb-4\">Favorite Author:&nbsp;<div id=\"accfavAuthor\" style=\"display: inline-flex;\">" + favAuthorVal + "</div></div>";
     	
     	response.setContentType("text/html");
-    	//response.getWriter().write(username);
-    	//response.getWriter().write(email);
     	response.getWriter().write(info);
     	
 	}

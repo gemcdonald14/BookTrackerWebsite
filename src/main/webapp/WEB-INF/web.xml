@@ -112,4 +112,14 @@
     <servlet-name>HomeDisplay</servlet-name>
     <url-pattern>/HomeDisplay</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DisplayGoals</display-name>
+    <servlet-name>DisplayGoals</servlet-name>
+    <servlet-class>DisplayGoals</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DisplayGoals</servlet-name>
+    <url-pattern>/DisplayGoals</url-pattern>
+  </servlet-mapping>
 </web-app>

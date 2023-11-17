@@ -24,8 +24,14 @@
 				$.get("AddGoal?timestamp=" + new Date().getTime(), { newGoalTitle: title, newGoalTarget: target, newGoalType: type }, function(responseText) {  
 					console.log("Received response from server:", responseText);
 					alert("before response text");
-					var ul = $("#monthGoalsList");
-					ul.append(responseText);
+					if (type == 1) {
+						var ul = $("#monthGoalsList");
+						ul.append(responseText);
+					} else {
+						var ul = $("#yearGoalsList");
+						ul.append(responseText);
+					}
+					
 					//document.getElementById("monthGoalsList").append = responseText;
 				});
 				return false;
@@ -97,60 +103,30 @@
                         </div>
                       </div>
                 </div>
-                <div class="col-md-6 p-4" id="monthGoalCol">
+                <script>
+							$(document).ready(function() { 
+								$.get("DisplayGoals?timestamp=" + new Date().getTime(), function(responseText) {  
+									console.log("Received response from server:", responseText);
+									alert("before response text");
+									var div = $("#createNewGoal");
+									div.append(responseText);
+								});
+								return false;
+							});
+				</script>
+                <!--<div class="col-md-6 p-4" id="monthGoalCol">
                     <div class="card" style="border-radius: 1rem;">
-                        <div class="card-header" style="font-size: larger;">
-                          Monthly Reading Goals
-                        </div>
-                        <ul class="list-group list-group-flush" id="monthGoalsList">
-                            <li class="list-group-item" id="firstGoal">
-                                <h6>October Reading Goal</h6>
-                                <div class="progress" style="height: 1.2rem;">
-                                    <div class="progress-bar w-75" id="octGoal" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <h6>November Reading Goal</h6>
-                                <div class="progress" style="height: 1.2rem;">
-                                    <div class="progress-bar w-75" id="octGoal" role="progressbar" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <h6>December Reading Goal</h6>
-                                <div class="progress" style="height: 1.2rem;">
-                                    <div class="progress-bar w-75" id="octGoal" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </li>
-                        </ul>
-                      </div>
+                    	
+                        <div class="card-header" style="font-size: larger;">My Monthly Reading Goals</div>
+                        <ul class="list-group list-group-flush" id="monthGoalsList"></ul>
+                    </div>
                 </div>
                 <div class="col-md-6 p-4" id="yearGoalCol">
                     <div class="card" style="border-radius: 1rem;">
-                        <div class="card-header" style="font-size: larger;">
-                          Yearly Reading Goals
-                        </div>
-                        <ul class="list-group list-group-flush" id="yearGoalsList">
-                            <li class="list-group-item">
-                                <h6>2022 Reading Goal</h6>
-                                <div class="progress" style="height: 1.2rem;">
-                                    <div class="progress-bar w-75" id="octGoal" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <h6>2023 Reading Goal</h6>
-                                <div class="progress" style="height: 1.2rem;">
-                                    <div class="progress-bar w-75" id="octGoal" role="progressbar" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <h6>2024 Reading Goal</h6>
-                                <div class="progress" style="height: 1.2rem;">
-                                    <div class="progress-bar w-75" id="octGoal" role="progressbar" aria-valuenow="2" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </li>
-                        </ul>
-                      </div>
-                </div>
+                        <div class="card-header" style="font-size: larger;">My Yearly Reading Goals</div>
+                        <ul class="list-group list-group-flush" id="yearGoalsList"></ul>
+                    </div>
+                </div>-->
             </div>
         </div>
     </body>

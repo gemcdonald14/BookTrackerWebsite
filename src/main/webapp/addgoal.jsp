@@ -1,13 +1,36 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
+        <meta charset="ISO-8859-1">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
         <link href="mystyles.css" rel="stylesheet">
         <script src="javascript.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" ></script>
         <title>My Goals</title>
+        
+        <script>
+			$(document).on("click", "#addNewGoalBtn", function() { 
+				var title = $("#newGoalTitle").val();
+				var target = $("#newGoalTarget").val();
+				var type = $("#newGoalType").val();
+				alert(title);
+				alert(target);
+				alert(type);
+				
+				console.log("Button clicked. Sending AJAX request.");
+				$.get("AddGoal?timestamp=" + new Date().getTime(), { newGoalTitle: title, newGoalTarget: target, newGoalType: type }, function(responseText) {  
+					console.log("Received response from server:", responseText);
+					alert("before response text");
+					var ul = $("#monthGoalsList");
+					ul.append(responseText);
+					//document.getElementById("monthGoalsList").append = responseText;
+				});
+				return false;
+			});
+		</script>
     </head>
     <body style="background-color: #F2EDE4;">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
@@ -31,14 +54,14 @@
                             <a class="nav-link" href="stats.html">Stats</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="mygoals.html">My Goals</a>
+                            <a class="nav-link" href="addgoal.jsp">My Goals</a>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link" href="myshelves.html">My Shelves</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="myaccount.html">My Account</a>
+                            <a class="nav-link" href="myaccount.jsp">My Account</a>
                         </li>
                     </ul>
                     <form class="d-flex">
@@ -48,7 +71,7 @@
                 </div>
             </div>
         </nav>
-
+        
         <div class="container-fluid">
             <div class="row m-3">
                 <div id="createNewGoal">
@@ -56,7 +79,7 @@
                         <div class="card-body" style="display: inline-flex; justify-content: space-evenly;">
 							<h5 class="card-title">Create New Goal</h5>
                             <form name="newGoalForm" method="post" action="AddGoal">
-                            	<label class="my-1 mr-2" for="newGoalType" id="goalTypeLabel">Goal Type</label>
+                            	<!--<label class="my-1 mr-2" for="newGoalType" id="goalTypeLabel">Select a Goal Type:</label>-->
 								<select class="custom-select" id="newGoalType" name="newGoalType">
 								    <option value="1">Monthly Goal</option>
 								    <option value="2">Yearly Goal</option>
@@ -69,7 +92,7 @@
                                     <input type="text" id="newGoalTarget" name="newGoalTarget" class="form-control form-control-lg" placeholder="# of Books To Read" />
                                     <!--<label class="form-label" for="newGoalTarget" style="font-size: 1.1rem;"># of Books:&nbsp;</label>-->
                                 </div>
-                                <button class="btn btn-primary" type="submit"  id="addNewGoalBtn" onclick="addGoal()">Add Goal</button>
+                                <button class="btn btn-primary" id="addNewGoalBtn">Add Goal</button>
                             </form>
                         </div>
                       </div>
@@ -80,7 +103,7 @@
                           Monthly Reading Goals
                         </div>
                         <ul class="list-group list-group-flush" id="monthGoalsList">
-                            <li class="list-group-item">
+                            <li class="list-group-item" id="firstGoal">
                                 <h6>October Reading Goal</h6>
                                 <div class="progress" style="height: 1.2rem;">
                                     <div class="progress-bar w-75" id="octGoal" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
@@ -106,7 +129,7 @@
                         <div class="card-header" style="font-size: larger;">
                           Yearly Reading Goals
                         </div>
-                        <ul class="list-group list-group-flush" id="yearGoalsList"">
+                        <ul class="list-group list-group-flush" id="yearGoalsList">
                             <li class="list-group-item">
                                 <h6>2022 Reading Goal</h6>
                                 <div class="progress" style="height: 1.2rem;">
@@ -130,49 +153,5 @@
                 </div>
             </div>
         </div>
-    </body>
-</html>
-
-
-
-
-
-
-<!--
-<div class="container-fluid">
-            <div class="row m-3">
-                <div class="col-md-6" id="leftCol" style="border: 2px solid cadetblue;">
-                    <div class="row" id="goalRow">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">My Goals</h5>
-                                <p class="card-text">book goals for the year or month</p>
-                                <button type="button" class="btn btn-primary">Set new goal</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" id="progressRow">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Current Book</h5>
-                                <p class="card-text">i am currently reading...</p>
-                                <button type="button" class="btn btn-primary">Update progress</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6" id="rightCol" style="border: 2px solid cornflowerblue;">
-                    <div class="card ">
-                        <div class="card-body">
-                            <h5 class="card-title">My Shelves</h5>
-                            <p class="card-text">book goals for the year or month</p>
-                            <button type="button" class="btn btn-primary">Set new goal</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
     </body>
 </html>

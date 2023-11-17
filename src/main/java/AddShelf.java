@@ -33,7 +33,6 @@ public class AddShelf extends HttpServlet {
 		String url = "jdbc:sqlite:C:/sqlite/db/capstone.db";
 		
         try {
-            // create a connection to the database
             conn = DriverManager.getConnection(url);
             System.out.println("Connection to SQLite has been established.");
         } catch (SQLException e) {
@@ -42,16 +41,21 @@ public class AddShelf extends HttpServlet {
         return conn;
     }
 	
-	public void insert(String name, int id) {
+	public Boolean insert(String name, int id) {
 		String sql = "INSERT INTO Shelf(ShelfName,UserID) VALUES(?,?)";
+		Boolean result = false;
 
         try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, name);
             pstmt.setInt(2, id);
             pstmt.executeUpdate();
+            
+            result = true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        
+        return result;
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -59,12 +63,31 @@ public class AddShelf extends HttpServlet {
     	
     	String name = request.getParameter("newShelfName");
 		
-		ServletContext servletContext = getServletContext();
+    	ServletContext servletContext = getServletContext();
     	int id = (int) servletContext.getAttribute("userID");
+    	System.out.println(id);
+    	System.out.println("shelf name: " + name);
     	
-		newShelf.insert(name, id);
+    	String newShelfListItem = "<li class=\"list-group-item d-flex justify-content-between align-items-center\">" 
+    							+ "<div class=\"listItemShelf\" style=\"display: inline-flex;\">" 
+    							+ " <div class=\"d-flex align-items-center\">"
+    							+ "<div class=\"listImgShelf\">"
+    							+ "<img src=\"colors.jpg\" style=\"border-radius: 1rem;  width: 100px; height: 150px;\">"
+    							+ "</div>"
+    							+ "<div class=\"listTitleShelf\"><p>" + name + "</p></div>"
+    							+ "<div class=\"listNumBooksShelf\"><p>0 books</p></div>"
+    							+ " </div></div></li>";
+    			
+    	if (newShelf.insert(name, id)) {
+			System.out.println("return true");
+			System.out.println(newShelfListItem);
+			response.setContentType("text/html");
+			response.getWriter().write(newShelfListItem);
+		} else {
+				response.getWriter().write("failed");
+		}
 	}
-
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		doGet(request, response);

@@ -82,4 +82,34 @@
     <servlet-name>UpdatePassword</servlet-name>
     <url-pattern>/UpdatePassword</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>VerifyUser</display-name>
+    <servlet-name>VerifyUser</servlet-name>
+    <servlet-class>VerifyUser</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>VerifyUser</servlet-name>
+    <url-pattern>/VerifyUser</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DisplayUserInfo</display-name>
+    <servlet-name>DisplayUserInfo</servlet-name>
+    <servlet-class>DisplayUserInfo</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DisplayUserInfo</servlet-name>
+    <url-pattern>/DisplayUserInfo</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>HomeDisplay</display-name>
+    <servlet-name>HomeDisplay</servlet-name>
+    <servlet-class>HomeDisplay</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HomeDisplay</servlet-name>
+    <url-pattern>/HomeDisplay</url-pattern>
+  </servlet-mapping>
 </web-app>

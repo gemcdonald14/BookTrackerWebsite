@@ -19,11 +19,11 @@ import java.sql.SQLException;
 import com.microsoft.sqlserver.jdbc.SQLServerDriver;
 import jakarta.servlet.ServletContext;
 
-@WebServlet("/UpdatePassword")
-public class UpdatePassword extends HttpServlet {
+@WebServlet("/VerifyUser")
+public class VerifyUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
  
-    public UpdatePassword() {
+    public VerifyUser() {
         super();
         
     }
@@ -42,106 +42,86 @@ public class UpdatePassword extends HttpServlet {
         return conn;
     }
     
-    public String PasswordHash(String password) {
-		String passwordToHash = password;
-	    String generatedPassword = null;
-
-	    try 
-	    {
-	      // Create MessageDigest instance for MD5
-	      MessageDigest md = MessageDigest.getInstance("MD5");
-
-	      // Add password bytes to digest
-	      md.update(passwordToHash.getBytes());
-
-	      // Get the hash's bytes
-	      byte[] bytes = md.digest();
-
-	      // This bytes[] has bytes in decimal format. Convert it to hexadecimal format
-	      StringBuilder sb = new StringBuilder();
-	      for (int i = 0; i < bytes.length; i++) {
-	        sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
-	      }
-
-	      // Get complete hashed password in hex format
-	      generatedPassword = sb.toString();
-	    } catch (NoSuchAlgorithmException e) {
-	      e.printStackTrace();
-	    }
-	    
-		return generatedPassword;
+    public void init(ServletConfig config) throws ServletException {
+		super.init(config);
+		String question = "";
+		getServletContext().setAttribute("question", question);
+    }
+   
+    public String getSecurityQuestion(String username) {
+		String sql = "SELECT SecurityQuestion FROM User WHERE Username=?";
+		String question = "";
+		
+		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(sql)){
+	            
+	            pstmt.setString(1,username);
+	            
+	            ResultSet rs  = pstmt.executeQuery();
+	            
+	            if(rs.next()) {
+	            	question = rs.getString("SecurityQuestion");
+		            System.out.println("Question: " + question);
+	            }
+	     } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            e.printStackTrace();
+	     }
+		return question;
 	}
     
-    public Boolean resetPassword(String question, String answer, String password) {
-		String sql = "UPDATE User SET Password=? WHERE SecurityQuestion=? AND SecurityAnswer=?";
+    public Boolean verifyUsername(String username) {
+    	String sql = "SELECT * FROM User WHERE Username=?";
 		Boolean result = false;
 		
 		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(sql)){
 	            
-	            pstmt.setString(1,password);
-	            pstmt.setString(2,question);
-	            pstmt.setString(3,answer);
+	            pstmt.setString(1,username);
+	            ResultSet rs  = pstmt.executeQuery();
 	            
-	            int rowsAffected = pstmt.executeUpdate();
-	         
-	            if(rowsAffected > 0) {
-		            result = true;
-		        }
+	            if(rs.next()) {
+	            	String dbUsername = rs.getString("Username");
+		            System.out.println("DB Username: " + dbUsername);
+		            System.out.println("Provided Username: " + username);
+		            
+		            if(dbUsername.equals(username)) {
+		            	result = true;
+		            }
+	            }
 	     } catch (SQLException e) {
 	            System.out.println(e.getMessage());
 	            e.printStackTrace();
 	     }
 		return result;
-	}
-    
+    }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*
-		UpdatePassword resetPass = new UpdatePassword();
+		
+		VerifyUser verify = new VerifyUser();
 		
 		String username = request.getParameter("forgotUsername");
-		String secAnswer = request.getParameter("forgotSecAnswer");
-		String newPass = request.getParameter("updatePassword");
-		String secQuestion = (String) request.getAttribute("securityQuestion");
-		String safePass = PasswordHash(newPass);
-		
-		if (resetPass.resetPassword(username, secQuestion, secAnswer, safePass)) {
-			System.out.print("made it to redirect");
-			response.sendRedirect("login.html");
-		} else {
-			PrintWriter writer = response.getWriter();
-			writer.println("failed");
-		}
-		*/
-		//---------------------------------------------------
-		
-		UpdatePassword resetPass = new UpdatePassword();
-		
-		ServletContext servletContext = getServletContext();
-		String secQues = (String) servletContext.getAttribute("question");
-    	
-		String secAnswer = request.getParameter("forgotSecAnswer");
-		String newPass = request.getParameter("updatePassword");
-		String safePass = PasswordHash(newPass);
-		
-		System.out.println("question: " + secQues);
-		System.out.println("answer: " + secAnswer);
-		System.out.println("password: " + safePass);
 		
 		
-		if (resetPass.resetPassword(secQues, secAnswer, safePass)) {
+		if (username != null && !username.trim().isEmpty()) {
+			String trimUsername = username.trim();
+			System.out.println("Forgot Username: " + trimUsername);
 			
-			System.out.println("question: " + secQues);
-			System.out.println("answer: " + secAnswer);
-			System.out.println("password: " + safePass);
+			if (verify.verifyUsername(trimUsername)) {
+				ServletContext servletContext = getServletContext();
+	        	String secQues = (String) servletContext.getAttribute("question");
+	        	secQues = verify.getSecurityQuestion(trimUsername);
+	        	System.out.println(secQues);
+	        	servletContext.setAttribute("question", secQues);
+				
+				
+				
+				//response.setContentType("text/plain"); 
+			    //response.setCharacterEncoding("UTF-8"); 
+			    response.getWriter().write(secQues);
+			} else {
+				response.getWriter().write("Invalid username");
+			}
 			
-			response.sendRedirect("login.html");
-		} else {
-			PrintWriter writer = response.getWriter();
-			writer.println("failed");
 		}
-		
-		
 		
 		
 		
@@ -214,8 +194,14 @@ public class UpdatePassword extends HttpServlet {
 		
 		response.setContentType("text/plain");
 		response.getWriter().write(greetings);	*/
+		/*
 		
-	
+		String username = "username";
+
+	    response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
+	    response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+	    response.getWriter().write(username);    */
+		
 		
 		
 		
@@ -227,6 +213,7 @@ public class UpdatePassword extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		/*
+		
 		UpdatePassword resetPass = new UpdatePassword();
 		
 		String username = request.getParameter("forgotUsername");

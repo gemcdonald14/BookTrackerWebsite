@@ -81,8 +81,8 @@ public class CreateUser extends HttpServlet {
         return conn;
     }
 	
-	public void insert(String username, String password, String email, String secQuestion, String secAnswer) {
-		String sql = "INSERT INTO User(Username,Password,Email,SecurityQuestion,SecurityAnswer) VALUES(?,?,?,?,?)";
+	public void insert(String username, String password, String email, String secQuestion, String secAnswer, String bio, String book, String author) {
+		String sql = "INSERT INTO User(Username,Password,Email,SecurityQuestion,SecurityAnswer,Bio,FavBook,FavAuthor) VALUES(?,?,?,?,?,?,?,?)";
 
         try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, username);
@@ -90,6 +90,9 @@ public class CreateUser extends HttpServlet {
             pstmt.setString(3, email);
             pstmt.setString(4, secQuestion);
             pstmt.setString(5, secAnswer);
+            pstmt.setString(6, bio);
+            pstmt.setString(7, book);
+            pstmt.setString(8, author);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -108,13 +111,20 @@ public class CreateUser extends HttpServlet {
 		String repassword = request.getParameter("retypePassword");
 		String question = request.getParameter("securityQuestion");
 		String answer = request.getParameter("securityAnswer");
+		String bio = request.getParameter("newBio");
+		String book = request.getParameter("newFavBook");
+		String author = request.getParameter("newFavAuthor");
 		
 		if (repassword.equals(password)) {
 			//password security 
 			String safePass = PasswordHash(password);
 			
-			newUser.insert(username, safePass, email, question, answer);
+			newUser.insert(username, safePass, email, question, answer, bio, book, author);
+			
+			response.sendRedirect("login.html");
 		}
+		
+		
 		
 		
 		

@@ -43,8 +43,9 @@ public class AddGoal extends HttpServlet {
         return conn;
     }
 	
-	public void insert(String name, String type, int id, String targetBooks) {
+	public Boolean insert(String name, String type, int id, String targetBooks) {
 		String sql = "INSERT INTO Goal(GoalName,GoalType,UserID,TargetBooks) VALUES(?,?,?,?)";
+		Boolean result = false;
 
         try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, name);
@@ -53,12 +54,44 @@ public class AddGoal extends HttpServlet {
             pstmt.setString(4, targetBooks);
             pstmt.executeUpdate();
             
+            result = true;
+            
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        
+        return result;
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		AddGoal newGoal = new AddGoal();
+		
+		String title = request.getParameter("newGoalTitle");
+		String type = request.getParameter("newGoalType");
+		String target = request.getParameter("newGoalTarget");
+		
+		ServletContext servletContext = getServletContext();
+    	int id = (int) servletContext.getAttribute("userID");
+    	System.out.println(id);
+		
+		System.out.println("title: " + title);
+		System.out.println("type: " + type);
+		System.out.println("target: " + target);
+		
+		String newGoalListItem = "<li class='list-group-item'><h6>" + title + "</h6><div class='progress' style='height: 1.2rem;'>"
+				+ "<div class='progress-bar w-75' role='progressbar' aria-valuenow='10' aria-valuemin='0' aria-valuemax='100'></div></div></li>";
+			
+		if (newGoal.insert(title, type, id, target)) {
+			System.out.println("return true");
+			System.out.println(newGoalListItem);
+			response.setContentType("text/html");
+			response.getWriter().write(newGoalListItem);
+		} else {
+				response.getWriter().write("failed");
+		}
+	}
+		/*
 		AddGoal newGoal = new AddGoal();
     	
     	String name = request.getParameter("newGoalTitle");
@@ -70,13 +103,17 @@ public class AddGoal extends HttpServlet {
     	System.out.println(id);
     	
 		newGoal.insert(name, type, id, target);
+		System.out.println(name);
+		System.out.println(type);
+		System.out.println(target);*/
+		/*
 		
 		String newGoalListItem = "<li class='list-group-item'>" 
 								+ "<h6>" + name + "</h6>" 
 								+ "<div class='progress' style='height: 1.2rem;'>"
 								+ "<div class='progress-bar w-75' role='progressbar' aria-valuenow='10' aria-valuemin='0' aria-valuemax='100'></div>"
 								+ "</div>"
-								+ "</li>";
+								+ "</li>";*/
 		/*
 		
 		if (type.equals("1")) {
@@ -111,11 +148,11 @@ public class AddGoal extends HttpServlet {
 		}*/
 			
 		//response.sendRedirect("mygoals.html");
-		
-		response.setContentType("text/html");
+		/*
+		response.setContentType("text/plain");
 		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(newGoalListItem);
-	}
+		response.getWriter().write(newGoalListItem);*/
+	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);

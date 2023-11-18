@@ -43,9 +43,9 @@
 
         <nav class="navbar navbar-expand-lg" style="background-color:#D9C9BA;">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">
-                    <img src="dog.jpg" alt="" width="50" height="50" class="d-inline-block align-text-top">
-                    books
+                 <a class="navbar-brand" href="#">
+                    <img src="./images/ella.jpg" alt="" width="60" height="60" class="d-inline-block align-text-top" style="border-radius: 2rem">
+                    Ella's Books
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -54,17 +54,17 @@
                 <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="homepage.html">Home</a>
+                            <a class="nav-link" href="homepage.jsp">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="stats.html">Stats</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="addgoal.jsp">My Goals</a>
+                            <a class="nav-link" href="mygoals.jsp">My Goals</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="myshelves.html">My Shelves</a>
+                            <a class="nav-link" href="myshelves.jsp">My Shelves</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="myaccount.jsp">My Account</a>

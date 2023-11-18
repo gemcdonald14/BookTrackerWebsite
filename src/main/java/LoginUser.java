@@ -159,7 +159,7 @@ public class LoginUser extends HttpServlet {
         	System.out.println(id);
         	servletContext.setAttribute("userID", id);
 			
-			response.sendRedirect("homepage.html");
+			response.sendRedirect("homepage.jsp");
 		} else {
 			PrintWriter writer = response.getWriter();
 			writer.println("failed");

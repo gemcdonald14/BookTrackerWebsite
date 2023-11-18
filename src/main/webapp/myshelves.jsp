@@ -31,9 +31,9 @@
 
         <nav class="navbar navbar-expand-lg" style="background-color:#D9C9BA;">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">
-                    <img src="/images/dog.jpg" alt="" width="50" height="50" class="d-inline-block align-text-top">
-                    books
+                 <a class="navbar-brand" href="#">
+                    <img src="./images/ella.jpg" alt="" width="60" height="60" class="d-inline-block align-text-top" style="border-radius: 2rem">
+                    Ella's Books
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -42,13 +42,13 @@
                 <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="homepage.html">Home</a>
+                            <a class="nav-link" href="homepage.jsp">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="stats.html">Stats</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="addgoal.jsp">My Goals</a>
+                            <a class="nav-link" href="mygoals.jsp">My Goals</a>
                         </li>
 
                         <li class="nav-item">
@@ -86,59 +86,22 @@
                             </div>
                         </div>
                     </div>
+                    <script>
+							$(document).ready(function() { 
+								$.get("DisplayShelves?timestamp=" + new Date().getTime(), function(responseText) {  
+									console.log("Received response from server:", responseText);
+									alert("before response text");
+									var ul = $("#shelfList");
+									ul.html(responseText);
+								});
+								return false;
+							});
+				</script>
                     <div class="row mb-2">
                         <div class="card" style="border-radius: 1rem;">
                             <div class="card-body">
                                 <h5 class="card-title">My Bookshelves</h5>
                                 <ul class="list-group list-group-flush" id="shelfList">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center" id="readShelf">
-                                        <div class="listItemShelf" id="listItem1Shelf" style="display: inline-flex;">
-                                            <div class="d-flex align-items-center">
-                                                <div class="listImgShelf">
-                                                    <img src="colors.jpg" style="border-radius: 1rem;  width: 100px; height: 150px;">
-                                                </div>
-                                                <div class="listTitleShelf">
-                                                    <p>Read</p>
-                                                </div>
-                                                <div class="listNumBooksShelf">
-                                                    <p>30 books</p>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center" id="wantToReadShelf">
-                                        <div class="listItemShelf" id="listItem2Shelf" style="display: inline-flex;">
-                                            <div class="d-flex align-items-center">
-                                                <div class="listImgShelf">
-                                                    <img src="dog.jpg" style="border-radius: 1rem;  width: 100px; height: 150px;">
-                                                </div>
-                                                <div class="listTitleShelf">
-                                                    <p>Want To Read</p>
-                                                </div>
-                                                <div class="listNumBooksShelf">
-                                                    <p>20 books</p>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center" id="myFavShelf">
-                                        <div class="listItemShelf" id="listItem3Shelf" style="display: inline-flex;">
-                                            <div class="d-flex align-items-center">
-                                                <div class="listImgShelf">
-                                                    <img src="cat.jpg" style="border-radius: 1rem;  width: 100px; height: 150px;">
-                                                </div>
-                                                <div class="listTitleShelf">
-                                                    <p>My Favorites</p>
-                                                </div>
-                                                <div class="listNumBooksShelf">
-                                                    <p>10 books</p>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </li>
                                 </ul>
                             </div>
                         </div>

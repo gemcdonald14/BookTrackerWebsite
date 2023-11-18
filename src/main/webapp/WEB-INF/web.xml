@@ -122,4 +122,14 @@
     <servlet-name>DisplayGoals</servlet-name>
     <url-pattern>/DisplayGoals</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DisplayShelves</display-name>
+    <servlet-name>DisplayShelves</servlet-name>
+    <servlet-class>DisplayShelves</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DisplayShelves</servlet-name>
+    <url-pattern>/DisplayShelves</url-pattern>
+  </servlet-mapping>
 </web-app>

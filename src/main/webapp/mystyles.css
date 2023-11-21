@@ -74,7 +74,7 @@ body {
     padding-bottom: 10px;
 }
 
-#newGoalBtn, #updateProgBtn, #newGoalDropdown, #addNewGoalBtn {
+#newGoalBtn, #updateProgBtn, #newGoalDropdown, #addNewGoalBtn, #updateGoalBtn, #updateCurrentBookBtn {
     color: #5C3F35;
     background-color: #D9C9BA;
     font-weight: 600;
@@ -106,7 +106,7 @@ input.form-control:focus {
     box-shadow: 1px 1px 1px 1px #4D4728; 
 } 
 
-#searchBtn, #registerBtn, #loginBtn, #logOutBtn, #updatePassBtn, #getQuestionBtn {
+#searchBtn, #registerBtn, #loginBtn, #logOutBtn, #updatePassBtn, #getQuestionBtn, #finishBookBtn {
     color: #F2EDE4;
     background-color: #5C3F35;
     font-weight: 600;

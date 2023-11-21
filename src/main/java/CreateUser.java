@@ -28,14 +28,6 @@ public class CreateUser extends HttpServlet {
 	public CreateUser() {
         super();
     }
-
-	public void init() throws ServletException {
-		
-	}
-
-	public void destroy() {
-		// TODO Auto-generated method stub
-	}
 	
 	public String PasswordHash(String password) {
 		String passwordToHash = password;
@@ -94,6 +86,35 @@ public class CreateUser extends HttpServlet {
             pstmt.setString(7, book);
             pstmt.setString(8, author);
             pstmt.executeUpdate();
+            System.out.println("inserting user");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+	}
+	
+	public void readShelf(String username) {
+		String insertsql = "INSERT INTO Shelf(ShelfName,UserID) VALUES(?,?)";
+		String getidsql = "SELECT UserID FROM User WHERE Username=?";
+		int userID = 0;
+		
+		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(getidsql)){
+	            
+	            pstmt.setString(1,username);
+	            ResultSet rs  = pstmt.executeQuery();
+	            
+	            if(rs.next()) {
+	            	userID = rs.getInt("UserID");
+	            }
+	     } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            e.printStackTrace();
+	     }
+		
+        try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(insertsql)) {
+            pstmt.setString(1, "Read");
+            pstmt.setInt(2, userID);
+            pstmt.executeUpdate();
+            System.out.println("inserting shelf");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -102,8 +123,6 @@ public class CreateUser extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		CreateUser newUser = new CreateUser();
-		//newUser.insert("grace","1234", "gemcdonald14@gmail.com", "What is your favorite color?", "red");
-    	
     	
     	String username = request.getParameter("newUsername");
 		String email = request.getParameter("newEmail");
@@ -116,36 +135,17 @@ public class CreateUser extends HttpServlet {
 		String author = request.getParameter("newFavAuthor");
 		
 		if (repassword.equals(password)) {
-			//password security 
 			String safePass = PasswordHash(password);
 			
 			newUser.insert(username, safePass, email, question, answer, bio, book, author);
 			
+			newUser.readShelf(username);
+			
 			response.sendRedirect("login.html");
 		}
-		
-		
-		
-		
-		
-		/*
-		
-		PrintWriter writer = response.getWriter();
-		
-		String htmlResponse = "<html>";
-		htmlResponse += "<h2>username is " + username + "</h2>";
-		htmlResponse += "<h2>email is " + email + "</h2>";
-		htmlResponse += "<h2>password is " + password + "</h2>";
-		htmlResponse += "<h2>question is " + question + "</h2>";
-		htmlResponse += "<h2>retype pass is " + retypePass + "</h2>";
-		htmlResponse += "<h2>answer is " + answer + "</h2>";
-		htmlResponse += "</html>";
-		
-		writer.println(htmlResponse);*/
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		doGet(request, response);
 	}
 

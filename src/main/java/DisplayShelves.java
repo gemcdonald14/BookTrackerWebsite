@@ -66,8 +66,8 @@ public class DisplayShelves extends HttpServlet {
 						+ "<div class=\"listItemShelf\" style=\"display: inline-flex;\">"
 						+ "<div class=\"d-flex align-items-center\">"
 						+ "<div class=\"listImgShelf\"><img src=\"colors.jpg\" style=\"border-radius: 1rem;  width: 100px; height: 150px;\"></div>"
-						+ "<div class=\"listTitleShelf\"><p>" + name + "</p></div>"
-						+ "<div class=\"listNumBooksShelf\"><p>" + books + " books</p></div>"
+						+ "<div class=\"listTitleShelf\">" + name + "</div>"
+						+ "<div class=\"listNumBooksShelf\">" + books + " books</div>"
 						+ "</div></div></li>";
 	            
 	            resultList +=shelfListItem;

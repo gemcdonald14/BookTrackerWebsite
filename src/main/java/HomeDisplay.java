@@ -63,7 +63,7 @@ public class HomeDisplay extends HttpServlet {
 	            String shelfListItem = "<li class=\"list-group-item\"><div class=\"listItemHome\" style=\"display: inline-flex;\">"
 	            					+ "<div class=\"listImgHome\"><img src=\"cat.jpg\" class=\"img-fluid\" style=\"border-radius: 1rem;  width: 100px; height: 125px;\"></div>"
 	            					+ "<div class=\"listTitleHome\"><p>" + name + "</p></div>"
-	            					+ "<div class=\"listNumBooksHome\"><p>" +  books + "</p></div></div></li>";
+	            					+ "<div class=\"listNumBooksHome\"><p>" +  books + " books</p></div></div></li>";
 	            
 	            resultShelves +=shelfListItem;
             }
@@ -78,6 +78,57 @@ public class HomeDisplay extends HttpServlet {
         return resultShelves;
     }
     
+    public String displayCurrentRead(int id) {
+    	String sql = "SELECT * FROM Book WHERE UserID=? AND IsCurrentRead=1 LIMIT 1";
+    	String resultCurrent = "<div class=\"row\" id=\"progressRow\"><div class=\"card\" style=\"border-radius: 1rem;\">"
+				+ " <div class=\"row g-0\"><div class=\"col-md-4\">";
+    	
+        try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        	pstmt.setInt(1, id);
+        	
+        	ResultSet rs  = pstmt.executeQuery();
+            
+            while(rs.next()) {
+            	String title = rs.getString("Title");
+	            System.out.println("Title: " + title);
+	            
+	            String author = rs.getString("Author");
+	            System.out.println("Author: " + author);
+	            
+	            int numpages = rs.getInt("NumPages");
+	            System.out.println("Number of Pages: " + numpages);
+	            
+	            int readpages = rs.getInt("ReadPages");
+	            System.out.println("Read Pages: " + readpages);
+	            
+	            int percent = (int)  (int) ((readpages * 100.0) / numpages);
+	            System.out.println(percent);
+	            
+	            String currentReadItem = "<img src=\"dark-bookshelf.jpg\" class=\"img-fluid\" style=\"border-radius: 1rem;\"></div>"
+	    				+ "<div class=\"col-md-8\"> <div class=\"card-body\">"
+	    				+ "<h5 class=\"card-title\">Currently Reading</h5>"
+	    				+ "<p class=\"card-text\">" + title + "</p>"
+	    				+ "<p class=\"card-text\">" + author + "</p>"
+	    				+ "<div class='progress' style='height: 0.8rem;'>"
+	    				+ "<div class='progress-bar' role='progressbar' style='width:" + percent + "%' aria-valuenow='" + readpages + "' aria-valuemin='0' aria-valuemax='" + numpages + "'></div></div>"
+	    				+ "<p class=\"card-text\"><small class=\"text-muted\">Started reading on 4/23/20</small></p>"
+	    				+ "<form name=\"updateCurrentBook\" method=\"post\" action=\"UpdateCurrentRead\">"
+	    				+ "<div class=\"form-outline\" style=\"display: inline-flex;\">"
+	    				+ "<input type=\"text\" id=\"updateCurrentRead\" name=\"updateCurrentRead\" class=\"form-control form-control-md\" placeholder=\"I'm on page...\"/></div>"
+	    				+ "<button class=\"btn btn-primary\" id=\"updateCurrentBookBtn\">Update Progress</button>"
+	    				+ "<button class=\"btn btn-primary\" id=\"finishBookBtn\">Finished Book!</button>"
+	    				+ "</div></div></div></div></div></div>";
+
+	            resultCurrent +=currentReadItem;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        System.out.println(resultCurrent);
+        
+        return resultCurrent;
+    }
+    
     public String displayGoals(int id) {
     	String monthsql = "SELECT * FROM Goal WHERE UserID=? AND GoalType=1 LIMIT 1";
     	String yearsql = "SELECT * FROM Goal WHERE UserID=? AND GoalType=2 LIMIT 1";
@@ -90,22 +141,10 @@ public class HomeDisplay extends HttpServlet {
     	String yearResult = "<div class=\"row mb-4\" id=\"goalYearRow\"><div class=\"card\" style=\"border-radius: 1rem;\">"
     						+ "<div class=\"card-body\">";
     	
-    	
     	String goalListItem = "";
     	
-    	String progressRowAndFinal = "<div class=\"row\" id=\"progressRow\"><div class=\"card\" style=\"border-radius: 1rem;\">"
-    							+ " <div class=\"row g-0\"><div class=\"col-md-4\">"
-    							+ "<img src=\"dark-bookshelf.jpg\" class=\"img-fluid\" style=\"border-radius: 1rem;\"></div>"
-    							+ "<div class=\"col-md-8\"> <div class=\"card-body\">"
-    							+ "<h5 class=\"card-title\">Current Book</h5>"
-    							+ "<p class=\"card-text\">Title</p>"
-    							+ "<p class=\"card-text\">Author</p>"
-    							+ "<p class=\"card-text\">Progress Bar</p>"
-    							+ "<p class=\"card-text\"><small class=\"text-muted\">Started reading on 4/23/20</small></p>"
-    							+ "<button type=\"button\" class=\"btn btn-primary\" id=\"updateProgBtn\">Update Progress</button>"
-    							+ "</div></div></div></div></div></div>";
+    	//String progressRowAndFinal = "";
 
-    	
         try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(monthsql)) {
         	pstmt.setInt(1, id);
         	
@@ -127,9 +166,10 @@ public class HomeDisplay extends HttpServlet {
 	            int percent = (int) ((completed * 100.0) / target);
 	            System.out.println(percent);
 
-	            goalListItem = "<h5 class=\"card-title\">" + name + "</h5>"
-		    				+ "<div class='progress-bar' role='progressbar' style='width:" + percent + "%' aria-valuenow='" + completed + "' aria-valuemin='0' aria-valuemax='" + target + "'></div>"
-		    				+ "</div></div></div></div>";
+	            goalListItem = "<h5 class=\"card-title\">" + name + "</h5><div class='progress' style='height: 1rem;'>"
+		    				+ "<div class=\"progress-bar\" role=\"progressbar\" style='width:" + percent + "%' aria-valuenow='" + completed + "' aria-valuemin=\"0\" aria-valuemax='" + target + "'></div>"
+		    				+ "</div></div></div>";
+	       
 
 	            monthResult += goalListItem;
             }
@@ -158,9 +198,9 @@ public class HomeDisplay extends HttpServlet {
 	            int percent = (int) ((completed * 100.0) / target);
 	            System.out.println(percent);
 	            
-	            goalListItem = "<h5 class=\"card-title\">" + name + "</h5>"
-		    				+ "<div class='progress-bar' role='progressbar' style='width:" + percent + "%' aria-valuenow='" + completed + "' aria-valuemin='0' aria-valuemax='" + target + "'></div>"
-		    				+ "</div></div></div></div>";
+	            goalListItem = "<h5 class=\"card-title\">" + name + "</h5><div class='progress' style='height: 1rem;'>"
+	    				+ "<div class=\"progress-bar\" role=\"progressbar\" style='width:" + percent + "%' aria-valuenow='" + completed + "' aria-valuemin=\"0\" aria-valuemax='" + target + "'></div>"
+	    				+ "</div></div></div>";
 	            	
 	            yearResult += goalListItem;
             }
@@ -170,7 +210,7 @@ public class HomeDisplay extends HttpServlet {
         
         finalResult = monthResult + yearResult;
         
-        finalResult += progressRowAndFinal;
+        //finalResult += progressRowAndFinal;
         
         return finalResult;
     }
@@ -186,10 +226,12 @@ public class HomeDisplay extends HttpServlet {
     	
     	String shelfResult = newDisplay.displayShelves(id);
     	String goalResult = newDisplay.displayGoals(id);
-    	String finalResult = goalResult + shelfResult;
+    	String currentReadResult = newDisplay.displayCurrentRead(id);
+    	String finalResult = goalResult + currentReadResult + shelfResult;
     	
     	System.out.println(shelfResult);
     	System.out.println(goalResult);
+    	System.out.println(currentReadResult);
     	System.out.println(finalResult);
     	response.setContentType("text/html");
     	response.getWriter().write(finalResult);

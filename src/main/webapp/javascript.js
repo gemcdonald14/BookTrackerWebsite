@@ -117,70 +117,16 @@ function validatePassReset() {
     
     return notEmpty;
 }
-/*---------------------------------------------CHANGE THE DISPLAY TO SHOW NEXT SECTION (FORGOT PASSWORD)-----------------------------------------------*/
+/*-----------------------------CHANGE THE DISPLAY TO SHOW NEXT SECTION (FORGOT PASSWORD)-----------------------------------------------*/
 function showSecQuestion(){
 	document.getElementById("enterQuesAndPass").style.display = "inherit";
 	
 }
-/*---------------------------------------------ADD NEW GOAL-----------------------------------------------*/
-/*function addGoal() {
-    // Your AJAX code to send the data to the servlet...
-    // Assuming you have these variables storing the new goal data
-    let newGoalTitle = 'New Goal Title';
-    let newGoalType = '1'; // Assuming 1 is for monthly, 2 is for yearly
-    let newGoalTarget = '5'; // Assuming a target of 5 books
+/*---------------------------------------------LOG OUT USER-----------------------------------------------*/
+function logOut() {
+	window.location.href = "login.html";
+}
 
-    // Construct a data object to send via AJAX
-    let data = new FormData();
-    data.append('newGoalTitle', newGoalTitle);
-    data.append('newGoalType', newGoalType);
-    data.append('newGoalTarget', newGoalTarget);
-
-alert(data.get('newGoalTarget'));
-    // AJAX call to retrieve the updated content after adding the goal
-    let xhr = new XMLHttpRequest();
-alert("Starting request");
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-			
-alert("Returned");
-            if (xhr.status === 200) {
-                const newGoalHTML = xhr.responseText;
-alert("New goal"+newGoalHTML);
-
-                // Select the container div based on the goal type (monthly or yearly)
-                let containerUl = document.getElementById(newGoalType === '1' ? 'monthGoalsList' : 'yearGoalsList');
-
-                // Append the new goal content to the container
-                containerUl.innerHTML += newGoalHTML;
-            } else {
-                console.log('Error: ' + xhr.status);
-                
-alert('Error: ' + xhr.status);
-            }
-        }
-    };
-    // Open the connection with your servlet URL
-    
-    xhr.open('POST', 'AddGoal', true);
-    xhr.send(data);
-}*/
-
-/*
-
-$(document).ready(function() {
-	$('#username').blur(function(event) {
-                var name = $('#username').val();
-                $.get('UpdatePassword', {
-                        username : name
-                }, function(responseText) {
-                        $('#ajaxGetUserServletResponse').text(responseText);
-                });
-        });
-});
-
-
-*/
 
 
 

@@ -91,7 +91,7 @@
 								    <option value="2">Yearly Goal</option>
 								 </select>
                                 <div class="form-outline" style="display: inline-flex;">
-                                    <input type="text" id="newGoalTitle" name="newGoalTitle" class="form-control form-control-lg" placeholder="Goal Title"/>
+                                    <input type="text" id="newGoalTitle" name="newGoalTitle" class="form-control form-control-lg" placeholder="Goal Name"/>
                                     <!--<label class="form-label" for="newGoalTitle" style="font-size: 1.1rem;">Goal Title:&nbsp;</label>-->
                                 </div>
                                 <div class="form-outline" style="display: inline-flex;">
@@ -103,12 +103,28 @@
                         </div>
                       </div>
                 </div>
+                <div id="updateGoal">
+                    <div class="card mt-2 mb-2" style="border-radius: 1rem;">
+                        <div class="card-body" style="display: inline-flex; justify-content: space-evenly;">
+							<h5 class="card-title">Update A Goal</h5>
+                            <form name="updateGoalForm" method="post" action="UpdateGoals">
+                                <div class="form-outline" style="display: inline-flex;">
+                                    <input type="text" id="updateGoalTitle" name="updateGoalTitle" class="form-control form-control-lg" placeholder="Goal Name"/>
+                                </div>
+                                <div class="form-outline" style="display: inline-flex;">
+                                    <input type="text" id="updateGoalCompleted" name="updateGoalCompleted" class="form-control form-control-lg" placeholder="# of Books Read" />
+                                </div>
+                                <button class="btn btn-primary" id="updateGoalBtn">Update Goal</button>
+                            </form>
+                        </div>
+                      </div>
+                </div>
                 <script>
 							$(document).ready(function() { 
 								$.get("DisplayGoals?timestamp=" + new Date().getTime(), function(responseText) {  
 									console.log("Received response from server:", responseText);
 									alert("before response text");
-									var div = $("#createNewGoal");
+									var div = $("#updateGoal");
 									div.append(responseText);
 								});
 								return false;

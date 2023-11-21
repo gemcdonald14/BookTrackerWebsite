@@ -43,8 +43,8 @@
                         </li>
                     </ul>
                     <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search books..." aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit"  id="searchBtn">Search</button>
+                        <input class="form-control me-2" id="searchInput" type="search" placeholder="Search books..." aria-label="Search">
+                        <button class="btn btn-outline-success" id="searchBooksBtn">Search</button>
                     </form>
                 </div>
             </div>
@@ -54,9 +54,30 @@
 			$(document).ready(function() { 
 				$.get("HomeDisplay?timestamp=" + new Date().getTime(), function(responseText) {  
 					console.log("Received response from server:", responseText);
-					alert("before response text");
+					//alert("before response text");
 					var div = $("#homepageRow");
 					div.html(responseText);
+				});
+				return false;
+			});
+		
+			$(document).on("click", "#updateCurrentBookBtn", function() { 
+				var numPages = $("#updateCurrentRead").val();
+				alert(numPages);
+				
+				console.log("Button clicked. Sending AJAX request.");
+				$.get("AddGoal?timestamp=" + new Date().getTime(), { newGoalTitle: title, newGoalTarget: target, newGoalType: type }, function(responseText) {  
+					console.log("Received response from server:", responseText);
+					alert("before response text");
+					if (type == 1) {
+						var ul = $("#monthGoalsList");
+						ul.append(responseText);
+					} else {
+						var ul = $("#yearGoalsList");
+						ul.append(responseText);
+					}
+					
+					//document.getElementById("monthGoalsList").append = responseText;
 				});
 				return false;
 			});
@@ -94,25 +115,21 @@
                                   <p class="card-text">Author</p>
                                   <p class="card-text">Progress Bar</p>
                                   <p class="card-text"><small class="text-muted">Started reading on 4/23/20</small></p>
-                                  <button type="button" class="btn btn-primary" id="updateProgBtn">Update Progress</button>
+                                  <form name="updateCurrentBook" method="post" action="UpdateCurrentRead">
+	                                  <div class="form-outline" style="display: inline-flex;">
+	                                   	<input type="text" id="updateCurrentRead" name="updateCurrentRead" class="form-control form-control-md" placeholder="I'm on page..."/>
+	                                  </div>
+	                                  <button class="btn btn-primary" id="updateCurrentBookBtn">Update Progress</button>
+                                  </form>
+                                  <form method="post" action="FinishBook">
+                                  	  <button class="btn btn-primary" id="finishBookBtn">I've finished this book!</button>
+                                  </form>
                                 </div>
                               </div>
                             </div>
                           </div>
                     </div>
                 </div>
-                <!--  
-                <script>
-							$(document).ready(function() { 
-								$.get("HomeDisplay?timestamp=" + new Date().getTime(), function(responseText) {  
-									console.log("Received response from server:", responseText);
-									alert("before response text");
-									var div = $("#rightColHome");
-									div.html(responseText);
-								});
-								return false;
-							});
-				</script> -->
                 <div class="col-md-6 p-4" id="rightColHome">
                     <div class="card" style="border-radius: 1rem;">
                         <div class="card-body">

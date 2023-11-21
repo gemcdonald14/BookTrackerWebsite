@@ -132,4 +132,44 @@
     <servlet-name>DisplayShelves</servlet-name>
     <url-pattern>/DisplayShelves</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UpdateGoals</display-name>
+    <servlet-name>UpdateGoals</servlet-name>
+    <servlet-class>UpdateGoals</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateGoals</servlet-name>
+    <url-pattern>/UpdateGoals</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DisplayBooks</display-name>
+    <servlet-name>DisplayBooks</servlet-name>
+    <servlet-class>DisplayBooks</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DisplayBooks</servlet-name>
+    <url-pattern>/DisplayBooks</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UpdateCurrentRead</display-name>
+    <servlet-name>UpdateCurrentRead</servlet-name>
+    <servlet-class>UpdateCurrentRead</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateCurrentRead</servlet-name>
+    <url-pattern>/UpdateCurrentRead</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>FinishBook</display-name>
+    <servlet-name>FinishBook</servlet-name>
+    <servlet-class>FinishBook</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FinishBook</servlet-name>
+    <url-pattern>/FinishBook</url-pattern>
+  </servlet-mapping>
 </web-app>

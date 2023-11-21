@@ -7,6 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
         <link href="mystyles.css" rel="stylesheet">
+        <script src="javascript.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" ></script>
         <title>My Account</title>
         
@@ -59,7 +60,8 @@
                         <div class="card" style="border-radius: 1rem;">
                             <div class="row g-0">
                                 <div class="col-md-4" style="display: block;">
-                                    <img src="dog.jpg" class="img-fluid" id="profilePic" style="border-radius: 1rem;">
+                                    <img src="./images/ella.jpg" class="img-fluid" id="profilePic" style="border-radius: 1rem;">
+                                    <button type="button" class="btn btn-primary" id="logOutBtn" onclick="logOut()">Log Out</button>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body" id="accountCard">
@@ -106,7 +108,7 @@
 	                                            Favorite Author:&nbsp;<div id="accfavAuthor" style="display: inline-flex;">Alice Blanchard</div>
 	                                        </div>
 	                                    </div>
-	                                    <button type="button" class="btn btn-primary" id="logOutBtn">Log Out</button>
+	                                    <!--<button type="button" class="btn btn-primary" id="logOutBtn">Log Out</button>-->
                           				
                                     </div>
                                 </div>

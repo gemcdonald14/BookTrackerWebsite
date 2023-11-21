@@ -24,6 +24,20 @@
 				});
 				return false;
 			});
+			
+			$(document).on("click", ".listTitleShelf", function() { 
+				var shelfName = $(this).text();
+				alert(shelfName);
+				
+				console.log("Button clicked. Sending AJAX request.");
+				$.get("DisplayBooks?timestamp=" + new Date().getTime(), { listTitleShelf: shelfName }, function(responseText) {  
+					console.log("Received response from server:", responseText);
+					alert("before response text");
+					var ul = $("#bookList");
+					ul.html(responseText);
+				});
+				return false;
+			});
 		</script>
     </head>
     <body style="background-color: #F2EDE4;">
@@ -109,45 +123,9 @@
                 </div>
                 <div class="col-xl-7 col-md-12" id="rightColShelves">
                     <div class="card" style="border-radius: 1rem;">
-                        <div class="card-body">
+                        <div class="card-body" id="bookList">
                             <h5 class="card-title">Read</h5>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <div class="listItemDisplayShelf"style="display: inline-flex;">
-                                        <div class="d-flex align-items-center">
-                                            <div class="listBookImgDisplayShelf">
-                                                <img src="colors.jpg" style="border-radius: 1rem;  width: 50px; height: 75px;">
-                                            </div>
-                                            <div class="listBookTitleDisplayShelf">
-                                                <p>Trace of Evil</p>
-                                            </div>
-                                            <div class="listBookAuthorDisplayShelf">
-                                                <p>Alice Blanchard</p>
-                                            </div>
-                                            <div class="listBookRatingDisplayShelf">
-                                                <p>4.5&#9734;</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <div class="listItemDisplayShelf"style="display: inline-flex;">
-                                        <div class="d-flex align-items-center">
-                                            <div class="listBookImgDisplayShelf">
-                                                <img src="colors.jpg" style="border-radius: 1rem;  width: 50px; height: 75px;">
-                                            </div>
-                                            <div class="listBookTitleDisplayShelf">
-                                                <p>The Witching Hour</p>
-                                            </div>
-                                            <div class="listBookAuthorDisplayShelf">
-                                                <p>Alice Blanchard</p>
-                                            </div>
-                                            <div class="listBookRatingDisplayShelf">
-                                                <p>4.5&#9734;</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
                             </ul>
                         </div>
                     </div>

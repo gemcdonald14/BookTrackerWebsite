@@ -40,30 +40,53 @@
 	    		 //create a div for each book in the returned list 
 	    		 var book = booksInfo.items[i];
 	    		 var thumbnailDiv = document.createElement("div");
-	    		 thumbnailDiv.className = "thumbnail col-md-5"; 
+	    		 thumbnailDiv.className = "thumbnail col-md-5";
+	    		 thumbnailDiv.id = book.id;
 		    	
 		    	if (book.volumeInfo && book.volumeInfo.imageLinks && book.volumeInfo.imageLinks.thumbnail) {
 		    		var img = document.createElement("img");
+		    		img.className = "bookImg";
 			    	img.src = book.volumeInfo.imageLinks.thumbnail;
 			    	thumbnailDiv.appendChild(img);
 		        }
 	    	
-	    		 
-	    		 
 	    		 var p1 = document.createElement("p");
 	    		 p1.innerHTML = book.volumeInfo && book.volumeInfo.title ? book.volumeInfo.title : "Unknown Title";
+	    		 p1.className = "title";
 	    		 thumbnailDiv.appendChild(p1);
 	    		 
 	    		 var p2 = document.createElement("p");
 	    		 p2.innerHTML = book.volumeInfo && book.volumeInfo.authors ? book.volumeInfo.authors.join(", ") : "Unknown Author";
+	    		 p2.className = "author";
 	    		 thumbnailDiv.appendChild(p2);
+	    	
+	    		 var p3 = document.createElement("p");
+	    		 p3.className = "pageCount";
+	    		 if (book.volumeInfo && book.volumeInfo.pageCount) {
+	    		     p3.innerHTML = book.volumeInfo.pageCount + " pages";
+	    		 } else {
+	    		     p3.innerHTML = "Unknown Page Count";
+	    		 }
+
+	    		 thumbnailDiv.appendChild(p3);
+	    		 
+	    		 var form = document.createElement("form");
+	    		 form.setAttribute("name", "addToShelfForm");
+	    		 var shelfName = document.createElement("input");
+	    		 shelfName.setAttribute("type", "text");
+	    		 shelfName.setAttribute("class", "shelf");
+	    		 shelfName.setAttribute("placeholder", "Shelf name to add book to");
+	    		 form.appendChild(shelfName);
 	    		 
 	    		 var addbutton = document.createElement("button");
 	    		 addbutton.className = "addToShelfBtn";
 	    		 addbutton.innerHTML = "Add To Shelf";
 	    		 addbutton.style.height = "50px";
 	    		 addbutton.style.width = "100px";
-	    		 thumbnailDiv.appendChild(addbutton);
+	    		 form.appendChild(addbutton);
+	    		 
+	    		 
+	    		 thumbnailDiv.appendChild(form);
 	    		 
 	    		 var setbutton = document.createElement("button");
 	    		 setbutton.className = "setCurrentReadBtn";
@@ -116,8 +139,58 @@
 	         document.documentElement.firstChild.appendChild(scriptElement);
 	       }
 	     
+	     //-------------------------------------------------------------------------------
+	     // add a book to a shelf 
+	     
+	     $(document).on("click", ".addToShelfBtn", function() {
+		    var parent = $(this).closest('.thumbnail');
+		    var title = parent.find(".title").text().trim();
+		    var author = parent.find(".author").text().trim();
+		    var shelf = parent.find(".shelf").val();
 		
+		    var numPagesElement = parent.find(".pageCount");
+		    var numPages = numPagesElement ? parseInt(numPagesElement.text().replace(/\D/g, ''), 10) : null;
 		
+		    console.log("Title: " + title);
+		    console.log("Author: " + author);
+		    console.log("Number of Pages: " + numPages);
+		    console.log("Shelf name: " + shelf);
+		
+		    console.log("Button clicked. Sending AJAX request.");
+		    $.get("AddBook?timestamp=" + new Date().getTime(), { bookTitle: title, bookAuthor: author, bookNumPages: numPages, bookShelf: shelf }, function(responseText) {  
+		        console.log("Received response from server:", responseText);
+		    });
+		});
+
+	     /*
+	     $(document).on("click", ".addToShelfBtn", function() {
+	    	 
+	    	var parent = this.parentElement; // get the parent element
+		    if (parent) {
+		        var parentId = parent.id; // get the parent element id
+		        
+		        var title = parent.querySelector(".title").innerHTML;
+		        var author = parent.querySelector(".author").innerHTML;
+		        var shelfInput = parent.querySelector("input.shelf");
+		        var shelf = shelfInput ? shelfInput.value : null;
+		        
+		        var numPagesElement = parent.querySelector(".pageCount");
+		        var numPages = numPagesElement ? parseInt(numPagesElement.innerHTML.replace(/\D/g, ''), 10) : null;
+		        
+		        console.log("Title: " + title);
+		        console.log("Author: " + author);
+		        console.log("Number of Pages: " + numPages);
+		        console.log("Shelf name: " + shelf);
+		        
+		        console.log("Button clicked. Sending AJAX request.");
+				$.get("AddBook?timestamp=" + new Date().getTime(), { bookTitle: title, bookAuthor: author, bookNumPages: numPages, bookShelf: shelf }, function(responseText) {  
+					console.log("Received response from server:", responseText);
+				});
+				return false;
+		    } else {
+		        console.error("Parent element is undefined");
+		    }
+		});*/
 		</script>
 	</head>
 	
@@ -139,7 +212,10 @@
                             <a class="nav-link" href="homepage.jsp">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="stats.html">Stats</a>
+                            <a class="nav-link" href="searchbooks.jsp">Search Books</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="stats.html">My Stats</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="mygoals.jsp">My Goals</a>
@@ -164,7 +240,7 @@
 								<h5 class="card-title">Search For Books</h5>
 	                            <form name="searchBooks" onSubmit="return false">
 	                                <div class="form-outline" style="display: inline-flex;">
-	                                    <input type="text" id="searchInput" name="searchInput" class="form-control form-control-md" placeholder="Search for books..."/>
+	                                    <input type="text" id="searchInput" name="searchInput" class="form-control form-control-lg" placeholder="Search for books..."/>
 	                                </div>
 	                                <button class="btn btn-primary" id="searchBtn" onClick="search(this.form)">Search</button>
 	                            </form>
@@ -178,18 +254,6 @@
 					<div id="data"></div>
 				</div>
 			</div>
-
 		</div>
-		
-		<!-- 
-		<h1>Search Books</h1>
-		 
-		<form onSubmit="return false">
-			<input type="text" id="searchInput" name="searchInput" class="form-control form-control-md" placeholder="Search for books..."/>
-			<button id="searchBtn" onClick="search(this.form)">Search</button>
-		</form>
-		
-		<div id="data"></div>
-		-->
 	</body>
 </html>

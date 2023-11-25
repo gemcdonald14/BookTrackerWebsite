@@ -47,7 +47,7 @@
                                      <div class="pt-1 mb-4">
                                         <button class="btn btn-md" id="getQuestionBtn">Submit</button>
                                     </div>
-                                    <div id="forgotSecQuestion">hi</div>
+                                    <div id="forgotSecQuestion"></div>
                             	</form>
                            		 <div id="enterQuesAndPass" style="display: none;">
                                 <form name="resetForm" method="post" action="UpdatePassword">

@@ -29,7 +29,10 @@
                             <a class="nav-link" href="homepage.jsp">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="stats.html">Stats</a>
+                            <a class="nav-link" href="searchbooks.jsp">Search Books</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="stats.html">My Stats</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="mygoals.jsp">My Goals</a>

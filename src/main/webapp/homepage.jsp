@@ -66,7 +66,7 @@
 				alert(numPages);
 				
 				console.log("Button clicked. Sending AJAX request.");
-				$.get("AddGoal?timestamp=" + new Date().getTime(), { newGoalTitle: title, newGoalTarget: target, newGoalType: type }, function(responseText) {  
+				$.get("UpdateCurrentRead?timestamp=" + new Date().getTime(), { newGoalTitle: title }, function(responseText) {  
 					console.log("Received response from server:", responseText);
 					alert("before response text");
 					if (type == 1) {

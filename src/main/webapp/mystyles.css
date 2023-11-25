@@ -74,12 +74,24 @@ body {
     padding-bottom: 10px;
 }
 
-#newGoalBtn, #updateProgBtn, #newGoalDropdown, #addNewGoalBtn, #updateGoalBtn, #updateCurrentBookBtn {
+#newGoalBtn, #updateProgBtn, #newGoalDropdown, #addNewGoalBtn, #updateGoalBtn, #updateCurrentBookBtn, .addToShelfBtn, .setCurrentReadBtn {
     color: #5C3F35;
     background-color: #D9C9BA;
     font-weight: 600;
     border: none;
     letter-spacing: 1px;
+}
+
+.addToShelfBtn, .setCurrentReadBtn {
+	margin: 0.5rem;
+	border-radius: 0.5rem;
+}
+
+.thumbnail {
+	margin: 1.2rem;
+	text-align: center;
+	margin-bottom: 2rem;
+	
 }
 
 
@@ -207,6 +219,8 @@ select {
 	font-weight: 500;
 	font-size: 1rem;
 }
+
+
 
 
 

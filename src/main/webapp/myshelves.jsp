@@ -38,6 +38,20 @@
 				});
 				return false;
 			});
+			
+			$(document).on("click", ".setAsCurrentBook", function() {
+			    var parent = $(this).closest('.list-group-item');
+			    var parentId = parent.attr('id');
+			
+			    console.log("Book ID: " + parentId);
+			
+			    console.log("Button clicked. Sending AJAX request.");
+			    $.get("SetCurrentRead?timestamp=" + new Date().getTime(), { bookId: parentId }, function(responseText) {  
+			        console.log("Received response from server:", responseText);
+			        $(".error").html(responseText);
+			    });
+			    return false;
+			});
 		</script>
     </head>
     <body style="background-color: #F2EDE4;">
@@ -128,8 +142,8 @@
                     <div class="card" style="border-radius: 1rem;">
                         <div class="card-body" id="bookList">
                             <h5 class="card-title">Read</h5>
-                            <ul class="list-group list-group-flush">
-                            </ul>
+	                        <ul class="list-group list-group-flush">
+	                        </ul>
                         </div>
                     </div>
                 </div>

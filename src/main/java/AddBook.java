@@ -41,13 +41,49 @@ public class AddBook extends HttpServlet {
         return conn;
     }
     
-    public int getShelfID(String name) {
-		String sql = "SELECT ShelfID FROM Shelf WHERE ShelfName=?";
+    public void updateShelf(int id, int shelfid) {
+		String updatesql = "UPDATE Shelf SET NumBooks=? WHERE UserID=? AND ShelfID=?";
+		String selectsql = "SELECT COUNT(BookID) FROM Book WHERE UserID=? AND ShelfID=?";
+		int count = 0;
+		
+		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(selectsql)){
+			 
+			pstmt.setInt(1, id);
+			pstmt.setInt(2, shelfid);
+	        ResultSet rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+	            count = rs.getInt(1);
+	            System.out.println("count" + count);
+	        }
+            
+	     } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            e.printStackTrace();
+	     }
+		
+		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(updatesql)){
+            
+			pstmt.setInt(1,count);
+			pstmt.setInt(2,id);
+            pstmt.setInt(3,shelfid);
+            
+            pstmt.executeUpdate();
+         
+	     } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            e.printStackTrace();
+	     }
+    }
+    
+    public int getShelfID(String name, int id) {
+		String sql = "SELECT ShelfID FROM Shelf WHERE ShelfName=? AND UserID=?";
 		int shelfid = 0;
 		
 		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(sql)){
 	            
 	            pstmt.setString(1,name);
+	            pstmt.setInt(2,id);
 	            
 	            ResultSet rs  = pstmt.executeQuery();
 	            
@@ -100,9 +136,10 @@ public class AddBook extends HttpServlet {
     	int id = (int) servletContext.getAttribute("userID");
     	System.out.println(id);
     	
-    	int shelfID = newBook.getShelfID(shelf);
+    	int shelfID = newBook.getShelfID(shelf, id);
     	
     	newBook.insert(title, author, pages, id, shelfID);
+    	newBook.updateShelf(id,shelfID);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -172,4 +172,54 @@
     <servlet-name>FinishBook</servlet-name>
     <url-pattern>/FinishBook</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SetCurrentRead</display-name>
+    <servlet-name>SetCurrentRead</servlet-name>
+    <servlet-class>SetCurrentRead</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SetCurrentRead</servlet-name>
+    <url-pattern>/SetCurrentRead</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DisplayHomeGoals</display-name>
+    <servlet-name>DisplayHomeGoals</servlet-name>
+    <servlet-class>DisplayHomeGoals</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DisplayHomeGoals</servlet-name>
+    <url-pattern>/DisplayHomeGoals</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DisplayHomeShelves</display-name>
+    <servlet-name>DisplayHomeShelves</servlet-name>
+    <servlet-class>DisplayHomeShelves</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DisplayHomeShelves</servlet-name>
+    <url-pattern>/DisplayHomeShelves</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DisplayHomeCurrentRead</display-name>
+    <servlet-name>DisplayHomeCurrentRead</servlet-name>
+    <servlet-class>DisplayHomeCurrentRead</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DisplayHomeCurrentRead</servlet-name>
+    <url-pattern>/DisplayHomeCurrentRead</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>RateBook</display-name>
+    <servlet-name>RateBook</servlet-name>
+    <servlet-class>RateBook</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RateBook</servlet-name>
+    <url-pattern>/RateBook</url-pattern>
+  </servlet-mapping>
 </web-app>

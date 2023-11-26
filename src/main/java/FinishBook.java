@@ -41,11 +41,34 @@ public class FinishBook extends HttpServlet {
         return conn;
     }
     
-    public Boolean finishBook(int id) {
-		String sql = "UPDATE Book SET ReadPages=NumPages WHERE UserID=? AND IsCurrentRead=1";
+    public int getShelf(int id) {
+    	int shelfid = 0;
+    	String sql = "SELECT ShelfID FROM Shelf WHERE UserID=? AND ShelfName=Read";
+    	
+    	try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(sql)){
+            
+			pstmt.setInt(1,id);
+            
+			ResultSet rs  = pstmt.executeQuery();
+            
+            while(rs.next()) {
+            	shelfid = rs.getInt("ShelfID");
+	            System.out.println("shelf id: " + shelfid);
+            }
+         
+	     } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            e.printStackTrace();
+	     }
+    	return shelfid;
+    }
+    
+    public Boolean finishBook(int id, int shelfid) {
+		String finishsql = "UPDATE Book SET ReadPages=NumPages, IsCurrentRead=0 WHERE UserID=? AND IsCurrentRead=1";
+		String shelfsql = "UPDATE Book SET ShelfID=? WHERE UserID=? AND ShelfName=Read";
 		Boolean result = false;
 
-		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(sql)){
+		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(finishsql)){
 	            
 				pstmt.setInt(1,id);
 	            
@@ -58,6 +81,21 @@ public class FinishBook extends HttpServlet {
 	            System.out.println(e.getMessage());
 	            e.printStackTrace();
 	     }
+		 try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(shelfsql)){
+            
+			pstmt.setInt(1,shelfid);
+			pstmt.setInt(2,id);
+            
+            int rowsAffected = pstmt.executeUpdate();
+         
+            if(rowsAffected > 0) {
+	            result = true;
+	        }
+	     } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            e.printStackTrace();
+	     }
+		 
 		return result;
     }
 
@@ -67,10 +105,18 @@ public class FinishBook extends HttpServlet {
 		ServletContext servletContext = getServletContext();
 		int id = (int) servletContext.getAttribute("userID");
 		
+		String rating = "<form name=\"rateBookForm\">"
+						+ "<div class=\"form-outline\" style=\"display: inline-flex;\">"
+						+ "<input type=\"text\" id=\"bookRating\" class=\"form-control form-control-sm\" placeholder=\"Rating (0 stars - 5 stars)\"/>"
+						+ "</div>"
+						+ "<button class=\"btn\" id=\"rateBook\">Rate Book</button>"
+						+ "</form>";
+		int shelfid = finishedBook.getShelf(id);
 		
-		if (finishedBook.finishBook(id)) {
+		if (finishedBook.finishBook(id, shelfid)) {
 			System.out.println("book finshed");
-			response.sendRedirect("homepage.jsp");
+			response.setContentType("text/html");
+	    	response.getWriter().write(rating);
 		} else {
 			PrintWriter writer = response.getWriter();
 			writer.println("failed");

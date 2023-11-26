@@ -55,10 +55,22 @@
 
 		<script>
 			$(document).ready(function() { 
-				$.get("HomeDisplay?timestamp=" + new Date().getTime(), function(responseText) {  
+				$.get("DisplayHomeGoals?timestamp=" + new Date().getTime(), function(responseText) {  
 					console.log("Received response from server:", responseText);
 					//alert("before response text");
-					var div = $("#homepageRow");
+					var div = $("#homeGoals");
+					div.html(responseText);
+				});
+				$.get("DisplayHomeCurrentRead?timestamp=" + new Date().getTime(), function(responseText) {  
+					console.log("Received response from server:", responseText);
+					//alert("before response text");
+					var div = $("#progressRow");
+					div.html(responseText);
+				});
+				$.get("DisplayHomeShelves?timestamp=" + new Date().getTime(), function(responseText) {  
+					console.log("Received response from server:", responseText);
+					//alert("before response text");
+					var div = $("#rightColHome");
 					div.html(responseText);
 				});
 				return false;
@@ -69,42 +81,59 @@
 				alert(numPages);
 				
 				console.log("Button clicked. Sending AJAX request.");
-				$.get("UpdateCurrentRead?timestamp=" + new Date().getTime(), { newGoalTitle: title }, function(responseText) {  
+				$.get("UpdateCurrentRead?timestamp=" + new Date().getTime(), { updateCurrentRead:numPages }, function(responseText) {  
 					console.log("Received response from server:", responseText);
-					alert("before response text");
-					if (type == 1) {
-						var ul = $("#monthGoalsList");
-						ul.append(responseText);
-					} else {
-						var ul = $("#yearGoalsList");
-						ul.append(responseText);
-					}
 					
-					//document.getElementById("monthGoalsList").append = responseText;
+				});
+			});
+			
+			$(document).on("click", "#finishBookBtn", function() { 
+				var numPages = $("#updateCurrentRead").val();
+				alert(numPages);
+				
+				console.log("Button clicked. Sending AJAX request.");
+				$.get("FinishBook?timestamp=" + new Date().getTime(), function(responseText) {  
+					console.log("Received response from server:", responseText);
+					var form = $("#updateCurrentBook");
+					form.append(responseText);
 				});
 				return false;
 			});
+			
+			$(document).on("click", "#rateBook", function() { 
+				var rating = $("#bookRating").val();
+				alert(rating);
+				
+				console.log("Button clicked. Sending AJAX request.");
+				$.get("RateBook?timestamp=" + new Date().getTime(), { bookRating:rating }, function(responseText) {  
+					console.log("Received response from server:", responseText);
+					
+				});
+			});
+			
 		</script>
 
         <div class="container-fluid">
             <div class="row m-3" id="homepageRow">
                 <div class="col-md-6 p-4" id="leftColHome">
-                    <div class="row mb-4" id="goalMRow">
-                        <div class="card" style="border-radius: 1rem;">
-                            <div class="card-body">
-                              <h5 class="card-title"></h5>
-                              <p class="card-text"></p>
-                            </div>
-                          </div>
-                    </div>
-                    <div class="row mb-4" id="goalYRow">
-                        <div class="card" style="border-radius: 1rem;">
-                            <div class="card-body">
-                              <h5 class="card-title"></h5>
-                              <p class="card-text"></p>
-                            </div>
-                        </div>
-                    </div>
+                	<div id="homeGoals">
+	                    <div class="row mb-4" id="goalMRow">
+	                        <div class="card" style="border-radius: 1rem;">
+	                            <div class="card-body">
+	                              <h5 class="card-title"></h5>
+	                              <p class="card-text"></p>
+	                            </div>
+	                          </div>
+	                    </div>
+	                    <div class="row mb-4" id="goalYRow">
+	                        <div class="card" style="border-radius: 1rem;">
+	                            <div class="card-body">
+	                              <h5 class="card-title"></h5>
+	                              <p class="card-text"></p>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
                     <div class="row" id="progressRow">
                         <div class="card" style="border-radius: 1rem;">
                             <div class="row g-0">

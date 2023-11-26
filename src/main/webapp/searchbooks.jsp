@@ -74,8 +74,10 @@
 	    		 form.setAttribute("name", "addToShelfForm");
 	    		 var shelfName = document.createElement("input");
 	    		 shelfName.setAttribute("type", "text");
-	    		 shelfName.setAttribute("class", "shelf");
-	    		 shelfName.setAttribute("placeholder", "Shelf name to add book to");
+	    		 shelfName.setAttribute("class", "shelf form-control form-control-md");
+	    		 shelfName.setAttribute("placeholder", "Enter shelf name...");
+	    		 shelfName.style.width = "60%";
+	    		 shelfName.style.margin = "auto";
 	    		 form.appendChild(shelfName);
 	    		 
 	    		 var addbutton = document.createElement("button");
@@ -88,12 +90,14 @@
 	    		 
 	    		 thumbnailDiv.appendChild(form);
 	    		 
+	    		 /*
 	    		 var setbutton = document.createElement("button");
 	    		 setbutton.className = "setCurrentReadBtn";
 	    		 setbutton.innerHTML = "Set As Current Read";
 	    		 setbutton.style.height = "50px";
 	    		 setbutton.style.width = "120px";
 	    		 thumbnailDiv.appendChild(setbutton);
+	    		 */
 	    		 
 	    		 row.appendChild(thumbnailDiv);
 	    	 }
@@ -160,6 +164,7 @@
 		    $.get("AddBook?timestamp=" + new Date().getTime(), { bookTitle: title, bookAuthor: author, bookNumPages: numPages, bookShelf: shelf }, function(responseText) {  
 		        console.log("Received response from server:", responseText);
 		    });
+		    return false;
 		});
 
 	     /*

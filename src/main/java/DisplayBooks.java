@@ -91,8 +91,11 @@ public class DisplayBooks extends HttpServlet {
 	            
 	            int rating = rs.getInt("Rating");
 	            System.out.println("Rating: " + rating);
+	            
+	            int bookid = rs.getInt("BookID");
+	            System.out.println("BookID: " + bookid);
 
-	            String bookListItem = "<li class=\"list-group-item d-flex justify-content-between align-items-center\">"
+	            String bookListItem = "<li class=\"list-group-item d-flex justify-content-between align-items-center\" id=" + bookid + ">"
 	            					+ "<div class=\"listItemDisplayShelf\"style=\"display: inline-flex;\">"
 	            					+ "<div class=\"d-flex align-items-center\">"
 	            					+ "<div class=\"listBookImgDisplayShelf\">"
@@ -101,6 +104,8 @@ public class DisplayBooks extends HttpServlet {
 	            					+ "<div class=\"listBookTitleDisplayShelf\"><p>" + title + "</p></div>"
 	            					+ "<div class=\"listBookAuthorDisplayShelf\"><p>" + author + "</p></div>"
 	            					+ "<div class=\"listBookRatingDisplayShelf\"><p>" + rating + "&#9734;</p></div>"
+	            					+ "<button class=\"btn btn-md btn-block setAsCurrentBook\">Set As Current Book</button>"
+	            					+ "<div class=\"error\"></div>"
 	            					+ "</div></div></li></ul>";
 
 	            resultList +=bookListItem;

@@ -74,7 +74,7 @@ body {
     padding-bottom: 10px;
 }
 
-#newGoalBtn, #updateProgBtn, #newGoalDropdown, #addNewGoalBtn, #updateGoalBtn, #updateCurrentBookBtn, .addToShelfBtn, .setCurrentReadBtn {
+#newGoalBtn, #updateProgBtn, #newGoalDropdown, #addNewGoalBtn, #updateGoalBtn, #updateCurrentBookBtn, .addToShelfBtn, .setCurrentReadBtn, .setAsCurrentBook, #rateBook {
     color: #5C3F35;
     background-color: #D9C9BA;
     font-weight: 600;
@@ -93,7 +93,6 @@ body {
 	margin-bottom: 2rem;
 	
 }
-
 
 /*------------NAVBAR------------*/
 nav {

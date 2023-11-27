@@ -222,4 +222,14 @@
     <servlet-name>RateBook</servlet-name>
     <url-pattern>/RateBook</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DisplayReadingStats</display-name>
+    <servlet-name>DisplayReadingStats</servlet-name>
+    <servlet-class>DisplayReadingStats</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DisplayReadingStats</servlet-name>
+    <url-pattern>/DisplayReadingStats</url-pattern>
+  </servlet-mapping>
 </web-app>

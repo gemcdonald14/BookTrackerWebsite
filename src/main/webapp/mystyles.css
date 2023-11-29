@@ -7,27 +7,25 @@
 */
 
 
-
 body {
     color: black;
     letter-spacing: 0.5px;
 }
 
-/*------------------LOGIN PAGE------------------*/
 #createAccLink, #forgotPassLink {
     text-decoration: none;
     color: black;
 }
 
 #createAccLink:hover, #forgotPassLink:hover {
-    color: #732222;
+    color: #B3746F;
     text-decoration: none;
 }
 
-/*------------------REGISTER------------------*/
-
-/*------------------HOME PAGE------------------*/
-/*my bookshelves*/
+#loginBtn:hover, #registerBtn:hover, #getQuestionBtn:hover, #updatePassBtn:hover {
+	background-color: #D9C9BA;
+	color: #5C3F35;
+}
 
 .list-group {
     font-size: 1.2rem;
@@ -43,28 +41,6 @@ body {
 .listBookRatingDisplayShelf {
     font-style: italic;
 }
-
-/*
-.listItemHome, .listItemShelf {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    font-size: 1.2rem;
-}*/
-
-/*
-.listTitleHome, .listTitleShelf {
-    padding-left: 4rem;
-    padding-right: 4rem;
-}*/
-/*
-.listTitleHome, .listNumBooksHome, .listTitleShelf, .listNumBooksShelf {
-    padding-top: 2.4rem;
-    font-size: 1.3rem;
-}*/
-/*
-.listNumBooksHome, .listNumBooksShelf {
-    font-weight: 100;
-}*/
 
 .card-title, .chartTitle {
     font-size: 1.5rem;
@@ -91,10 +67,8 @@ body {
 	margin: 1.2rem;
 	text-align: center;
 	margin-bottom: 2rem;
-	
 }
 
-/*------------NAVBAR------------*/
 nav {
     color: #5C3F35;
     font-weight: 600;
@@ -124,21 +98,11 @@ input.form-control:focus {
     border: none;
     letter-spacing: 1px;
 }
-/*------------------MY ACCOUNT------------------*/
-#accountDetails {
-    color: #4D4728;
-    font-size: 1.2em;
-}
 
 #accountCard {
     color: black;
     line-height: 2.2rem;
-    font-size: 1.2rem;
-}
-
-#accountTitle {
-    font-size: 1.5rem;
-
+    letter-spacing: 1px;
 }
 
 #profilePic {
@@ -153,41 +117,9 @@ input.form-control:focus {
     margin-left: 40%;
     margin-right: 40%;
 }
-/*------------------MY SHELVES------------------*/
-/*
-.bookTitleShelf, .bookAuthorShelf, .bookRatingShelf {
-    padding-top: 1.1rem;
-    font-size: 1.1rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
-}
 
-.bookTitleShelf {
-    font-weight: 600;
-}
-
-.bookRatingShelf {
-    font-style: italic;
-}
-
-.listTitleShelf {
-    text-decoration: none;
-    color: black;
-}
-
-.listTitleShelf:hover {
-    text-decoration: none;
-    color: #732222;
-}
-
-.listTitleShelf:visited {
-    text-decoration: none;
-    color: black;
-}
-*/
-/*------------------MY GOALS------------------*/
 .progress-bar {
-    background-color: #732222;
+    background-color: #B3746F;
 }
 
 
@@ -219,6 +151,10 @@ select {
 	font-size: 1rem;
 }
 
+#readingStats {
+	line-height: 2.2em;
+	font-size: 1.1em;
+}
 
 
 

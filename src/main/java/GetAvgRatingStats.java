@@ -20,11 +20,11 @@ import com.microsoft.sqlserver.jdbc.SQLServerDriver;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-@WebServlet("/DisplayReadingStats") 
-public class DisplayReadingStats extends HttpServlet {
+@WebServlet("/GetAvgRatingStats")
+public class GetAvgRatingStats extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-    public DisplayReadingStats() {
+ 
+    public GetAvgRatingStats() {
         super();
     }
     
@@ -39,12 +39,6 @@ public class DisplayReadingStats extends HttpServlet {
             System.out.println(e.getMessage());
         }
         return conn;
-    }
-    
-    public void init(ServletConfig config) throws ServletException {
-		super.init(config);
-		int readBooks = 0;
-		getServletContext().setAttribute("readBooks", readBooks);
     }
     
     public int getShelf(int id) {
@@ -72,86 +66,113 @@ public class DisplayReadingStats extends HttpServlet {
     }
     
     public String displayStats(int id, int shelfid) {
-    	String readbookssql = "SELECT NumBooks FROM Shelf WHERE UserID=? AND ShelfID=?";
-    	String totalbookssql = "SELECT SUM(NumBooks) FROM Shelf WHERE UserID=?";
-    	String totalpagessql = "SELECT SUM(NumPages) FROM Book WHERE UserID=? AND ShelfID=?";
-    	int readBooks = 0;
-    	int totalBooks = 0;
-    	int totalPages = 0;
+    	String onesql = "SELECT COUNT(BookID) FROM Book WHERE UserID=? AND ShelfID=? AND Rating = 1";
+    	String twosql = "SELECT COUNT(BookID) FROM Book WHERE UserID=? AND ShelfID=? AND Rating = 2";
+    	String threesql = "SELECT COUNT(BookID) FROM Book WHERE UserID=? AND ShelfID=? AND Rating = 3";
+    	String foursql = "SELECT COUNT(BookID) FROM Book WHERE UserID=? AND ShelfID=? AND Rating = 4";
+    	String fivesql = "SELECT COUNT(BookID) FROM Book WHERE UserID=? AND ShelfID=? AND Rating = 5";
+    	int one = 0;
+    	int two = 0;
+    	int three = 0;
+    	int four = 0;
+    	int five = 0;
     	String result = "";
 		
-    	//get read books 
-		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(readbookssql)){
+		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(onesql)){
 			 
 			pstmt.setInt(1, id);
 			pstmt.setInt(2, shelfid);
 	        ResultSet rs = pstmt.executeQuery();
 
 	        if (rs.next()) {
-	            readBooks = rs.getInt("NumBooks");
-	            System.out.println("Read Books: " + readBooks);
+	            one = rs.getInt(1);
+	            System.out.println("one star: " + one);
 	        }
 	     } catch (SQLException e) {
 	            System.out.println(e.getMessage());
 	            e.printStackTrace();
 	     }
 		
-		
-		//get total saved books 
-		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(totalbookssql)){
-			 
-			pstmt.setInt(1, id);
-	        ResultSet rs = pstmt.executeQuery();
-
-	        if (rs.next()) {
-	        	totalBooks = rs.getInt(1);
-	            System.out.println("Total Books: " + totalBooks);
-	        }
-	     } catch (SQLException e) {
-	            System.out.println(e.getMessage());
-	            e.printStackTrace();
-	     }
-		
-		//get total read pages books 
-		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(totalpagessql)){
+		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(twosql)){
 			 
 			pstmt.setInt(1, id);
 			pstmt.setInt(2, shelfid);
 	        ResultSet rs = pstmt.executeQuery();
 
 	        if (rs.next()) {
-	        	totalPages = rs.getInt(1);
-	            System.out.println("Total Pages: " + totalPages);
+	            two = rs.getInt(1);
+	            System.out.println("two star: " + two);
 	        }
 	     } catch (SQLException e) {
 	            System.out.println(e.getMessage());
 	            e.printStackTrace();
 	     }
 		
-		result = "<div>You have read " + readBooks + " books</div>"
-				+ "<div>You have read " + totalPages + " pages</div>"
-				+ "<div>You have " + totalBooks + " books on shelves in your library</div>";
+		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(threesql)){
+			 
+			pstmt.setInt(1, id);
+			pstmt.setInt(2, shelfid);
+	        ResultSet rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+	            three = rs.getInt(1);
+	            System.out.println("three star: " + three);
+	        }
+	     } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            e.printStackTrace();
+	     }
+		
+		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(foursql)){
+			 
+			pstmt.setInt(1, id);
+			pstmt.setInt(2, shelfid);
+	        ResultSet rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+	            four = rs.getInt(1);
+	            System.out.println("four star: " + four);
+	        }
+	     } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            e.printStackTrace();
+	     }
+		
+		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(fivesql)){
+			 
+			pstmt.setInt(1, id);
+			pstmt.setInt(2, shelfid);
+	        ResultSet rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+	            five = rs.getInt(1);
+	            System.out.println("five star: " + five);
+	        }
+	     } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            e.printStackTrace();
+	     }
+
+		result = one + "/" + two + "/" + three + "/" + four + "/" + five;
 		
 		return result;
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		DisplayReadingStats newStats = new DisplayReadingStats();
+		GetAvgRatingStats newStats = new GetAvgRatingStats();
     	
     	ServletContext servletContext = getServletContext();
     	int id = (int) servletContext.getAttribute("userID");
     	System.out.println(id);
     	
-    	
     	int shelfid = newStats.getShelf(id);
     	String statsResult = newStats.displayStats(id, shelfid);
     	System.out.println(statsResult);
-    	response.setContentType("text/html");
     	response.getWriter().write(statsResult);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		
 		doGet(request, response);
 	}
 

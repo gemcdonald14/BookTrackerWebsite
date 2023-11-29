@@ -27,100 +27,54 @@ public class FinishBook extends HttpServlet {
     public FinishBook() {
         super();
     }
-    
-    private Connection connect() {
-    	Connection conn = null;
-		String url = "jdbc:sqlite:C:/sqlite/db/capstone.db";
-		
-        try {
-            conn = DriverManager.getConnection(url);
-            System.out.println("Connection to SQLite has been established.");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return conn;
-    }
-    
-    public int getShelf(int id) {
-    	int shelfid = 0;
-    	String sql = "SELECT ShelfID FROM Shelf WHERE UserID=? AND ShelfName=Read";
-    	
-    	try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(sql)){
-            
-			pstmt.setInt(1,id);
-            
-			ResultSet rs  = pstmt.executeQuery();
-            
-            while(rs.next()) {
-            	shelfid = rs.getInt("ShelfID");
-	            System.out.println("shelf id: " + shelfid);
-            }
-         
-	     } catch (SQLException e) {
-	            System.out.println(e.getMessage());
-	            e.printStackTrace();
-	     }
-    	return shelfid;
-    }
-    
-    public Boolean finishBook(int id, int shelfid) {
-		String finishsql = "UPDATE Book SET ReadPages=NumPages, IsCurrentRead=0 WHERE UserID=? AND IsCurrentRead=1";
-		String shelfsql = "UPDATE Book SET ShelfID=? WHERE UserID=? AND ShelfName=Read";
-		Boolean result = false;
-
-		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(finishsql)){
-	            
-				pstmt.setInt(1,id);
-	            
-	            int rowsAffected = pstmt.executeUpdate();
-	         
-	            if(rowsAffected > 0) {
-		            result = true;
-		        }
-	     } catch (SQLException e) {
-	            System.out.println(e.getMessage());
-	            e.printStackTrace();
-	     }
-		 try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(shelfsql)){
-            
-			pstmt.setInt(1,shelfid);
-			pstmt.setInt(2,id);
-            
-            int rowsAffected = pstmt.executeUpdate();
-         
-            if(rowsAffected > 0) {
-	            result = true;
-	        }
-	     } catch (SQLException e) {
-	            System.out.println(e.getMessage());
-	            e.printStackTrace();
-	     }
-		 
-		return result;
-    }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		FinishBook finishedBook = new FinishBook();
-		
-		ServletContext servletContext = getServletContext();
-		int id = (int) servletContext.getAttribute("userID");
-		
+
 		String rating = "<form name=\"rateBookForm\">"
 						+ "<div class=\"form-outline\" style=\"display: inline-flex;\">"
 						+ "<input type=\"text\" id=\"bookRating\" class=\"form-control form-control-sm\" placeholder=\"Rating (0 stars - 5 stars)\"/>"
-						+ "</div>"
+						+ "</div><br>"
+						+ "<label class=\"form-label\" for=\"bookGenre\" style=\"font-size: 1rem;\">Book Genre:</label>"
+						+ "<select class=\"custom-select\" id=\"bookGenre\" name=\"bookGenre\">"
+						+ "<option value=\"1\">Fiction</option>"
+						+ "<option value=\"2\">Non-Fiction</option>"
+						+ "<option value=\"3\">Young Adult</option>"
+						+ "<option value=\"4\">Children's Lit</option>"
+						+ "<option value=\"5\">Romance</option>"
+						+ "<option value=\"6\">Fantasy</option>"
+						+ "<option value=\"7\">Mystery</option>"
+						+ "<option value=\"8\">Thriller</option>"
+						+ "<option value=\"9\">Historical</option>"
+						+ "<option value=\"10\">Informational</option>"
+						+ "</select><br>"
+						+ "<label class=\"form-label\" for=\"bookMood\" style=\"font-size: 1rem;\">Book Mood:</label>"
+						+ "<select class=\"custom-select\" id=\"bookMood\" name=\"bookMood\">"
+						+ "<option value=\"1\">Adventurous</option>"
+						+ "<option value=\"2\">Tense</option>"
+						+ "<option value=\"3\">Dark</option>"
+						+ "<option value=\"4\">Funny</option>"
+						+ "<option value=\"5\">Emotional</option>"
+						+ "<option value=\"6\">Light-Hearted</option>"
+						+ "<option value=\"7\">Mysterious</option>"
+						+ "<option value=\"8\">Challenging</option>"
+						+ "<option value=\"9\">Reflective</option>"
+						+ "<option value=\"10\">Informative</option>"
+						+ "<option value=\"11\">Inspiring</option>"
+						+ "<option value=\"12\">Hopeful</option>"
+						+ "<option value=\"13\">Relaxing</option>"
+						+ "<option value=\"14\">Sad</option>"
+						+ "</select><br>"
+						+ "<input type=\"radio\" id=\"slow\" name=\"bookPace\" value=\"1\">"
+						+ "<label for=\"slow\">Slow</label><br>"
+						+ "<input type=\"radio\" id=\"medium\" name=\"bookPace\" value=\"2\">"
+						+ "<label for=\"medium\">Medium</label><br>"
+						+ "<input type=\"radio\" id=\"fast\" name=\"bookPace\" value=\"3\">"
+						+ "<label for=\"fast\">Fast</label><br>"
 						+ "<button class=\"btn\" id=\"rateBook\">Rate Book</button>"
 						+ "</form>";
-		int shelfid = finishedBook.getShelf(id);
-		
-		if (finishedBook.finishBook(id, shelfid)) {
-			System.out.println("book finshed");
+
 			response.setContentType("text/html");
 	    	response.getWriter().write(rating);
-		} else {
-			PrintWriter writer = response.getWriter();
-			writer.println("failed");
-		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

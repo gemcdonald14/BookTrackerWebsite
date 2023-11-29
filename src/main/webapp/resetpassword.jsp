@@ -49,7 +49,7 @@
                                     </div>
                                     <div id="forgotSecQuestion"></div>
                             	</form>
-                           		 <div id="enterQuesAndPass" style="display: none;">
+                           		 <div id="enterQuesAndPass" style="display: none;"><br>
                                 <form name="resetForm" method="post" action="UpdatePassword">
                                     
 										<h6 class="fw-normal mb-3 pb-3">Please answer the security question that you created to reset your password.</h6>

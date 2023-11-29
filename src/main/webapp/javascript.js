@@ -118,10 +118,7 @@ function validatePassReset() {
     return notEmpty;
 }
 /*-----------------------------CHANGE THE DISPLAY TO SHOW NEXT SECTION (FORGOT PASSWORD)-----------------------------------------------*/
-function showSecQuestion(){
-	document.getElementById("enterQuesAndPass").style.display = "inherit";
-	
-}
+
 /*---------------------------------------------LOG OUT USER-----------------------------------------------*/
 function logOut() {
 	window.location.href = "login.html";

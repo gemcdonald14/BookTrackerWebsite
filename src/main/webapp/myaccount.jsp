@@ -48,10 +48,6 @@
                             <a class="nav-link" href="myaccount.jsp">My Account</a>
                         </li>
                     </ul>
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search books..." aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit"  id="searchBtn">Search</button>
-                    </form>
                 </div>
             </div>
         </nav>
@@ -74,13 +70,10 @@
 												$(document).ready(function() { 
 													var username = $("#accUsername");
 													var email = $("#accEmail");
-													alert(username);
-													alert(email);
 													
 													console.log("Button clicked. Sending AJAX request.");
 													$.get("DisplayUserInfo?timestamp=" + new Date().getTime(), function(responseText) {  
 														console.log("Received response from server:", responseText);
-														alert("before response text");
 														var div = $("#userInfo");
 														div.html(responseText);
 													});
@@ -88,27 +81,26 @@
 												});
 											</script>
                           					<div class="form-outline mb-4">
-	                                            Username:&nbsp;<div id="accUsername" style="display: inline-flex;"></div>
+	                                            <p style="font-weight:bold;">Username:&nbsp;</p><div id="accUsername" style="display: inline-flex;" class="accountDetails"></div>
 	                                        </div>
 	
 	                                        <div class="form-outline mb-4">
-	                                            Email:&nbsp;<div id="accEmail" style="display: inline-flex;"></div>
+	                                            Email:&nbsp;<div id="accEmail" style="display: inline-flex;" class="accountDetails"></div>
 	                                        </div>
 	
 	                                        <div class="form-outline mb-4">
-	                                            Bio:&nbsp;<div id="accBio" style="display: inline-flex;">I love to read!</div>
+	                                            Bio:&nbsp;<div id="accBio" style="display: inline-flex;" class="accountDetails"></div>
+	                                        </div>
+	                                        <div class="form-outline mb-4">
+	                                            Total Books:&nbsp;<div id="accNumBooks" style="display: inline-flex;" class="accountDetails"></div>
 	                                        </div>
 	
 	                                        <div class="form-outline mb-4">
-	                                            Total Books:&nbsp;<div id="accNumBooks" style="display: inline-flex;"> 120</div>
+	                                            Favorite Book:&nbsp;<div id="accFavBook" style="display: inline-flex;" class="accountDetails"></div>
 	                                        </div>
 	
 	                                        <div class="form-outline mb-4">
-	                                            Favorite Book:&nbsp;<div id="accFavBook" style="display: inline-flex;">Trace of Evil</div>
-	                                        </div>
-	
-	                                        <div class="form-outline mb-4">
-	                                            Favorite Author:&nbsp;<div id="accfavAuthor" style="display: inline-flex;">Alice Blanchard</div>
+	                                            Favorite Author:&nbsp;<div id="accfavAuthor" style="display: inline-flex;" class="accountDetails"></div>
 	                                        </div>
 	                                    </div>
 	                                    <!--<button type="button" class="btn btn-primary" id="logOutBtn">Log Out</button>-->

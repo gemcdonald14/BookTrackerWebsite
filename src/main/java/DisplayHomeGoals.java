@@ -58,7 +58,7 @@ public class DisplayHomeGoals extends HttpServlet {
         	
         	ResultSet rs  = pstmt.executeQuery();
             
-            while(rs.next()) {
+            if(rs.next()) {
             	String name = rs.getString("GoalName");
 	            System.out.println("Name: " + name);
 	            
@@ -80,6 +80,12 @@ public class DisplayHomeGoals extends HttpServlet {
 	       
 
 	            monthResult += goalListItem;
+            } else {
+            	goalListItem = "<h5 class=\"card-title\">Monthly Goal</h5>"
+            						+ "<p class=\"card-text\">You currently do not have any monthly goals set.</p>"
+            						+ "<p class=\"card-text\">Set goals on the My Goals tab!</p>"
+            						+ "</div></div>";
+            	 monthResult += goalListItem;
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -90,7 +96,7 @@ public class DisplayHomeGoals extends HttpServlet {
         	
         	ResultSet rs  = pstmt.executeQuery();
             
-            while(rs.next()) {
+            if(rs.next()) {
             	String name = rs.getString("GoalName");
 	            System.out.println("Name: " + name);
 	            
@@ -111,6 +117,12 @@ public class DisplayHomeGoals extends HttpServlet {
 	    				+ "</div></div></div>";
 	            	
 	            yearResult += goalListItem;
+            } else {
+            	goalListItem = "<h5 class=\"card-title\">Yearly Goal</h5>"
+						+ "<p class=\"card-text\">You currently do not have any yearly goals set.</p>"
+						+ "<p class=\"card-text\">Set goals on the My Goals tab!</p>"
+						+ "</div></div>";
+            	yearResult += goalListItem;
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -118,10 +130,9 @@ public class DisplayHomeGoals extends HttpServlet {
         
         finalResult = monthResult + yearResult;
         
-        //finalResult += progressRowAndFinal;
-        
         return finalResult;
     }
+    
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		DisplayHomeGoals newDisplay = new DisplayHomeGoals();

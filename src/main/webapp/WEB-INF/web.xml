@@ -232,4 +232,54 @@
     <servlet-name>DisplayReadingStats</servlet-name>
     <url-pattern>/DisplayReadingStats</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetPageCountStats</display-name>
+    <servlet-name>GetPageCountStats</servlet-name>
+    <servlet-class>GetPageCountStats</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetPageCountStats</servlet-name>
+    <url-pattern>/GetPageCountStats</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetAvgRatingStats</display-name>
+    <servlet-name>GetAvgRatingStats</servlet-name>
+    <servlet-class>GetAvgRatingStats</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetAvgRatingStats</servlet-name>
+    <url-pattern>/GetAvgRatingStats</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetRatingStats</display-name>
+    <servlet-name>GetRatingStats</servlet-name>
+    <servlet-class>GetRatingStats</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetRatingStats</servlet-name>
+    <url-pattern>/GetRatingStats</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetTopMoodStats</display-name>
+    <servlet-name>GetTopMoodStats</servlet-name>
+    <servlet-class>GetTopMoodStats</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetTopMoodStats</servlet-name>
+    <url-pattern>/GetTopMoodStats</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetPaceStats</display-name>
+    <servlet-name>GetPaceStats</servlet-name>
+    <servlet-class>GetPaceStats</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetPaceStats</servlet-name>
+    <url-pattern>/GetPaceStats</url-pattern>
+  </servlet-mapping>
 </web-app>

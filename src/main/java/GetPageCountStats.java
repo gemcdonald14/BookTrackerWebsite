@@ -20,11 +20,11 @@ import com.microsoft.sqlserver.jdbc.SQLServerDriver;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-@WebServlet("/DisplayReadingStats") 
-public class DisplayReadingStats extends HttpServlet {
+@WebServlet("/GetPageCountStats")
+public class GetPageCountStats extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public DisplayReadingStats() {
+    public GetPageCountStats() {
         super();
     }
     
@@ -39,12 +39,6 @@ public class DisplayReadingStats extends HttpServlet {
             System.out.println(e.getMessage());
         }
         return conn;
-    }
-    
-    public void init(ServletConfig config) throws ServletException {
-		super.init(config);
-		int readBooks = 0;
-		getServletContext().setAttribute("readBooks", readBooks);
     }
     
     public int getShelf(int id) {
@@ -72,86 +66,80 @@ public class DisplayReadingStats extends HttpServlet {
     }
     
     public String displayStats(int id, int shelfid) {
-    	String readbookssql = "SELECT NumBooks FROM Shelf WHERE UserID=? AND ShelfID=?";
-    	String totalbookssql = "SELECT SUM(NumBooks) FROM Shelf WHERE UserID=?";
-    	String totalpagessql = "SELECT SUM(NumPages) FROM Book WHERE UserID=? AND ShelfID=?";
-    	int readBooks = 0;
-    	int totalBooks = 0;
-    	int totalPages = 0;
+    	String smallsql = "SELECT COUNT(BookID) FROM Book WHERE UserID=? AND ShelfID=? AND NumPages <= 299";
+    	String medsql = "SELECT COUNT(BookID) FROM Book WHERE UserID=? AND ShelfID=? AND NumPages BETWEEN 300 AND 499";
+    	String largesql = "SELECT COUNT(BookID) FROM Book WHERE UserID=? AND ShelfID=? AND NumPages >= 500";
+    	int small = 0;
+    	int med = 0;
+    	int large = 0;
     	String result = "";
 		
-    	//get read books 
-		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(readbookssql)){
+		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(smallsql)){
 			 
 			pstmt.setInt(1, id);
 			pstmt.setInt(2, shelfid);
 	        ResultSet rs = pstmt.executeQuery();
 
 	        if (rs.next()) {
-	            readBooks = rs.getInt("NumBooks");
-	            System.out.println("Read Books: " + readBooks);
+	            small = rs.getInt(1);
+	            System.out.println("small: " + small);
 	        }
 	     } catch (SQLException e) {
 	            System.out.println(e.getMessage());
 	            e.printStackTrace();
 	     }
-		
-		
-		//get total saved books 
-		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(totalbookssql)){
-			 
-			pstmt.setInt(1, id);
-	        ResultSet rs = pstmt.executeQuery();
-
-	        if (rs.next()) {
-	        	totalBooks = rs.getInt(1);
-	            System.out.println("Total Books: " + totalBooks);
-	        }
-	     } catch (SQLException e) {
-	            System.out.println(e.getMessage());
-	            e.printStackTrace();
-	     }
-		
-		//get total read pages books 
-		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(totalpagessql)){
+	
+		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(medsql)){
 			 
 			pstmt.setInt(1, id);
 			pstmt.setInt(2, shelfid);
 	        ResultSet rs = pstmt.executeQuery();
 
 	        if (rs.next()) {
-	        	totalPages = rs.getInt(1);
-	            System.out.println("Total Pages: " + totalPages);
+	            med = rs.getInt(1);
+	            System.out.println("med: " + med);
 	        }
 	     } catch (SQLException e) {
 	            System.out.println(e.getMessage());
 	            e.printStackTrace();
 	     }
 		
-		result = "<div>You have read " + readBooks + " books</div>"
-				+ "<div>You have read " + totalPages + " pages</div>"
-				+ "<div>You have " + totalBooks + " books on shelves in your library</div>";
+		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(largesql)){
+			 
+			pstmt.setInt(1, id);
+			pstmt.setInt(2, shelfid);
+	        ResultSet rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+	            large = rs.getInt(1);
+	            System.out.println("large: " + large);
+	        }
+	     } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            e.printStackTrace();
+	     }
+	
+		
+		result = small + "/" + med + "/" + large;
 		
 		return result;
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		DisplayReadingStats newStats = new DisplayReadingStats();
+		GetPageCountStats newStats = new GetPageCountStats();
     	
     	ServletContext servletContext = getServletContext();
     	int id = (int) servletContext.getAttribute("userID");
     	System.out.println(id);
     	
-    	
     	int shelfid = newStats.getShelf(id);
     	String statsResult = newStats.displayStats(id, shelfid);
     	System.out.println(statsResult);
-    	response.setContentType("text/html");
     	response.getWriter().write(statsResult);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		
 		doGet(request, response);
 	}
 

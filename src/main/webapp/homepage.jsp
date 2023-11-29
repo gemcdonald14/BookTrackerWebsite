@@ -45,10 +45,6 @@
                             <a class="nav-link" href="myaccount.jsp">My Account</a>
                         </li>
                     </ul>
-                    <form class="d-flex">
-                        <input class="form-control me-2" id="searchInput" type="search" placeholder="Search books..." aria-label="Search">
-                        <button class="btn btn-outline-success" id="searchBooksBtn">Search</button>
-                    </form>
                 </div>
             </div>
         </nav>
@@ -78,7 +74,7 @@
 		
 			$(document).on("click", "#updateCurrentBookBtn", function() { 
 				var numPages = $("#updateCurrentRead").val();
-				alert(numPages);
+				//alert(numPages);
 				
 				console.log("Button clicked. Sending AJAX request.");
 				$.get("UpdateCurrentRead?timestamp=" + new Date().getTime(), { updateCurrentRead:numPages }, function(responseText) {  
@@ -88,10 +84,7 @@
 			});
 			
 			$(document).on("click", "#finishBookBtn", function() { 
-				var numPages = $("#updateCurrentRead").val();
-				alert(numPages);
-				
-				console.log("Button clicked. Sending AJAX request.");
+				//alert("Button clicked. Sending AJAX request.");
 				$.get("FinishBook?timestamp=" + new Date().getTime(), function(responseText) {  
 					console.log("Received response from server:", responseText);
 					var form = $("#updateCurrentBook");
@@ -102,15 +95,21 @@
 			
 			$(document).on("click", "#rateBook", function() { 
 				var rating = $("#bookRating").val();
-				alert(rating);
+				var genre = $("#bookGenre").val();
+				var mood = $("#bookMood").val();
+				var pace = $("input[name='bookPace']:checked").val();
 				
-				console.log("Button clicked. Sending AJAX request.");
-				$.get("RateBook?timestamp=" + new Date().getTime(), { bookRating:rating }, function(responseText) {  
+				//alert(rating);
+				//alert(genre);
+				//alert("Button clicked. Sending AJAX request.");
+				$.get("RateBook?timestamp=" + new Date().getTime(), { bookRating:rating, bookGenre:genre, bookMood:mood, bookPace:pace }, function(responseText) {  
 					console.log("Received response from server:", responseText);
+					var form = $("#progressRow");
+					form.html(responseText);
 					
 				});
+				return false;
 			});
-			
 		</script>
 
         <div class="container-fluid">
@@ -142,19 +141,18 @@
                               </div>
                               <div class="col-md-8">
                                 <div class="card-body">
-                                  <h5 class="card-title">Current Book</h5>
+                                  <h5 class="card-title">Currently Reading</h5>
                                   <p class="card-text">Title</p>
                                   <p class="card-text">Author</p>
-                                  <p class="card-text">Progress Bar</p>
-                                  <p class="card-text"><small class="text-muted">Started reading on 4/23/20</small></p>
-                                  <form name="updateCurrentBook" method="post" action="UpdateCurrentRead">
+                                  <div class='progress' style='height: 1.2rem;'>
+                              		  <div class='progress-bar' role='progressbar' style='width:0%' aria-valuenow='0'></div>
+                              	  </div>
+                                  <form name="updateCurrentBook" id="updateCurrentBook">
 	                                  <div class="form-outline" style="display: inline-flex;">
-	                                   	<input type="text" id="updateCurrentRead" name="updateCurrentRead" class="form-control form-control-md" placeholder="I'm on page..."/>
+	                                   	<input type="text" id="updateCurrentRead" name="updateCurrentRead" class="form-control form-control-sm" placeholder="I'm on page..."/>
 	                                  </div>
 	                                  <button class="btn btn-primary" id="updateCurrentBookBtn">Update Progress</button>
-                                  </form>
-                                  <form method="post" action="FinishBook">
-                                  	  <button class="btn btn-primary" id="finishBookBtn">I've finished this book!</button>
+	                                  <button class="btn btn-primary" id="finishBookBtn">Finished Book!</button>
                                   </form>
                                 </div>
                               </div>

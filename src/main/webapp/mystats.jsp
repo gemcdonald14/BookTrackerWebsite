@@ -271,9 +271,9 @@
                     <div class="row mb-2">
                         <div class="card" style="border-radius: 1rem;">
                             <div class="card-body p-3 text-black">
-                                <h5 class="card-title">Average Rating</h5>
-                                <div id="avgRatingStats">
-                                	<canvas id="avgRatingChart" aria-label="chart"></canvas>
+                                <h5 class="card-title">Genre</h5>
+                                <div id="topGenresStats">
+                                	<canvas id="topGenresChart" aria-label="chart"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -281,9 +281,9 @@
                     <div class="row mb-2">
                         <div class="card" style="border-radius: 1rem;">
                             <div class="card-body p-3 text-black">
-                                <h5 class="card-title">Genre</h5>
-                                <div id="topGenresStats">
-                                	<canvas id="topGenresChart" aria-label="chart"></canvas>
+                               <h5 class="card-title">Page Count</h5>
+                                <div id="pageCountStats">
+                                	<canvas id="pageCountChart" aria-label="chart"></canvas>
                                 </div>
                             </div>
                         </div>
@@ -294,10 +294,12 @@
                 	<div class="row mb-2">
                         <div class="card" style="border-radius: 1rem;">
                             <div class="card-body p-3 text-black">
-                                <h5 class="card-title">Page Count</h5>
-                                <div id="pageCountStats">
-                                	<canvas id="pageCountChart" aria-label="chart"></canvas>
+                                <div class="card-body p-3 text-black">
+                                <h5 class="card-title">Average Rating</h5>
+                                <div id="avgRatingStats">
+                                	<canvas id="avgRatingChart" aria-label="chart"></canvas>
                                 </div>
+                            </div>
                             </div>
                         </div>
                     </div>

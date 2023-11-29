@@ -127,10 +127,14 @@ public class DisplayReadingStats extends HttpServlet {
 	            System.out.println(e.getMessage());
 	            e.printStackTrace();
 	     }
-		
+		/*
 		result = "<div>You have read " + readBooks + " books</div>"
 				+ "<div>You have read " + totalPages + " pages</div>"
 				+ "<div>You have " + totalBooks + " books on shelves in your library</div>";
+		*/
+		result = "<ul><li>You have read " + readBooks + " books</li>"
+				+ "<li>You have read " + totalPages + " pages</li>"
+				+ "<li>You have " + totalBooks + " books on shelves in your library</li></ul>";
 		
 		return result;
     }

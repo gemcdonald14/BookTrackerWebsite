@@ -152,9 +152,20 @@ select {
 }
 
 #readingStats {
-	line-height: 2.2em;
+	line-height: 2.5em;
 	font-size: 1.1em;
 }
+
+#readingStats li {
+	background-size: 50px;
+	list-style: none;
+	margin: 15px;
+	padding-left: 60px;
+	background-image: url('./images/openbook.png');
+	background-repeat: no-repeat;
+    background-position: left center;
+}
+
 
 
 

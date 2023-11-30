@@ -13,12 +13,12 @@
         <script>
 			$(document).on("click", "#addNewShelfBtn", function() { 
 				var name = $("#newShelfName").val();
-				alert(name);
+				//alert(name);
 				
 				console.log("Button clicked. Sending AJAX request.");
 				$.get("AddShelf?timestamp=" + new Date().getTime(), { newShelfName: name }, function(responseText) {  
 					console.log("Received response from server:", responseText);
-					alert("before response text");
+					//alert("before response text");
 					var ul = $("#shelfList");
 					ul.append(responseText);
 				});
@@ -27,12 +27,12 @@
 			
 			$(document).on("click", ".listTitleShelf", function() { 
 				var shelfName = $(this).text();
-				alert(shelfName);
+				//alert(shelfName);
 				
 				console.log("Button clicked. Sending AJAX request.");
 				$.get("DisplayBooks?timestamp=" + new Date().getTime(), { listTitleShelf: shelfName }, function(responseText) {  
 					console.log("Received response from server:", responseText);
-					alert("before response text");
+					//alert("before response text");
 					var ul = $("#bookList");
 					ul.html(responseText);
 				});
@@ -58,16 +58,20 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 
         <nav class="navbar navbar-expand-lg" style="background-color:#D9C9BA;">
-            <div class="container-fluid ">
-                 <a class="navbar-brand" href="#">
-                    <img src="./images/ella.jpg" alt="" width="60" height="60" class="d-inline-block align-text-top" style="border-radius: 2rem">
-                    Ella's Books
-                </a>
+            <div class="container-fluid">
+            	<div class="d-flex align-items-center">
+            		<a class="navbar-brand" href="homepage.jsp">
+                    <img src="./images/ella.jpg" alt="" width="60" height="60" class="d-inline-block center" style="border-radius: 2rem">
+                    	Ella's Books
+                    <img alt="" src="./images/openbook.png" width="35" height="35" class="d-inline-block center">
+                	</a>
+            	</div>
+                
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent" style="justify-content: right;">
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link" href="homepage.jsp">Home</a>
@@ -89,13 +93,10 @@
                             <a class="nav-link" href="myaccount.jsp">My Account</a>
                         </li>
                     </ul>
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search books..." aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit"  id="searchBtn">Search</button>
-                    </form>
                 </div>
             </div>
         </nav>
+        
 
         <div class="container-fluid">
             <div class="row m-3">
@@ -106,8 +107,8 @@
                                 <h5 class="card-title">Create A New Bookshelf</h5>
                                 <form name="newShelfForm" method="post" action="AddShelf">
                                     <div class="form-outline mb-4 col-auto">
-                                        <label class="form-label" for="newShelfName" style="font-size: 1.1rem;">Shelf Name:</label>
-                                        <input type="text" id="newShelfName" class="form-control w-75" name="newShelfName"/>
+                                        <!--<label class="form-label" for="newShelfName" style="font-size: 1.1rem;">Shelf Name:</label>-->
+                                        <input type="text" id="newShelfName" class="form-control w-75" name="newShelfName" placeholder="Shelf Name"/>
                                     </div>
                   
                                     <div class="pt-1 mt-4">
@@ -121,12 +122,21 @@
 							$(document).ready(function() { 
 								$.get("DisplayShelves?timestamp=" + new Date().getTime(), function(responseText) {  
 									console.log("Received response from server:", responseText);
-									alert("before response text");
+									//alert("before response text");
 									var ul = $("#shelfList");
+									ul.html(responseText);
+								});
+								
+								var shelfName = "Read";
+								$.get("DisplayBooks?timestamp=" + new Date().getTime(), { listTitleShelf: shelfName }, function(responseText) {  
+									console.log("Received response from server:", responseText);
+									//alert("before response text");
+									var ul = $("#bookList");
 									ul.html(responseText);
 								});
 								return false;
 							});
+			
 					</script>
                     <div class="row mb-2">
                         <div class="card" style="border-radius: 1rem;">
@@ -138,13 +148,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-7 col-md-12" id="rightColShelves">
+                <div class="col-xl-6 col-md-12 justify-content-end" id="rightColShelves">
                     <div class="card" style="border-radius: 1rem;">
-                        <div class="card-body" id="bookList">
-                            <h5 class="card-title">Read</h5>
-	                        <ul class="list-group list-group-flush">
-	                        </ul>
-                        </div>
+                        <div class="card-body" id="bookList"></div>
                     </div>
                 </div>
             </div>

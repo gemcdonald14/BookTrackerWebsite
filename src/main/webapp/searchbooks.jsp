@@ -12,6 +12,21 @@
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" ></script>
 		<script type="text/javascript">
 		
+		
+		function uploadFile(inputElement) {
+			  var file = inputElement.files[0];
+			  var reader = new FileReader();
+			  reader.onloadend = function() {
+			    console.log('Encoded Base 64 File String:', reader.result);
+			    
+			    /******************* for Binary ***********************/
+			    var data=(reader.result).split(',')[1];
+			     var binaryBlob = atob(data);
+			     console.log('Encoded Binary File String:', binaryBlob);
+			  }
+			  reader.readAsDataURL(file);
+		}
+		
 		/**
 	     * This function is the call-back function for the JSON scripts which
 	     * executes a Google book search response.
@@ -151,6 +166,24 @@
 		    var title = parent.find(".title").text().trim();
 		    var author = parent.find(".author").text().trim();
 		    var shelf = parent.find(".shelf").val();
+		    /*
+		    var imageElement = parent.find(".bookImg")[0]; // Assuming .bookImg is the class of your image element
+		    var canvas = document.createElement("canvas");
+		    canvas.width = imageElement.width;
+		    canvas.height = imageElement.height;
+		    var ctx = canvas.getContext("2d");
+		    ctx.drawImage(imageElement, 0, 0, canvas.width, canvas.height);
+
+		    // Get the Base64 data
+		    var base64Image = canvas.toDataURL("image/png"); // You can change "image/png" to the desired format
+
+		    // Remove the data:image/png;base64, part
+		    var base64ImageData = base64Image.replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
+
+		    // Now you can use base64ImageData in your AJAX request
+
+		    */
+		    
 		
 		    var numPagesElement = parent.find(".pageCount");
 		    var numPages = numPagesElement ? parseInt(numPagesElement.text().replace(/\D/g, ''), 10) : null;
@@ -201,17 +234,22 @@
 	
 	<body style="background-color: #F2EDE4;">
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+		
 		<nav class="navbar navbar-expand-lg" style="background-color:#D9C9BA;">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">
-                    <img src="./images/ella.jpg" alt="" width="60" height="60" class="d-inline-block align-text-top" style="border-radius: 2rem">
-                    Ella's Books
-                </a>
+            	<div class="d-flex align-items-center">
+            		<a class="navbar-brand" href="homepage.jsp">
+                    <img src="./images/ella.jpg" alt="" width="60" height="60" class="d-inline-block center" style="border-radius: 2rem">
+                    	Ella's Books
+                    <img alt="" src="./images/openbook.png" width="35" height="35" class="d-inline-block center">
+                	</a>
+            	</div>
+                
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent" style="justify-content: right;">
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link" href="homepage.jsp">Home</a>
@@ -238,16 +276,16 @@
         </nav>
 		
 		<div class="container-fluid">
-			<div class="row m-3">
-				<div id="searchRow">
+			<div class="row m-3" style="justify-content:center;">
+				<div id="searchRow" class="col-xl-10 col-md-10">
 					<div class="card mt-2 mb-2" style="border-radius: 1rem;">
-	                        <div class="card-body" style="display: inline-flex;">
+	                        <div class="card-body" style="display: inline-flex; justify-content: space-evenly;">
 								<h5 class="card-title">Search For Books</h5>
 	                            <form name="searchBooks" onSubmit="return false">
 	                                <div class="form-outline" style="display: inline-flex;">
-	                                    <input type="text" id="searchInput" name="searchInput" class="form-control form-control-lg" placeholder="Search for books..."/>
+	                                    <input type="text" id="searchInput" name="searchInput" class="form-control form-control-xl" placeholder="Search for books by title..."/>
 	                                </div>
-	                                <button class="btn btn-primary" id="searchBtn" onClick="search(this.form)">Search</button>
+	                                <button class="btn btn-primary" id="searchBtn" onClick="search(this.form)">Search Books</button>
 	                            </form>
 	                        </div>
 					</div>

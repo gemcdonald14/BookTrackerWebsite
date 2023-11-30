@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.SecureRandom;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -109,6 +110,7 @@ public class AddBook extends HttpServlet {
             pstmt.setInt(3, pages);
             pstmt.setInt(4, id);
             pstmt.setInt(5, shelf);
+            //pstmt.setString(6, image);
             pstmt.executeUpdate();
             
             result = true;
@@ -126,6 +128,7 @@ public class AddBook extends HttpServlet {
     	String author = request.getParameter("bookAuthor");
     	String pages = request.getParameter("bookNumPages");
     	String shelf = request.getParameter("bookShelf");
+    	//String image = request.getParameter("bookImg");
     	
     	System.out.println("title: " + title);
     	System.out.println("author: " + author);

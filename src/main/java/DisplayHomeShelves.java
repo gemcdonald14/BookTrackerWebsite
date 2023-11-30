@@ -41,6 +41,30 @@ public class DisplayHomeShelves extends HttpServlet {
         return conn;
     }
     
+    public int getShelf(int id) {
+    	int shelfid = 0;
+    	String shelfname = "Read";
+    	String sql = "SELECT ShelfID FROM Shelf WHERE UserID=? AND ShelfName=?";
+    	
+    	try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(sql)){
+            
+			pstmt.setInt(1,id);
+			pstmt.setString(2,shelfname);
+            
+			ResultSet rs  = pstmt.executeQuery();
+            
+            while(rs.next()) {
+            	shelfid = rs.getInt("ShelfID");
+	            System.out.println("shelf id: " + shelfid);
+            }
+         
+	     } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            e.printStackTrace();
+	     }
+    	return shelfid;
+    }
+    
     public String displayShelves(int id) {
     	String sql = "SELECT * FROM Shelf WHERE UserID=? LIMIT 4";
     	String resultShelves = "<div class=\"card\" style=\"border-radius: 1rem;\">"
@@ -59,10 +83,12 @@ public class DisplayHomeShelves extends HttpServlet {
 	            int books = rs.getInt("NumBooks");
 	            System.out.println("Books: " + books);
 	            
-	            String shelfListItem = "<li class=\"list-group-item\"><div class=\"listItemHome\" style=\"display: inline-flex;\">"
+	            String shelfListItem = "<li class=\"list-group-item d-flex justify-content-between align-items-center\">"
+	            					+ "<div class=\"listItemHome\" style=\"display: inline-flex;\">"
+	            					+ "<div class=\"d-flex align-items-center\">"
 	            					+ "<div class=\"listImgHome\"><img src=\"cat.jpg\" class=\"img-fluid\" style=\"border-radius: 1rem;  width: 100px; height: 125px;\"></div>"
-	            					+ "<div class=\"listTitleHome\"><p>" + name + "</p></div>"
-	            					+ "<div class=\"listNumBooksHome\"><p>" +  books + " books</p></div></div></li>";
+	            					+ "<div class=\"listTitleHome\">" + name + "</div>"
+	            					+ "<div class=\"listNumBooksHome\">" +  books + " books</div></div></div></li>";
 	            
 	            resultShelves +=shelfListItem;
             }
@@ -83,6 +109,10 @@ public class DisplayHomeShelves extends HttpServlet {
     	ServletContext servletContext = getServletContext();
     	int id = (int) servletContext.getAttribute("userID");
     	System.out.println(id);
+    	
+    	int shelfid = newDisplay.getShelf(id);
+    	servletContext.getAttribute("readShelfID");
+    	servletContext.setAttribute("readShelfID", shelfid);
     	
     	String shelfResult = newDisplay.displayShelves(id);
     	

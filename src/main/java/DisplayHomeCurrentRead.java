@@ -44,7 +44,7 @@ public class DisplayHomeCurrentRead extends HttpServlet {
     public String displayCurrentRead(int id) {
     	String sql = "SELECT * FROM Book WHERE UserID=? AND IsCurrentRead=1 LIMIT 1";
     	String resultCurrent = "<div class=\"card\" style=\"border-radius: 1rem;\">"
-				+ " <div class=\"row g-0\"><div class=\"col-md-4\">";
+				+ "<div class=\"row g-0\"><div class=\"col-md-4 d-none d-lg-block\">";
     	
         try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
         	pstmt.setInt(1, id);
@@ -67,24 +67,29 @@ public class DisplayHomeCurrentRead extends HttpServlet {
 	            int percent = (int)  (int) ((readpages * 100.0) / numpages);
 	            System.out.println(percent);
 	            
-	            String currentReadItem = "<img src=\"dark-bookshelf.jpg\" class=\"img-fluid\" style=\"border-radius: 1rem;\"></div>"
+	            String currentReadItem = "<img src=\"./images/bookpile.jpg\" class=\"img-fluid\" style=\"border-radius: 1rem;\"></div>"
 	    				+ "<div class=\"col-md-8\"> <div class=\"card-body\">"
 	    				+ "<h5 class=\"card-title\">Currently Reading</h5>"
-	    				+ "<p class=\"card-text\">" + title + "</p>"
-	    				+ "<p class=\"card-text\">" + author + "</p>"
-	    				+ "<div class='progress' style='height: 1.2rem;'>"
-	    				+ "<div class='progress-bar' role='progressbar' style='width:" + percent + "%' aria-valuenow='" + readpages + "' aria-valuemin='0' aria-valuemax='" + numpages + "'>" + readpages + "/" + numpages + " pages</div></div>"
+	    				
+	    				+ "<ul><li>" + title + "</li>"
+	    				+"<li>" + author + "</li>"
+	    				+ "<li>" + readpages + " / " + numpages + " pages </li></ul>"
+	    				
+	    				//+ "<p class=\"card-text\">" + title + "</p>"
+	    				//+ "<p class=\"card-text\">" + author + "</p>"
+	    				+ "<div class='progress' style='height: 1.2rem; margin-top: 20px; margin-bottom: 20px;'>"
+	    				+ "<div class='progress-bar' role='progressbar' style='width:" + percent + "%' aria-valuenow='" + readpages + "' aria-valuemin='0' aria-valuemax='" + numpages + "'></div></div>"
 	    				+ "<form name=\"updateCurrentBook\" id=\"updateCurrentBook\">"
 	    				+ "<div class=\"form-outline\" style=\"display: inline-flex;\">"
 	    				+ "<input type=\"text\" id=\"updateCurrentRead\" name=\"updateCurrentRead\" class=\"form-control form-control-sm\" placeholder=\"I'm on page...\"/></div>"
 	    				+ "<button class=\"btn btn-primary\" id=\"updateCurrentBookBtn\">Update Progress</button>"
-	    				+ "<button class=\"btn btn-primary\" id=\"finishBookBtn\">Finished Book!</button>"
+	    				+ "<button class=\"btn btn-primary\" id=\"finishBookBtn\">I finished my book!</button>"
 	    				+ "</form></div></div></div></div>";
 
 	            resultCurrent +=currentReadItem;
             } else {
-            	String currentReadItem = "<img src=\"./images/emptyBookshelf.jpg\" class=\"img-fluid\" style=\"border-radius: 1rem;\"></div>"
-	    				+ "<div class=\"col-md-8\"> <div class=\"card-body\">"
+            	String currentReadItem = "<img src=\"./images/dogbook.jpg\" class=\"img-fluid\" style=\"border-radius: 1rem;\"></div>"
+	    				+ "<div class=\"col-md-8\"><div class=\"card-body\">"
 	    				+ "<h5 class=\"card-title\">Currently Reading</h5>"
 	    				+ "<p class=\"card-text\">You are currently not reading any book.</p>"
 	    				+ "<p class=\"card-text\">Set a book as a current book to track your progress.</p>"

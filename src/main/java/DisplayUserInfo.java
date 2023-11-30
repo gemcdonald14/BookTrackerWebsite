@@ -56,6 +56,28 @@ public class DisplayUserInfo extends HttpServlet {
         }
         return conn;
     }
+    
+    public int getTotalBooks(int id, int shelfid) {
+    	String totalbookssql = "SELECT SUM(NumBooks) FROM Shelf WHERE UserID=?";
+    	int totalBooks = 0;
+		
+		//get total saved books 
+		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(totalbookssql)){
+			 
+			pstmt.setInt(1, id);
+	        ResultSet rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+	        	totalBooks = rs.getInt(1);
+	            System.out.println("Total Books: " + totalBooks);
+	        }
+	     } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            e.printStackTrace();
+	     }
+		
+		return totalBooks;
+    }
 
 	
 	public String[] display(int id) {
@@ -80,16 +102,12 @@ public class DisplayUserInfo extends HttpServlet {
             	userInfo[2] = bio;
 	            System.out.println("Bio: " + bio);
 	            
-	            String totalBooks = rs.getString("TotalBooks");
-            	userInfo[3] = totalBooks;
-	            System.out.println("Total Books: " + totalBooks);
-	            
 	            String favBook = rs.getString("FavBook");
-            	userInfo[4] = favBook;
+            	userInfo[3] = favBook;
 	            System.out.println("Fav Book: " + favBook);
 	            
 	            String favAuthor = rs.getString("FavAuthor");
-            	userInfo[5] = favAuthor;
+            	userInfo[4] = favAuthor;
 	            System.out.println("Fav Author: " + favAuthor);
             }
         } catch (SQLException e) {
@@ -104,11 +122,13 @@ public class DisplayUserInfo extends HttpServlet {
     	int id = (int) servletContext.getAttribute("userID");
     	System.out.println(id);
     	
+    	int shelfid = (int) servletContext.getAttribute("readShelfID");
+    	
     	String[] infoArr = display(id);
     	String usernameVal = infoArr[0];
     	String emailVal = infoArr[1];
     	String bioVal = infoArr[2];
-    	String totalVal = infoArr[3];
+    	int totalVal = getTotalBooks(id, shelfid);
     	String favBookVal = infoArr[4];
     	String favAuthorVal = infoArr[5];
     	
@@ -137,12 +157,12 @@ public class DisplayUserInfo extends HttpServlet {
     	System.out.println(favAuthorVal);
     	
     	
-    	String info = "<div class=\"form-outline mb-4\">Username:&nbsp;<div id=\"accUsername\" style=\"display: inline-flex;\">" + usernameVal + "</div></div>"
-    				+ "<div class=\"form-outline mb-4\">Email:&nbsp;<div id=\"accEmail\" style=\"display: inline-flex;\">" + emailVal + "</div></div>"
-    				+ "<div class=\"form-outline mb-4\">Bio:&nbsp;<div id=\"accBio\" style=\"display: inline-flex;\">" + bioVal + "</div></div>"
-    				+ "<div class=\"form-outline mb-4\">Total Books:&nbsp;<div id=\"accNumBooks\" style=\"display: inline-flex;\">" + totalVal + "</div></div>"
-    				+ "<div class=\"form-outline mb-4\">Favorite Book:&nbsp;<div id=\"accFavBook\" style=\"display: inline-flex;\">" + favBookVal + "</div></div>"
-    				+ "<div class=\"form-outline mb-4\">Favorite Author:&nbsp;<div id=\"accfavAuthor\" style=\"display: inline-flex;\">" + favAuthorVal + "</div></div>";
+    	String info = "<div class=\"form-outline mb-4\">Username:&nbsp;<div id=\"accUsername\" style=\"display: inline-flex;\" class=\"accInfo\">" + usernameVal + "</div></div>"
+    				+ "<div class=\"form-outline mb-4\">Email:&nbsp;<div id=\"accEmail\" style=\"display: inline-flex;\" class=\"accInfo\">" + emailVal + "</div></div>"
+    				+ "<div class=\"form-outline mb-4\">Bio:&nbsp;<div id=\"accBio\" style=\"display: inline-flex;\" class=\"accInfo\">" + bioVal + "</div></div>"
+    				+ "<div class=\"form-outline mb-4\">Total Books:&nbsp;<div id=\"accNumBooks\" style=\"display: inline-flex;\" class=\"accInfo\">" + totalVal + "</div></div>"
+    				+ "<div class=\"form-outline mb-4\">Favorite Book:&nbsp;<div id=\"accFavBook\" style=\"display: inline-flex;\" class=\"accInfo\">" + favBookVal + "</div></div>"
+    				+ "<div class=\"form-outline mb-4\">Favorite Author:&nbsp;<div id=\"accfavAuthor\" style=\"display: inline-flex;\" class=\"accInfo\">" + favAuthorVal + "</div></div>";
     	
     	response.setContentType("text/html");
     	response.getWriter().write(info);

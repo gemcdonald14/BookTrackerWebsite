@@ -9,7 +9,7 @@
 
 body {
     color: black;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
 }
 
 #createAccLink, #forgotPassLink {
@@ -22,24 +22,46 @@ body {
     text-decoration: none;
 }
 
-#loginBtn:hover, #registerBtn:hover, #getQuestionBtn:hover, #updatePassBtn:hover {
+#loginBtn:hover, #registerBtn:hover, #getQuestionBtn:hover, #updatePassBtn:hover, #searchBtn:hover, #addNewGoalBtn:hover, #updateGoalBtn:hover, #addNewShelfBtn:hover, #logOutBtn:hover, #rateBook:hover, #finishBookBtn:hover  {
 	background-color: #D9C9BA;
 	color: #5C3F35;
 }
 
-.list-group {
-    font-size: 1.2rem;
-    font-weight: 100;
-}
-.listTitleHome, .listTitleShelf, .listBookTitleDisplayShelf {
+.listBookTitleDisplayShelf {
     padding: 0px 20px 0px 20px;
     font-weight: 400;
 }
+
+.listTitleHome, .listTitleShelf {
+	padding: 0px 20px 0px 20px;
+    font-weight: 400;
+    font-size: 1.3rem;
+}
+
+#leftColShelves {
+	margin-right: 80px;
+}
+
+.listNumBooksShelf, .listNumBooksHome {
+	font-weight: 300;
+    font-size: 1.3rem;
+}
+
 .listBookAuthorDisplayShelf {
     padding-right: 20px;
+    font-weight: 300;
 }
 .listBookRatingDisplayShelf {
     font-style: italic;
+    font-weight: 300;
+}
+
+.listItemDisplayShelf {
+	font-size: 1.1rem;
+	letter-spacing: 1px;
+	border-bottom: 1px solid gainsboro;
+	padding: 20px 10px 20px 10px;
+	
 }
 
 .card-title, .chartTitle {
@@ -50,12 +72,16 @@ body {
     padding-bottom: 10px;
 }
 
-#newGoalBtn, #updateProgBtn, #newGoalDropdown, #addNewGoalBtn, #updateGoalBtn, #updateCurrentBookBtn, .addToShelfBtn, .setCurrentReadBtn, .setAsCurrentBook, #rateBook {
+#newGoalBtn, #updateProgBtn, #newGoalDropdown, #updateCurrentBookBtn, .addToShelfBtn, .setAsCurrentBook {
     color: #5C3F35;
     background-color: #D9C9BA;
     font-weight: 600;
     border: none;
     letter-spacing: 1px;
+}
+
+#newShelfName {
+	margin-top: 1.5rem;
 }
 
 .addToShelfBtn, .setCurrentReadBtn {
@@ -75,11 +101,22 @@ nav {
     font-size: 1.1rem;
     letter-spacing: 1px;
 }
+
+.navbar-nav li {
+	padding-left: 2em;
+}
+
+.navbar-brand {
+	color: black;
+	font-size: 2rem;
+	letter-spacing: 1px;
+	font-weight: 200;
+	
+}
 /*search bar*/
 input.form-control { 
     width: 300px;
     color: #5C3F35;
-    font-weight: 600;
     font-size: 1rem;
     letter-spacing: 1px;
 } 
@@ -87,11 +124,11 @@ input.form-control {
 input.form-control:focus { 
     border-color: #5C3F35;
     outline: 0;
-    -webkit-box-shadow: 1px 1px 1px 1px #4D4728; 
-    box-shadow: 1px 1px 1px 1px #4D4728; 
+    -webkit-box-shadow: 1px 1px 1px 1px #5C3F35; 
+    box-shadow: 1px 1px 1px 0px #5C3F35; 
 } 
 
-#searchBtn, #registerBtn, #loginBtn, #logOutBtn, #updatePassBtn, #getQuestionBtn, #finishBookBtn {
+#searchBtn, #registerBtn, #loginBtn, #logOutBtn, #updatePassBtn, #getQuestionBtn, #finishBookBtn, #addNewGoalBtn, #updateGoalBtn, #addNewShelfBtn, #rateBook {
     color: #F2EDE4;
     background-color: #5C3F35;
     font-weight: 600;
@@ -99,25 +136,45 @@ input.form-control:focus {
     letter-spacing: 1px;
 }
 
+.setAsCurrentBook {
+	background-color: #F2EDE4;
+    color: #5C3F35;
+    font-weight: 600;
+    border: none;
+    letter-spacing: 1px;
+    font-size: 0.7rem;
+    margin: 0px 10px 0px 10px;
+    align-items: right;
+}
+
 #accountCard {
     color: black;
     line-height: 2.2rem;
     letter-spacing: 1px;
+    font-weight: 400;
+    font-size: 1.3rem;
+    padding: 20px;
+    margin-left: 50px;
+}
+
+.accInfo {
+	font-weight: 300;
 }
 
 #profilePic {
-    max-width: 300px;
-    max-height: 300px;
+    max-width: 250px;
+    max-height: 250px;
     border-radius: 1rem;
     margin: 20px;
 }
 
+/*
 #logOutBtn {
     margin-top: 2rem;
     margin-left: 40%;
     margin-right: 40%;
 }
-
+*/
 .progress-bar {
     background-color: #B3746F;
 }
@@ -128,14 +185,14 @@ canvas {
     font-size: 1rem;
 }
 
-.custom-select {
-	
+.custom-select {	
 	position: relative;
 	font-weight: 600;
-	padding: 0.5rem;
-	border-radius: 0.5rem;
+	padding: 0.6rem;
+	border-radius: 0.5em;
 	border: none;
-	
+	letter-spacing: 1px;
+	text-align: center;
 }
 
 select {
@@ -144,9 +201,10 @@ select {
 	font-size: 1rem;
 	background-color: #D9C9BA;
 	color: #5C3F35;
+	letter-spacing: 1px;
 }
 
-.goalTypeLabel {
+.goalTypeLabel, #bookGenre {
 	font-weight: 500;
 	font-size: 1rem;
 }
@@ -166,12 +224,61 @@ select {
     background-position: left center;
 }
 
+#progressRow li {
+	background-size: 30px;
+	list-style: none;
+	margin: 15px;
+	padding-left: 60px;
+	background-image: url('./images/openbook.png');
+	background-repeat: no-repeat;
+    background-position: left center;
+}
 
+#currentReadProg {
+	margin: 10px 0px 10px 0px;
+}
 
+#updateGoalBtn, #addNewGoalBtn {
+	line-height: 1.8rem;
+}
 
+#goalMonthRow {
+	margin-bottom: 100px;
+}
 
+#updateCurrentRead {
+	margin-bottom: 20px;
+	width: 200px;
+	margin-right: 20px;
+}
 
+#finishBookBtn, #rateBook {
+	margin-bottom: 20px;
+}
 
+#reviewTitle {
+	text-align: center;
+	font-weight: 500;
+	font-size: 1.5em;
+}
+
+#bookRating {
+	margin-bottom: 20px;
+}
+
+input[type="radio"] {
+	font-size: 1.1rem;
+	font-weight: 400;
+}
+
+#rateBookForm {
+	letter-spacing: 1px;
+}
+
+#forgotSecQuestion {
+	font-weight: 500;
+	text-align: center;
+}
 
 
 

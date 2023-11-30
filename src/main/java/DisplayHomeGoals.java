@@ -45,11 +45,11 @@ public class DisplayHomeGoals extends HttpServlet {
     	String monthsql = "SELECT * FROM Goal WHERE UserID=? AND GoalType=1 LIMIT 1";
     	String yearsql = "SELECT * FROM Goal WHERE UserID=? AND GoalType=2 LIMIT 1";
     	String finalResult = "";
-    	String monthResult = "<div class=\"row mb-4\" id=\"goalMonthRow\"><div class=\"card\" style=\"border-radius: 1rem;\">"
-    						+ "<div class=\"card-body\">";
+    	String monthResult = "<div class=\"row mb-4\" id=\"goalMonthRow\"><div class=\"card mt-2 mb-2\" style=\"border-radius: 1rem;\">"
+    						+ "<div class=\"card-body\" style=\"justify-content: space-evenly;\">";
     	
-    	String yearResult = "<div class=\"row mb-4\" id=\"goalYearRow\"><div class=\"card\" style=\"border-radius: 1rem;\">"
-    						+ "<div class=\"card-body\">";
+    	String yearResult = "<div class=\"row mb-4\" id=\"goalYearRow\"><div class=\"card mt-2\" style=\"border-radius: 1rem;\">"
+    						+ "<div class=\"card-body\" style=\"justify-content: space-evenly;\">";
     	
     	String goalListItem = "";
 

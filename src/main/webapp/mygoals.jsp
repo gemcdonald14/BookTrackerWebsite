@@ -16,14 +16,10 @@
 				var title = $("#newGoalTitle").val();
 				var target = $("#newGoalTarget").val();
 				var type = $("#newGoalType").val();
-				alert(title);
-				alert(target);
-				alert(type);
 				
 				console.log("Button clicked. Sending AJAX request.");
 				$.get("AddGoal?timestamp=" + new Date().getTime(), { newGoalTitle: title, newGoalTarget: target, newGoalType: type }, function(responseText) {  
 					console.log("Received response from server:", responseText);
-					alert("before response text");
 					if (type == 1) {
 						var ul = $("#monthGoalsList");
 						ul.append(responseText);
@@ -43,15 +39,19 @@
 
         <nav class="navbar navbar-expand-lg" style="background-color:#D9C9BA;">
             <div class="container-fluid">
-                 <a class="navbar-brand" href="#">
-                    <img src="./images/ella.jpg" alt="" width="60" height="60" class="d-inline-block align-text-top" style="border-radius: 2rem">
-                    Ella's Books
-                </a>
+            	<div class="d-flex align-items-center">
+            		<a class="navbar-brand" href="homepage.jsp">
+                    <img src="./images/ella.jpg" alt="" width="60" height="60" class="d-inline-block center" style="border-radius: 2rem">
+                    	Ella's Books
+                    <img alt="" src="./images/openbook.png" width="35" height="35" class="d-inline-block center">
+                	</a>
+            	</div>
+                
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent" style="justify-content: right;">
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link" href="homepage.jsp">Home</a>
@@ -73,10 +73,6 @@
                             <a class="nav-link" href="myaccount.jsp">My Account</a>
                         </li>
                     </ul>
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search books..." aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit"  id="searchBtn">Search</button>
-                    </form>
                 </div>
             </div>
         </nav>
@@ -126,26 +122,15 @@
 							$(document).ready(function() { 
 								$.get("DisplayGoals?timestamp=" + new Date().getTime(), function(responseText) {  
 									console.log("Received response from server:", responseText);
-									alert("before response text");
-									var div = $("#updateGoal");
-									div.append(responseText);
+									//alert("before response text");
+									var div = $("#myGoalsRow");
+									div.html(responseText);
 								});
 								return false;
 							});
 				</script>
-                <!--<div class="col-md-6 p-4" id="monthGoalCol">
-                    <div class="card" style="border-radius: 1rem;">
-                    	
-                        <div class="card-header" style="font-size: larger;">My Monthly Reading Goals</div>
-                        <ul class="list-group list-group-flush" id="monthGoalsList"></ul>
-                    </div>
-                </div>
-                <div class="col-md-6 p-4" id="yearGoalCol">
-                    <div class="card" style="border-radius: 1rem;">
-                        <div class="card-header" style="font-size: larger;">My Yearly Reading Goals</div>
-                        <ul class="list-group list-group-flush" id="yearGoalsList"></ul>
-                    </div>
-                </div>-->
+            </div>
+            <div class="row m-3" id="myGoalsRow">
             </div>
         </div>
     </body>

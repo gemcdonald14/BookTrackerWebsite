@@ -18,15 +18,19 @@
 	
         <nav class="navbar navbar-expand-lg" style="background-color:#D9C9BA;">
             <div class="container-fluid">
-                 <a class="navbar-brand" href="#">
-                    <img src="./images/ella.jpg" alt="" width="60" height="60" class="d-inline-block align-text-top" style="border-radius: 2rem">
-                    Ella's Books
-                </a>
+            	<div class="d-flex align-items-center">
+            		<a class="navbar-brand" href="homepage.jsp">
+                    <img src="./images/ella.jpg" alt="" width="60" height="60" class="d-inline-block center" style="border-radius: 2rem">
+                    	Ella's Books
+                    <img alt="" src="./images/openbook.png" width="35" height="35" class="d-inline-block center">
+                	</a>
+            	</div>
+                
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent" style="justify-content: right;">
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link" href="homepage.jsp">Home</a>
@@ -58,10 +62,11 @@
                     <div class="col col-xl-8">
                         <div class="card" style="border-radius: 1rem;">
                             <div class="row g-0">
-                                <div class="col-md-4" style="display: block;">
+                                <div class="col-md-4 text-center">
                                     <img src="./images/ella.jpg" class="img-fluid" id="profilePic" style="border-radius: 1rem;">
                                     <button type="button" class="btn btn-primary" id="logOutBtn" onclick="logOut()">Log Out</button>
                                 </div>
+                                
                                 <div class="col-md-8">
                                     <div class="card-body" id="accountCard">
                                         <h5 class="card-title mb-3 pb-3" id="accountTitle" style="text-align: center;">My Account Information</h5>

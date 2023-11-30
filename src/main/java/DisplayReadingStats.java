@@ -43,8 +43,8 @@ public class DisplayReadingStats extends HttpServlet {
     
     public void init(ServletConfig config) throws ServletException {
 		super.init(config);
-		int readBooks = 0;
-		getServletContext().setAttribute("readBooks", readBooks);
+		int readShelf = 0;
+		getServletContext().setAttribute("readShelfID", readShelf);
     }
     
     public int getShelf(int id) {
@@ -148,7 +148,11 @@ public class DisplayReadingStats extends HttpServlet {
     	
     	
     	int shelfid = newStats.getShelf(id);
+    	
     	String statsResult = newStats.displayStats(id, shelfid);
+    	
+    	
+    	
     	System.out.println(statsResult);
     	response.setContentType("text/html");
     	response.getWriter().write(statsResult);

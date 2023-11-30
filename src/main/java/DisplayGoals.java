@@ -49,12 +49,15 @@ public class DisplayGoals extends HttpServlet {
     	
     	String sql = "SELECT * FROM Goal WHERE UserID=?";
     	String finalResult = "";
-    	String monthResult = "<div class=\"col-md-6 p-4\" id=\"monthGoalCol\"><div class=\"card\" style=\"border-radius: 1rem;\">"
-    						+ "<div class=\"card-header\" style=\"font-size: larger;\">My Monthly Reading Goals</div>"
+
+    	String monthResult = "<div class=\"col-xl-6 col-lg-5 col-md-6 p-4\" id=\"monthGoalCol\"><div class=\"card mt-2 mb-2\" style=\"border-radius: 1rem;\">"
+    						+ "<div class=\"card-body\" style=\"justify-content: space-evenly;\">"
+    						+ "<h5 class=\"card-title\" style=\"text-align:center;\">My Monthly Reading Goals</h5><br>"
     						+ "<ul class=\"list-group list-group-flush\" id=\"monthGoalsList\">";
-    	String yearResult = "<div class=\"col-md-6 p-4\" id=\"yearGoalCol\"><div class=\"card\" style=\"border-radius: 1rem;\">"
-    						+ "<div class=\"card-header\" style=\"font-size: larger;\">My Yearly Reading Goals</div>"
-    						+ "<ul class=\"list-group list-group-flush\" id=\"yearGoalsList\">";
+    	String yearResult = "<div class=\"col-xl-6 col-lg-5 col-md-6 p-4\" id=\"yearGoalCol\"><div class=\"card mt-2 mb-2\" style=\"border-radius: 1rem;\">"
+							+ "<div class=\"card-body\" style=\"justify-content: space-evenly;\">"
+							+ "<h5 class=\"card-title\" style=\"text-align:center;\">My Yearly Reading Goals</h5><br>"
+							+ "<ul class=\"list-group list-group-flush\" id=\"yearGoalsList\">";
     	String goalListItem = "";
     	
         try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -92,7 +95,7 @@ public class DisplayGoals extends HttpServlet {
 	            }
             }
             
-            monthResult +=  "</ul></div></div>";
+            monthResult +=  "</ul></div></div></div>";
             yearResult += "</ul></div></div>";
             finalResult = monthResult + yearResult;
             

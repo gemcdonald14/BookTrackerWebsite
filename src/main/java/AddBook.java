@@ -20,6 +20,11 @@ import java.sql.SQLException;
 import com.microsoft.sqlserver.jdbc.SQLServerDriver;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import javax.imageio.ImageIO;
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
 @WebServlet("/AddBook")
 public class AddBook extends HttpServlet {
@@ -100,7 +105,7 @@ public class AddBook extends HttpServlet {
 	}
     
     public Boolean insert(String title, String author, String numPages, int id, int shelf) {
-		String sql = "INSERT INTO Book(Title,Author,NumPages,UserID,ShelfID) VALUES(?,?,?,?,?)";
+		String sql = "INSERT INTO Book(Title,Author,NumPages,UserID,ShelfID,Image) VALUES(?,?,?,?,?)";
 		Boolean result = false;
 
         try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -110,7 +115,6 @@ public class AddBook extends HttpServlet {
             pstmt.setInt(3, pages);
             pstmt.setInt(4, id);
             pstmt.setInt(5, shelf);
-            //pstmt.setString(6, image);
             pstmt.executeUpdate();
             
             result = true;
@@ -128,12 +132,12 @@ public class AddBook extends HttpServlet {
     	String author = request.getParameter("bookAuthor");
     	String pages = request.getParameter("bookNumPages");
     	String shelf = request.getParameter("bookShelf");
-    	//String image = request.getParameter("bookImg");
     	
     	System.out.println("title: " + title);
     	System.out.println("author: " + author);
     	System.out.println("pages: " + pages);
     	System.out.println("shelf: " + shelf);
+    	//System.out.println("image: " + image);
 		
     	ServletContext servletContext = getServletContext();
     	int id = (int) servletContext.getAttribute("userID");

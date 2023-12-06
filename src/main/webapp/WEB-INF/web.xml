@@ -282,4 +282,24 @@
     <servlet-name>GetPaceStats</servlet-name>
     <url-pattern>/GetPaceStats</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddProfilePicture</display-name>
+    <servlet-name>AddProfilePicture</servlet-name>
+    <servlet-class>AddProfilePicture</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddProfilePicture</servlet-name>
+    <url-pattern>/AddProfilePicture</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DisplayProfilePicture</display-name>
+    <servlet-name>DisplayProfilePicture</servlet-name>
+    <servlet-class>DisplayProfilePicture</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DisplayProfilePicture</servlet-name>
+    <url-pattern>/DisplayProfilePicture</url-pattern>
+  </servlet-mapping>
 </web-app>

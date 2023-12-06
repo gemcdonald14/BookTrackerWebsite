@@ -96,10 +96,10 @@ public class DisplayBooks extends HttpServlet {
 	            System.out.println("BookID: " + bookid);
 
 	            String bookListItem = "<li class=\"list-group-item d-flex justify-content-between align-items-center\" id=" + bookid + ">"
-	            					+ "<div class=\"listItemDisplayShelf\"style=\"display: inline-flex; justify-content: space-between; align-items: center; width: 100%;\">"
+	            					+ "<div class=\"listItemDisplayShelf\"style=\"display: inline-flex; justify-content: space-between; width: 100%;\">"
 	            					+ "<div class=\"d-flex align-items-center\">"
 	            					+ "<div class=\"listBookImgDisplayShelf\">"
-	            					+ "<img src=\"colors.jpg\" style=\"border-radius: 1rem;  width: 50px; height: 75px;\">"
+	            					+ "<img src=\"./images/openbook.png\" style=\"width: 50px; height: 50px;\">"
 	            					+ "</div>"
 	            					+ "<div class=\"listBookTitleDisplayShelf\"><p>" + title + "</p></div>"
 	            					+ "<div class=\"listBookAuthorDisplayShelf\"><p>" + author + "</p></div>"

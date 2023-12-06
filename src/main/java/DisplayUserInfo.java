@@ -36,6 +36,7 @@ public class DisplayUserInfo extends HttpServlet {
 		String totalBooks = "";
 		String favBook = "";
 		String favAuthor = "";
+		
 		getServletContext().setAttribute("username", username);
 		getServletContext().setAttribute("email", email);
 		getServletContext().setAttribute("bio", bio);
@@ -140,23 +141,43 @@ public class DisplayUserInfo extends HttpServlet {
     	servletContext.setAttribute("email", emailVal);
     	System.out.println(emailVal);
     	
-    	servletContext.getAttribute("bio");
-    	servletContext.setAttribute("bio", bioVal);
-    	System.out.println(bioVal);
-    	
     	servletContext.getAttribute("totalBooks");
     	servletContext.setAttribute("totalBooks", totalVal);
     	System.out.println(totalVal);
     	
-    	servletContext.getAttribute("favBook");
-    	servletContext.setAttribute("favBook", favBookVal);
-    	System.out.println(favBookVal);
+    	if (bioVal != null) {
+    		servletContext.getAttribute("bio");
+        	servletContext.setAttribute("bio", bioVal);
+        	System.out.println(bioVal);
+    	} else {
+    		servletContext.getAttribute("bio");
+        	servletContext.setAttribute("bio", "N/A");
+        	bioVal = "N/A";
+        	System.out.println(bioVal);
+    	}
     	
-    	servletContext.getAttribute("favAuthor");
-    	servletContext.setAttribute("favAuthor", favAuthorVal);
-    	System.out.println(favAuthorVal);
+    	if (favBookVal != null) {
+    		servletContext.getAttribute("favBook");
+        	servletContext.setAttribute("favBook", favBookVal);
+        	System.out.println(favBookVal);
+    	} else {
+    		servletContext.getAttribute("favBook");
+        	servletContext.setAttribute("favBook", "N/A");
+        	favBookVal = "N/A";
+        	System.out.println(favBookVal);
+    	}
     	
-    	
+    	if (favAuthorVal != null) {
+    		servletContext.getAttribute("favAuthor");
+        	servletContext.setAttribute("favAuthor", favAuthorVal);
+        	System.out.println(favAuthorVal);
+    	} else {
+    		servletContext.getAttribute("favAuthor");
+        	servletContext.setAttribute("favAuthor", "N/A");
+        	favAuthorVal = "N/A";
+        	System.out.println(favAuthorVal);
+    	}
+
     	String info = "<div class=\"form-outline mb-4\">Username:&nbsp;<div id=\"accUsername\" style=\"display: inline-flex;\" class=\"accInfo\">" + usernameVal + "</div></div>"
     				+ "<div class=\"form-outline mb-4\">Email:&nbsp;<div id=\"accEmail\" style=\"display: inline-flex;\" class=\"accInfo\">" + emailVal + "</div></div>"
     				+ "<div class=\"form-outline mb-4\">Bio:&nbsp;<div id=\"accBio\" style=\"display: inline-flex;\" class=\"accInfo\">" + bioVal + "</div></div>"

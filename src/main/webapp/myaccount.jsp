@@ -11,6 +11,71 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" ></script>
         <title>My Account</title>
         
+        <script>
+        	function uploadFile(inputElement, callback) {
+        	  /*var file = inputElement.files[0];
+        	  var reader = new FileReader();
+        	  
+        	  reader.onloadend = function() {
+        	    console.log('Encoded Base 64 File String:', reader.result);
+        	    var data = (reader.result).split(',')[1];
+        	    var binaryBlob = atob(data);
+        	    console.log('Encoded Binary File String:', binaryBlob);
+        	    callback(binaryBlob);
+        	  }
+        	  reader.readAsDataURL(file);*/
+        		var file = inputElement.files[0];
+                var reader = new FileReader();
+
+                reader.onloadend = function () {
+                    console.log('Encoded Base 64 File String:', reader.result);
+                    var data = (reader.result).split(',')[1]; // Extract only the Base64-encoded part
+                    callback(data);
+                }
+                reader.readAsDataURL(file);
+        	}
+        
+        	$(document).on("click", "#addProfilePicture", function () {
+        		event.preventDefault(); 
+        		var inputElement = document.getElementById("uploadPic");
+                uploadFile(inputElement, function (pic) {
+                    console.log("Button clicked. Sending AJAX request.");
+                    console.log("Profile Picture Data:", pic);
+                    $.ajax({
+                        url: "AddProfilePicture",
+                        type: "POST",
+                        contentType: "application/x-www-form-urlencoded; charset=UTF-8", // Set content type
+                        data: { profilePicture: pic },
+                        success: function (responseText) {
+                            console.log("Received response from server:", responseText);
+
+                            // Extract profile picture data from the response
+                            var profilePicData = $(responseText).find("#profilePic").attr("src");
+                            
+                            // Update the profile picture on the page
+                            $("#profilePic").attr("src", profilePicData);
+
+                            // You may also update other user information on the page if needed
+
+                            // Handle the response as needed
+                        },
+                        error: function (error) {
+                            console.error("Error uploading profile picture:", error);
+                        }
+                    });/*
+                    $.post("AddProfilePicture?timestamp=" + new Date().getTime(), { profilePicture:pic }, function(responseText) {  
+    					console.log("Received response from server:", responseText);
+    					// Extract profile picture data from the response
+                        //var profilePicData = $(responseText).find("#profilePic").attr("src");
+                        
+                        // Update the profile picture on the page
+                        //$("#profilePic").attr("src", profilePicData);
+    					
+    				});*/
+                });
+                return false;
+            });
+        </script>
         
     </head>
     <body style="background-color: #F2EDE4;">
@@ -63,7 +128,7 @@
                         <div class="card" style="border-radius: 1rem;">
                             <div class="row g-0">
                                 <div class="col-md-4 text-center">
-                                    <img src="./images/ella.jpg" class="img-fluid" id="profilePic" style="border-radius: 1rem;">
+                                    <img src="DisplayProfilePicture" alt="Profile Picture" class="img-fluid" id="profilePic" style="border-radius: 1rem;">
                                     <button type="button" class="btn btn-primary" id="logOutBtn" onclick="logOut()">Log Out</button>
                                 </div>
                                 
@@ -108,6 +173,13 @@
 	                                            Favorite Author:&nbsp;<div id="accfavAuthor" style="display: inline-flex;" class="accountDetails"></div>
 	                                        </div>
 	                                    </div>
+	                                    <div class="mb-3" style="display: inline-flex;">
+											Profile Picture:&nbsp;
+											<form id="addProfilePicForm">
+												<input class="form-control form-control-sm" id="uploadPic" type="file" accept="image/png">
+												<button class="btn" id="addProfilePicture">Update Picture</button>
+											</form>
+										</div>
 	                                    <!--<button type="button" class="btn btn-primary" id="logOutBtn">Log Out</button>-->
                           				
                                     </div>

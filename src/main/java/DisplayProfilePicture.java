@@ -1,0 +1,81 @@
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Base64;
+import java.util.UUID;
+public class DisplayProfilePicture extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+    public DisplayProfilePicture() {
+        super();
+    }
+    
+    private Connection connect() {
+    	Connection conn = null;
+		String url = "jdbc:sqlite:C:/sqlite/db/capstone.db";
+		
+        try {
+            conn = DriverManager.getConnection(url);
+            System.out.println("Connection to SQLite has been established.");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return conn;
+    }
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ServletContext servletContext = getServletContext();
+    	int id = (int) servletContext.getAttribute("userID");
+    	System.out.println(id);
+    	
+    	String sql = "SELECT ProfilePic FROM User WHERE UserID=?";
+    	try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(sql)){
+            
+			pstmt.setInt(1,id);
+			ResultSet rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+                // Retrieve the image data from the database
+                byte[] imageData = rs.getBytes("ProfilePic");
+
+                // Set the content type to image/png
+                response.setContentType("image/png");
+
+                // Write the image data to the response output stream
+                try (OutputStream out = response.getOutputStream()) {
+                    out.write(imageData);
+                }
+            } else {
+                // If no image data is found, you can set a default image or handle it as needed
+                response.setContentType("text/plain");
+                response.getWriter().write("No profile picture available");
+            }
+         
+	     } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            e.printStackTrace();
+	     }
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		doGet(request, response);
+	}
+
+}

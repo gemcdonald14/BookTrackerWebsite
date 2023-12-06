@@ -148,7 +148,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-6 col-md-12 justify-content-end" id="rightColShelves">
+                <div class="col-xl-6 col-md-12 col-sm-12 justify-content-end" id="rightColShelves">
                     <div class="card" style="border-radius: 1rem;">
                         <div class="card-body" id="bookList"></div>
                     </div>

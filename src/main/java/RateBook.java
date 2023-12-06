@@ -218,7 +218,9 @@ public class RateBook extends HttpServlet {
 		newRating.finishBook(id); //finish book, update info & make not current read
 		newRating.updateShelf(id,shelfid); //update the numbooks for shelf 
 		
-		String result = "<img src=\"./images/dogbook.jpg\" class=\"img-fluid\" style=\"border-radius: 1rem;\"></div>"
+		String result = "<div class=\"card\" style=\"border-radius: 1rem;\">"
+				+ "<div class=\"row g-0\"><div class=\"col-md-4 d-none d-lg-block\">"
+				+ "<img src=\"./images/dogbook.jpg\" class=\"img-fluid\" style=\"border-radius: 1rem;\"></div>"
 				+ "<div class=\"col-md-8\"> <div class=\"card-body\">"
 				+ "<h5 class=\"card-title\">Currently Reading</h5>"
 				+ "<p class=\"card-text\">You are currently not reading any book.</p>"

@@ -102,17 +102,7 @@
 	    		 addbutton.style.width = "100px";
 	    		 form.appendChild(addbutton);
 	    		 
-	    		 
 	    		 thumbnailDiv.appendChild(form);
-	    		 
-	    		 /*
-	    		 var setbutton = document.createElement("button");
-	    		 setbutton.className = "setCurrentReadBtn";
-	    		 setbutton.innerHTML = "Set As Current Read";
-	    		 setbutton.style.height = "50px";
-	    		 setbutton.style.width = "120px";
-	    		 thumbnailDiv.appendChild(setbutton);
-	    		 */
 	    		 
 	    		 row.appendChild(thumbnailDiv);
 	    	 }
@@ -166,6 +156,9 @@
 		    var title = parent.find(".title").text().trim();
 		    var author = parent.find(".author").text().trim();
 		    var shelf = parent.find(".shelf").val();
+		    
+		    //var imageData = getImageData(parent);
+		    
 		    /*
 		    var imageElement = parent.find(".bookImg")[0]; // Assuming .bookImg is the class of your image element
 		    var canvas = document.createElement("canvas");
@@ -192,6 +185,7 @@
 		    console.log("Author: " + author);
 		    console.log("Number of Pages: " + numPages);
 		    console.log("Shelf name: " + shelf);
+		    //console.log("Image data: " + imageData);
 		
 		    console.log("Button clicked. Sending AJAX request.");
 		    $.get("AddBook?timestamp=" + new Date().getTime(), { bookTitle: title, bookAuthor: author, bookNumPages: numPages, bookShelf: shelf }, function(responseText) {  
@@ -199,6 +193,30 @@
 		    });
 		    return false;
 		});
+	     
+	     function getImageData(parent) {
+	    	 var image = parent.find(".bookImg")[0];
+	    	 var canvas = document.createElement("canvas");
+	    	 canvas.width = image.width;
+	    	 canvas.height = image.height;
+	    	 var ctx = canvas.getContext("2d");
+	    	 ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+	    	 
+	    	 try {
+	    	        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+	    	        // Get the Base64 data
+	    	        var base64Image = canvas.toDataURL("image/png");
+
+	    	        // Remove the data:image/png;base64, part
+	    	        var base64ImageData = base64Image.replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
+
+	    	        return base64ImageData;
+	    	    } catch (error) {
+	    	        console.error("Error in getImageData:", error);
+	    	        return null; // Return null or handle the error appropriately
+	    	    }
+	     }
 
 	     /*
 	     $(document).on("click", ".addToShelfBtn", function() {

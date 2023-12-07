@@ -20,11 +20,11 @@ import java.sql.SQLException;
 import java.util.Base64;
 import java.util.UUID;
 
-@WebServlet("/DisplayProfilePicture")
-public class DisplayProfilePicture extends HttpServlet {
+@WebServlet("/DisplayShelfPic")
+public class DisplayShelfPic extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public DisplayProfilePicture() {
+    public DisplayShelfPic() {
         super();
     }
     
@@ -46,7 +46,7 @@ public class DisplayProfilePicture extends HttpServlet {
     	int id = (int) servletContext.getAttribute("userID");
     	System.out.println(id);
     	
-    	String sql = "SELECT ProfilePic FROM User WHERE UserID=?";
+    	String sql = "SELECT ShelfPic FROM Shelf WHERE UserID=? AND ShelfID=?";
     	try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(sql)){
             
 			pstmt.setInt(1,id);
@@ -54,7 +54,7 @@ public class DisplayProfilePicture extends HttpServlet {
 			
 			if (rs.next()) {
                 // Retrieve the image data from the database
-                byte[] imageData = rs.getBytes("ProfilePic");
+                byte[] imageData = rs.getBytes("ShelfPic");
 
                 // Set the content type to image/png
                 response.setContentType("image/png");
@@ -76,7 +76,7 @@ public class DisplayProfilePicture extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		
 		doGet(request, response);
 	}
 

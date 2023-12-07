@@ -11,6 +11,17 @@
         <link href="mystyles.css" rel="stylesheet">
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" ></script>
 		<script type="text/javascript">
+		/*
+		$(document).on("click", "#searchBtn", function() { 
+	   		 $.get("DisplayShelvesSearch?timestamp=" + new Date().getTime(), function(responseText) {  
+					console.log("Received response from server:", responseText);
+					var select = $(".custom-select");
+					console.log("Selected element:", select);
+					select.html(responseText);
+				});
+	   		 return false;
+		 });*/
+		
 		
 		
 		function uploadFile(inputElement) {
@@ -84,7 +95,7 @@
 	    		 }
 
 	    		 thumbnailDiv.appendChild(p3);
-	    		 
+	    		 /*
 	    		 var form = document.createElement("form");
 	    		 form.setAttribute("name", "addToShelfForm");
 	    		 var shelfName = document.createElement("input");
@@ -94,6 +105,19 @@
 	    		 shelfName.style.width = "60%";
 	    		 shelfName.style.margin = "auto";
 	    		 form.appendChild(shelfName);
+	    		 */
+	    		 //------
+	    		 var form = document.createElement("form");
+	    		 form.setAttribute("name", "addToShelfForm");
+	    		 var shelfName = document.createElement("select");
+				 shelfName.className = "custom-select";
+	    		 shelfName.setAttribute("name", "addToShelfSelect");
+	    		 shelfName.style.width = "60%";
+	    		 shelfName.style.margin = "auto";
+	    		 
+	    		 form.appendChild(shelfName);
+	    		 form.appendChild(document.createElement("br"));
+	    		 //------
 	    		 
 	    		 var addbutton = document.createElement("button");
 	    		 addbutton.className = "addToShelfBtn";
@@ -107,6 +131,14 @@
 	    		 row.appendChild(thumbnailDiv);
 	    	 }
 	    	 div.appendChild(mainDiv);
+	    	 
+	    	 
+	    	 $.get("DisplayShelvesSearch?timestamp=" + new Date().getTime(), function(responseText) {  
+					console.log("Received response from server:", responseText);
+					var select = $(".custom-select");
+					console.log("Selected element:", select);
+					select.html(responseText);
+				});
 	     }
 	     
 	     
@@ -155,29 +187,9 @@
 		    var parent = $(this).closest('.thumbnail');
 		    var title = parent.find(".title").text().trim();
 		    var author = parent.find(".author").text().trim();
-		    var shelf = parent.find(".shelf").val();
-		    
-		    //var imageData = getImageData(parent);
-		    
-		    /*
-		    var imageElement = parent.find(".bookImg")[0]; // Assuming .bookImg is the class of your image element
-		    var canvas = document.createElement("canvas");
-		    canvas.width = imageElement.width;
-		    canvas.height = imageElement.height;
-		    var ctx = canvas.getContext("2d");
-		    ctx.drawImage(imageElement, 0, 0, canvas.width, canvas.height);
+		    var shelf = parent.find(".custom-select option:selected").html();
 
-		    // Get the Base64 data
-		    var base64Image = canvas.toDataURL("image/png"); // You can change "image/png" to the desired format
-
-		    // Remove the data:image/png;base64, part
-		    var base64ImageData = base64Image.replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
-
-		    // Now you can use base64ImageData in your AJAX request
-
-		    */
-		    
-		
+		   
 		    var numPagesElement = parent.find(".pageCount");
 		    var numPages = numPagesElement ? parseInt(numPagesElement.text().replace(/\D/g, ''), 10) : null;
 		
@@ -185,7 +197,6 @@
 		    console.log("Author: " + author);
 		    console.log("Number of Pages: " + numPages);
 		    console.log("Shelf name: " + shelf);
-		    //console.log("Image data: " + imageData);
 		
 		    console.log("Button clicked. Sending AJAX request.");
 		    $.get("AddBook?timestamp=" + new Date().getTime(), { bookTitle: title, bookAuthor: author, bookNumPages: numPages, bookShelf: shelf }, function(responseText) {  

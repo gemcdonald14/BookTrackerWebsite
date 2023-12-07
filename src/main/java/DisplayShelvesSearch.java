@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.SecureRandom;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
@@ -16,15 +17,12 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Random;
 import java.sql.SQLException;
-import com.microsoft.sqlserver.jdbc.SQLServerDriver;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
-@WebServlet("/DisplayShelves")
-public class DisplayShelves extends HttpServlet {
+@WebServlet("/DisplayShelvesSearch")
+public class DisplayShelvesSearch extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public DisplayShelves() {
+    public DisplayShelvesSearch() {
         super();
     }
     
@@ -47,8 +45,9 @@ public class DisplayShelves extends HttpServlet {
     	int id = (int) servletContext.getAttribute("userID");
     	System.out.println(id);
     	
-    	String sql = "SELECT * FROM Shelf WHERE UserID=?";
+    	String sql = "SELECT ShelfName FROM Shelf WHERE UserID=?";
     	String resultList = "";
+    	int i = 0;
 
         try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
         	pstmt.setInt(1, id);
@@ -59,23 +58,10 @@ public class DisplayShelves extends HttpServlet {
             	String name = rs.getString("ShelfName");
 	            System.out.println("Name: " + name);
 	            
-	            String shelf = rs.getString("ShelfID");
-	            System.out.println("ID: " + shelf);
-	            
-	            int books = rs.getInt("NumBooks");
-	            System.out.println("Books: " + books);
-	            
-	            String shelfListItem = "<li class=\"list-group-item d-flex justify-content-between align-items-center\" id=" + shelf + ">"
-						+ "<div class=\"listItemShelf\" style=\"display: inline-flex;\">"
-						+ "<div class=\"d-flex align-items-center\">"
-						+ "<div class=\"listImgShelf\">"
-						+"<img id=\'" + shelf + "Img\' src='DisplayShelfPic' class='shelfPic' style=\"border-radius: 1rem;  width: 100px; height: 150px;\"></div>"
-						//+ "<img src=\"DisplayShelfPic\" style=\"border-radius: 1rem;  width: 100px; height: 150px;\"></div>"
-						+ "<div class=\"listTitleShelf\">" + name + "</div>"
-						+ "<div class=\"listNumBooksShelf\">" + books + " books</div>"
-						+ "</div></div></li>";
+	            String shelfListItem = "<option value=\'" + i + "\'>" + name + "</option>";
 	            
 	            resultList +=shelfListItem;
+	            i++;
             }
             
         } catch (SQLException e) {
@@ -87,6 +73,7 @@ public class DisplayShelves extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		doGet(request, response);
 	}
 

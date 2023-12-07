@@ -302,4 +302,34 @@
     <servlet-name>DisplayProfilePicture</servlet-name>
     <url-pattern>/DisplayProfilePicture</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DisplayShelvesSearch</display-name>
+    <servlet-name>DisplayShelvesSearch</servlet-name>
+    <servlet-class>DisplayShelvesSearch</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DisplayShelvesSearch</servlet-name>
+    <url-pattern>/DisplayShelvesSearch</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddShelfPicture</display-name>
+    <servlet-name>AddShelfPicture</servlet-name>
+    <servlet-class>AddShelfPicture</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddShelfPicture</servlet-name>
+    <url-pattern>/AddShelfPicture</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DisplayShelfPic</display-name>
+    <servlet-name>DisplayShelfPic</servlet-name>
+    <servlet-class>DisplayShelfPic</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DisplayShelfPic</servlet-name>
+    <url-pattern>/DisplayShelfPic</url-pattern>
+  </servlet-mapping>
 </web-app>

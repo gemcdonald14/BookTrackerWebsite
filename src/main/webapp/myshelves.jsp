@@ -52,6 +52,94 @@
 			    });
 			    return false;
 			});
+			
+			$(document).on("click", ".listImgShelf", function() { 
+				var parent = $(this).closest('.list-group-item');
+			    var parentId = parent.attr('id');
+			    var fileUpload = "<br><div class=\"listAddPicShelf\">Change Shelf Pic&nbsp;"
+								+ "<form id=\"addShelfPicForm\">"
+								+ "<input class=\"addShelfPic form-control form-control-sm\" type=\"file\" accept=\"image/png\">"
+								+ "<button class=\"btn addShelfPicBtn\">Update Picture</button>"
+								+ "</form></div>";
+			    
+				parent.append(fileUpload);
+			});
+			
+			function uploadFile(inputElement, callback) {
+			    // Ensure inputElement is a jQuery object
+			    var input = $(inputElement);
+
+			    // Access the underlying DOM element using [0]
+			    var file = input[0].files ? input[0].files[0] : null;
+
+			    // Check if files array is not empty
+			    if (file) {
+			        var reader = new FileReader();
+
+			        reader.onloadend = function () {
+			            console.log('Encoded Base64 File String:', reader.result);
+			            var data = (reader.result).split(',')[1]; // Extract only the Base64-encoded part
+			            callback(data);
+			        };
+
+			        reader.readAsDataURL(file);
+			    } else {
+			        console.error('No file selected');
+			    }
+			}
+
+
+
+
+			
+			$(document).on("click", ".addShelfPicBtn", function(event) {
+				event.preventDefault(); 
+				var parent = $(this).closest('.list-group-item');
+			    var parentId = parent.attr('id');
+			
+			    console.log("Shelf ID: " + parentId);
+			    
+			    
+        		var inputElement = parent.find('.addShelfPic');
+
+        		
+                uploadFile(inputElement, function (pic) {
+                    console.log("Button clicked. Sending AJAX request.");
+                    console.log("Profile Picture Data:", pic);
+                    $.ajax({
+                        url: "AddShelfPicture",
+                        type: "POST",
+                        contentType: "application/x-www-form-urlencoded; charset=UTF-8", // Set content type
+                        data: { shelfPicture: pic, shelfId: parentId },
+                        success: function (responseText) {
+                            console.log("Received response from server:", responseText);
+
+                            // Extract profile picture data from the response
+                            var shelfPicData = $(responseText).find(".shelfPic").attr("src");
+                            
+                            // Extract shelf ID from the response
+						    //var shelfId = $(responseText).find(".shelfPic").attr("id");
+						
+						    // Log the shelf ID to verify
+						    //console.log("Shelf ID from response:", shelfId);
+                            
+                            // Update the profile picture on the page
+                            parent.find(".shelfPic").attr("src", shelfPicData);
+                            //$("id='" + shelfId + "Img'").attr("src", responseText);
+
+                            // You may also update other user information on the page if needed
+
+                            // Handle the response as needed
+                        },
+                        error: function (error) {
+                            console.error("Error uploading profile picture:", error);
+                        }
+                    });
+		
+			        
+			    });
+                return false;
+			});
 		</script>
     </head>
     <body style="background-color: #F2EDE4;">
@@ -126,6 +214,7 @@
 									var ul = $("#shelfList");
 									ul.html(responseText);
 								});
+								
 								
 								var shelfName = "Read";
 								$.get("DisplayBooks?timestamp=" + new Date().getTime(), { listTitleShelf: shelfName }, function(responseText) {  

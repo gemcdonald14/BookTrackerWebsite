@@ -112,123 +112,16 @@ public class VerifyUser extends HttpServlet {
 	        	System.out.println(secQues);
 	        	servletContext.setAttribute("question", secQues);
 				
-				
-				
-				//response.setContentType("text/plain"); 
-			    //response.setCharacterEncoding("UTF-8"); 
 			    response.getWriter().write(secQues);
 			} else {
 				response.getWriter().write("Invalid username");
 			}
 			
 		}
-		
-		
-		
-		/*
-		if (resetPass.verifyUsername(username)) {
-			String secQuestion = resetPass.getSecurityQuestion(username);
-			request.setAttribute("securityQuestion", secQuestion);
-			
-			RequestDispatcher dispatcher = request.getRequestDispatcher("forgotpass.jsp");
-			dispatcher.forward(request, response);
-		}
-		*/
-		
-		
-		/*
-		
-		String secQuestion = resetPass.getSecurityQuestion(username);
-		String secAnswer = request.getParameter("forgotSecAnswer");
-		String newPass = request.getParameter("updatePassword");
-		
-		
-		if (resetPass.resetPassword(username, secQuestion, secAnswer, newPass)) {
-			System.out.print("made it to redirect");
-			response.sendRedirect("login.html");
-		} else {
-			PrintWriter writer = response.getWriter();
-			writer.println("failed");
-		}
-		
-		*/
-		/*
-		UpdatePassword resetPass = new UpdatePassword();
-    	
-		String username = request.getParameter("forgotUsername");
-		
-		System.out.println("Forgot Username: " + username);
-		
-		if (resetPass.verifyUsername(username)) {
-			
-			//CALL THE JAVASCRIPT FUNCTION TO DISPLAY THE NEXT SECTION 
-			//PrintWriter out = response.getWriter();
-			//out.println("<script>function showSecQuestion(){document.getElementById('enterQuesAndPass').className = 'd-block';}</script>");
-			//CALL THE JAVASCRIPT FUNCTION TO DISPLAY THE SECURITY QUESTION 
-			String secQuestion = resetPass.getSecurityQuestion(username);
-			response.getWriter().write(secQuestion);
-			String secAnswer = request.getParameter("forgotSecAnswer");
-			String newPass = request.getParameter("updatePassword");
-			
-			String safePass = PasswordHash(newPass);
-			
-			//resetPass.resetPassword(username, secQuestion, secAnswer);
-			
-			
-			if (resetPass.resetPassword(username, secQuestion, secAnswer, safePass)) {
-				System.out.print("made it to redirect");
-				response.sendRedirect("login.html");
-			} else {
-				PrintWriter writer = response.getWriter();
-				writer.println("failed");
-			}
-		}*/
-		//	USING JQUERY
-		/*
-		String username = request.getParameter("forgotUsername").trim();
-		if(username == null || "".equals(username)) {
-			username = "Guest";
-		}
-		
-		String greetings = "hello " + username;
-		
-		response.setContentType("text/plain");
-		response.getWriter().write(greetings);	*/
-		/*
-		
-		String username = "username";
-
-	    response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
-	    response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
-	    response.getWriter().write(username);    */
-		
-		
-		
-		
-		
-		
-		
 	}
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		/*
-		
-		UpdatePassword resetPass = new UpdatePassword();
-		
-		String username = request.getParameter("forgotUsername");
-		String secAnswer = request.getParameter("forgotSecAnswer");
-		String newPass = request.getParameter("updatePassword");
-		String secQuestion = (String) request.getAttribute("securityQuestion");
-		String safePass = PasswordHash(newPass);
-		
-		if (resetPass.resetPassword(username, secQuestion, secAnswer, safePass)) {
-			System.out.print("made it to redirect");
-			response.sendRedirect("login.html");
-		} else {
-			PrintWriter writer = response.getWriter();
-			writer.println("failed");
-		}*/
 		
 		doGet(request, response);
 	}

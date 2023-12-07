@@ -24,7 +24,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import javax.imageio.ImageIO;
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
 @WebServlet("/AddBook")
 public class AddBook extends HttpServlet {
@@ -105,7 +104,7 @@ public class AddBook extends HttpServlet {
 	}
     
     public Boolean insert(String title, String author, String numPages, int id, int shelf) {
-		String sql = "INSERT INTO Book(Title,Author,NumPages,UserID,ShelfID,Image) VALUES(?,?,?,?,?)";
+		String sql = "INSERT INTO Book(Title,Author,NumPages,UserID,ShelfID) VALUES(?,?,?,?,?)";
 		Boolean result = false;
 
         try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -137,7 +136,6 @@ public class AddBook extends HttpServlet {
     	System.out.println("author: " + author);
     	System.out.println("pages: " + pages);
     	System.out.println("shelf: " + shelf);
-    	//System.out.println("image: " + image);
 		
     	ServletContext servletContext = getServletContext();
     	int id = (int) servletContext.getAttribute("userID");

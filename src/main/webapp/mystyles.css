@@ -22,13 +22,13 @@ body {
     text-decoration: none;
 }
 
-#loginBtn:hover, #registerBtn:hover, #getQuestionBtn:hover, #updatePassBtn:hover, #searchBtn:hover, #addNewGoalBtn:hover, #updateGoalBtn:hover, #addNewShelfBtn:hover, #logOutBtn:hover, #rateBook:hover, #finishBookBtn:hover, #addProfilePicture:hover  {
+#loginBtn:hover, #registerBtn:hover, #getQuestionBtn:hover, #updatePassBtn:hover, #searchBtn:hover, #addNewGoalBtn:hover, #updateGoalBtn:hover, #addNewShelfBtn:hover, #logOutBtn:hover, #rateBook:hover, #finishBookBtn:hover, #addProfilePicture:hover, .addToShelfBtn:hover  {
 	background-color: #D9C9BA;
 	color: #5C3F35;
 }
 
 .listBookTitleDisplayShelf {
-    padding: 0px 20px 0px 20px;
+    /*padding: 0px 20px 0px 20px;*/
     font-weight: 400;
 }
 
@@ -48,7 +48,7 @@ body {
 }
 
 .listBookAuthorDisplayShelf {
-    padding-right: 20px;
+    /*padding-right: 20px;*/
     font-weight: 300;
 }
 .listBookRatingDisplayShelf {
@@ -60,7 +60,7 @@ body {
 	font-size: 1.1rem;
 	letter-spacing: 1px;
 	border-bottom: 1px solid gainsboro;
-	/*padding: 20px 10px 20px 10px;*/
+	padding: 20px 10px 20px 10px;
 	
 }
 
@@ -70,6 +70,11 @@ body {
 }
 .chartTitle {
     padding-bottom: 10px;
+}
+
+#newGoalBtn:hover, #updateProgBtn:hover, #newGoalDropdown:hover, #updateCurrentBookBtn:hover, .setAsCurrentBook:hover {
+	color: #D9C9BA;
+    background-color: #5C3F35;
 }
 
 #newGoalBtn, #updateProgBtn, #newGoalDropdown, #updateCurrentBookBtn, .addToShelfBtn, .setAsCurrentBook {
@@ -128,7 +133,7 @@ input.form-control:focus {
     box-shadow: 1px 1px 1px 0px #5C3F35; 
 } 
 
-#searchBtn, #registerBtn, #loginBtn, #logOutBtn, #updatePassBtn, #getQuestionBtn, #finishBookBtn, #addNewGoalBtn, #updateGoalBtn, #addNewShelfBtn, #rateBook, #addProfilePicture {
+#searchBtn, #registerBtn, #loginBtn, #logOutBtn, #updatePassBtn, #getQuestionBtn, #finishBookBtn, #addNewGoalBtn, #updateGoalBtn, #addNewShelfBtn, #rateBook, #addProfilePicture, .addToShelfBtn {
     color: #F2EDE4;
     background-color: #5C3F35;
     font-weight: 600;

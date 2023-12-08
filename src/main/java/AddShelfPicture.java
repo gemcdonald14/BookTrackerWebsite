@@ -17,6 +17,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.UUID;
 
@@ -70,28 +71,33 @@ public class AddShelfPicture extends HttpServlet {
 		String shelfPictureData = request.getParameter("shelfPicture");
 		String shelfid = request.getParameter("shelfId");
 		System.out.println("image data: " + shelfPictureData);
+		System.out.println("Shelf ID: " + shelfid);
+		
+		if (shelfPictureData == null || shelfPictureData.isEmpty()) {
+		    response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing or empty shelfPicture parameter");
+		    return;
+		}
+
 		
 		ServletContext servletContext = getServletContext();
     	int id = (int) servletContext.getAttribute("userID");
     	System.out.println(id);
-
-        if (shelfPictureData == null || shelfPictureData.isEmpty()) {
-            // Handle the case where the profilePictureData is missing or empty
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing or empty profilePicture parameter");
-            return;
-        }
+    	
+    	System.out.println("Received shelfPictureData: " + shelfPictureData);
 
         try {
             // Decode Base64 string to byte array
-            byte[] imageData = Base64.getDecoder().decode(shelfPictureData);
-
+        	System.out.println("Before decoding: " + shelfPictureData);
+        	byte[] imageData = Base64.getDecoder().decode(shelfPictureData.trim());
+        	System.out.println("After decoding: " + Arrays.toString(imageData));
             // Insert the image data into the database
             newImage.insert(id, shelfid, imageData);
             //response.setContentType("image/png");
 
-            response.getWriter().write("<img id='" + shelfid + "Img' src='data:image/png;base64," + Base64.getEncoder().encodeToString(imageData) + "' class='shelfPic'>");
+            //response.getWriter().write("<img id='" + shelfid + "Img' src='data:image/png;base64," + Base64.getEncoder().encodeToString(imageData) + "' class='shelfPic'>");
+            request.setCharacterEncoding("UTF-8");
 
-            //response.getWriter().write("<img src='data:image/png;base64," + Base64.getEncoder().encodeToString(imageData) + "' class='shelfPic'>");
+            response.getWriter().write("<img class='shelfPic' name='" + shelfid + "' src='data:image/png;base64," + Base64.getEncoder().encodeToString(imageData) + "'>");
 
         } catch (IllegalArgumentException e) {
             // Handle the case where decoding fails

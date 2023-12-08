@@ -83,10 +83,13 @@ public class DisplayHomeShelves extends HttpServlet {
 	            int books = rs.getInt("NumBooks");
 	            System.out.println("Books: " + books);
 	            
+	            int shelf = rs.getInt("ShelfID");
+	            System.out.println("Shelf: " + shelf);
+	            
 	            String shelfListItem = "<li class=\"list-group-item d-flex justify-content-between align-items-center\">"
 	            					+ "<div class=\"listItemHome\" style=\"display: inline-flex;\">"
 	            					+ "<div class=\"d-flex align-items-center\">"
-	            					+ "<div class=\"listImgHome\"><img src=\"cat.jpg\" class=\"img-fluid\" style=\"border-radius: 1rem;  width: 100px; height: 125px;\"></div>"
+	            					+ "<div class=\"listImgHome\"><img name=\'" + shelf + "\' src='DisplayShelfPic?shelfId=" + shelf + "\' class='shelfPic' style=\"border-radius: 1rem;  width: 100px; height: 150px;\"></div>"
 	            					+ "<div class=\"listTitleHome\">" + name + "</div>"
 	            					+ "<div class=\"listNumBooksHome\">" +  books + " books</div></div></div></li>";
 	            

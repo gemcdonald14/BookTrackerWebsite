@@ -95,7 +95,7 @@ public class DisplayBooks extends HttpServlet {
 	            int bookid = rs.getInt("BookID");
 	            System.out.println("BookID: " + bookid);
 
-	            String bookListItem = "<li class=\"list-group-item d-flex justify-content-between align-items-center\" id=" + bookid + ">"
+	            /*String bookListItem = "<li class=\"list-group-item d-flex justify-content-between align-items-center\" id=" + bookid + ">"
 	            					+ "<div class=\"listItemDisplayShelf\"style=\"display: inline-flex; justify-content: space-between; width: 100%;\">"
 	            					+ "<div class=\"d-flex align-items-center\">"
 	            					+ "<div class=\"listBookImgDisplayShelf\">"
@@ -106,8 +106,21 @@ public class DisplayBooks extends HttpServlet {
 	            					+ "<div class=\"listBookRatingDisplayShelf\"><p>" + rating + "&#9734;</p></div>"
 	            					+ "<button class=\"btn btn-md btn-block setAsCurrentBook\">Currently<br>Reading</button>"
 	            					+ "<div class=\"error\"></div>"
-	            					+ "</div></div></li></ul>";
-
+	            					+ "</div></div></li></ul>";*/
+	            
+	            String bookListItem = "<li class=\"list-group-item d-flex justify-content-between align-items-center\" id=" + bookid + ">"
+    					+ "<div class=\"listItemDisplayShelf\"style=\"display: flex; justify-content: space-between; width: 100%;\">"
+    					+ "<div class=\"d-flex align-items-center\">"
+    					+ "<div class=\"listBookImgDisplayShelf\" style=\"flex: 0 0 auto; margin-right: 15px;\">"
+    					+ "<img src=\"./images/openbook.png\" style=\"width: 50px; height: 50px;\">"
+    					+ "</div>"
+    					+ "<div class=\"listBookTitleDisplayShelf\" style=\"flex: 1; margin-right: 15px;\"><p>" + title + "</p></div>"
+    					+ "<div class=\"listBookAuthorDisplayShelf\" style=\"flex: 1;\"><p>" + author + "</p></div>"
+    					+ "<div class=\"listBookRatingDisplayShelf\" style=\"flex: 0 0 auto; margin-right: 15px;\"><p>" + rating + "&#9734;</p></div>"
+    					+ "<button class=\"btn btn-md btn-block setAsCurrentBook\">Currently<br>Reading</button>"
+    					+ "<div class=\"error\"></div>"
+    					+ "</div></div></li></ul>";
+	            
 	            resultList +=bookListItem;
             }
             

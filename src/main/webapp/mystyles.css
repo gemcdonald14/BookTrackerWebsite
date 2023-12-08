@@ -22,7 +22,7 @@ body {
     text-decoration: none;
 }
 
-#loginBtn:hover, #registerBtn:hover, #getQuestionBtn:hover, #updatePassBtn:hover, #searchBtn:hover, #addNewGoalBtn:hover, #updateGoalBtn:hover, #addNewShelfBtn:hover, #logOutBtn:hover, #rateBook:hover, #finishBookBtn:hover, #addProfilePicture:hover, .addToShelfBtn:hover  {
+#loginBtn:hover, #registerBtn:hover, #getQuestionBtn:hover, #updatePassBtn:hover, #searchBtn:hover, #addNewGoalBtn:hover, #updateGoalBtn:hover, #addNewShelfBtn:hover, #logOutBtn:hover, #rateBook:hover, #finishBookBtn:hover, #addProfilePicture:hover, .addToShelfBtn:hover, .addShelfPicBtn:hover  {
 	background-color: #D9C9BA;
 	color: #5C3F35;
 }
@@ -38,9 +38,7 @@ body {
     font-size: 1.3rem;
 }
 
-#leftColShelves {
-	margin-right: 80px;
-}
+
 
 .listNumBooksShelf, .listNumBooksHome {
 	font-weight: 300;
@@ -133,7 +131,7 @@ input.form-control:focus {
     box-shadow: 1px 1px 1px 0px #5C3F35; 
 } 
 
-#searchBtn, #registerBtn, #loginBtn, #logOutBtn, #updatePassBtn, #getQuestionBtn, #finishBookBtn, #addNewGoalBtn, #updateGoalBtn, #addNewShelfBtn, #rateBook, #addProfilePicture, .addToShelfBtn {
+#searchBtn, #registerBtn, #loginBtn, #logOutBtn, #updatePassBtn, #getQuestionBtn, #finishBookBtn, #addNewGoalBtn, #updateGoalBtn, #addNewShelfBtn, #rateBook, #addProfilePicture, .addToShelfBtn, .addShelfPicBtn {
     color: #F2EDE4;
     background-color: #5C3F35;
     font-weight: 600;

@@ -46,10 +46,15 @@ public class DisplayShelfPic extends HttpServlet {
     	int id = (int) servletContext.getAttribute("userID");
     	System.out.println(id);
     	
+    	int shelfId = Integer.parseInt(request.getParameter("shelfId"));
+    	System.out.println("Received ShelfID: " + shelfId);
+
+    	
     	String sql = "SELECT ShelfPic FROM Shelf WHERE UserID=? AND ShelfID=?";
     	try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(sql)){
             
 			pstmt.setInt(1,id);
+			pstmt.setInt(2, shelfId);
 			ResultSet rs = pstmt.executeQuery();
 			
 			if (rs.next()) {

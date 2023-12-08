@@ -55,6 +55,38 @@
 
 		<script>
 			$(document).ready(function() { 
+				function updateShelfPictures() {
+			        // Make an AJAX request to get the latest shelf pictures
+					// Assuming your base URL is something like "http://localhost:8443/BookWebsite/"
+					var baseUrl = "http://localhost:8443/BookWebsite/";
+
+					$.ajax({
+					    url: baseUrl + "DisplayShelfPic",
+					    type: "GET",
+					    dataType: "html",
+					    success: function (responseText) {
+					        // Create a temporary element to parse the HTML response
+					        var tempElement = $('<div>').html(responseText);
+
+					        // Find the "shelfPic" elements within each list item
+					        tempElement.find('.listImgHome img').each(function () {
+					            var shelfId = $(this).attr('name');
+					            var shelfPicData = $(this).attr('src');
+
+					            // Update the corresponding image on the page using the shelfId
+					            $("img[name='" + shelfId + "']").attr('src', baseUrl + shelfPicData);
+					        });
+					    },
+					    error: function (error) {
+					        console.error("Error:", error);
+					    }
+					});
+
+			    }
+
+			    // Call the function to update shelf pictures on page load
+			    updateShelfPictures();
+				
 				$.get("DisplayHomeGoals?timestamp=" + new Date().getTime(), function(responseText) {  
 					console.log("Received response from server:", responseText);
 					//alert("before response text");

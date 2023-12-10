@@ -1,16 +1,16 @@
-/*---------------------------------------------VALIDATE LOGIN FUNCTION-----------------------------------------------*/
+/*---------------------------------------------VALIDATE LOGIN-----------------------------------------------*/
 function validateLogin() {
     var notEmpty = true;
     
     if (document.forms["loginForm"]["inputUsername"].value == "") {
-        document.getElementById("inputUsername").style.border = "3px solid #732222";
+        document.getElementById("inputUsername").style.border = "3px solid #B3746F";
         notEmpty = false;
     } else {
         document.getElementById("inputUsername").style.border = "";
         notEmpty = true;
     }
     if (document.forms["loginForm"]["inputPassword"].value == "") {
-        document.getElementById("inputPassword").style.border = "3px solid #732222";
+        document.getElementById("inputPassword").style.border = "3px solid #B3746F";
         notEmpty = false;
     } else {
         document.getElementById("inputPassword").style.border = "";
@@ -21,53 +21,53 @@ function validateLogin() {
     }
     return notEmpty;
 }
-/*---------------------------------------------VALIDATE REGISTRATION FUNCTION-----------------------------------------------*/
+/*---------------------------------------------VALIDATE REGISTRATION-----------------------------------------------*/
 function validateRegistration() {
     var notEmpty = true;
     var matchPass = true;
     
     if (document.forms["registerForm"]["newUsername"].value == "") {
-        document.getElementById("newUsername").style.border = "3px solid #732222";
+        document.getElementById("newUsername").style.border = "3px solid #B3746F";
         notEmpty = false;
     } else {
         document.getElementById("newUsername").style.border = "";
         notEmpty = true;
     }
     if (document.forms["registerForm"]["newEmail"].value == "") {
-        document.getElementById("newEmail").style.border = "3px solid #732222";
+        document.getElementById("newEmail").style.border = "3px solid #B3746F";
         notEmpty = false;
     } else {
         document.getElementById("newEmail").style.border = "";
         notEmpty = true;
     }
     if (document.forms["registerForm"]["newPassword"].value == "") {
-        document.getElementById("newPassword").style.border = "3px solid #732222";
+        document.getElementById("newPassword").style.border = "3px solid #B3746F";
         notEmpty = false;
     } else {
         document.getElementById("newPassword").style.border = "";
         notEmpty = true;
     }
     if (document.forms["registerForm"]["retypePassword"].value == "") {
-        document.getElementById("retypePassword").style.border = "3px solid #732222";
+        document.getElementById("retypePassword").style.border = "3px solid #B3746F";
         notEmpty = false;
     } else {
         document.getElementById("retypePassword").style.border = "";
         notEmpty = true;
     }
     if (document.forms["registerForm"]["securityQuestion"].value == "") {
-        document.getElementById("securityQuestion").style.border = "3px solid #732222";
+        document.getElementById("securityQuestion").style.border = "3px solid #B3746F";
         notEmpty = false;
     } else {
         document.getElementById("securityQuestion").style.border = "";
         notEmpty = true;
     }
     if (document.forms["registerForm"]["securityAnswer"].value == "") {
-        document.getElementById("securityAnswer").style.border = "3px solid #732222";
+        document.getElementById("securityAnswer").style.border = "3px solid #B3746F";
         notEmpty = false;
     } else {
         document.getElementById("securityAnswer").style.border = "";
         notEmpty = true;
-    }
+    }/*
     if (document.forms["registerForm"]["newPassword"].value == document.forms["registerForm"]["retypePassword"].value) {
 		matchPass = true;
 	} else {
@@ -76,44 +76,32 @@ function validateRegistration() {
 	}
     if (notEmpty == false) {
         document.getElementById("errorMessage").innerHTML = "*** Please provide the required information ***";
-    }
+    }*/
     
-    var result = false;
-    if (notEmpty && matchPass) {
-		result = true
-	} else {
-		result = false;
-	}
-    return result;
+    
+    return notEmpty;
 }
-/*---------------------------------------------VALIDATE RESET PASSWORD FUNCTION-----------------------------------------------*/
+/*---------------------------------------------VALIDATE RESET PASSWORD-----------------------------------------------*/
 function validatePassReset() {
     var notEmpty = true;
     
-    if (document.forms["resetForm"]["forgotUsername"].value == "") {
-        document.getElementById("forgotUsername").style.border = "3px solid #732222";
-        notEmpty = false;
-    } else {
-        document.getElementById("forgotUsername").style.border = "";
-        notEmpty = true;
-    }
     if (document.forms["resetForm"]["forgotSecAnswer"].value == "") {
-        document.getElementById("forgotSecAnswer").style.border = "3px solid #732222";
+        document.getElementById("forgotSecAnswer").style.border = "3px solid #B3746F";
         notEmpty = false;
     } else {
         document.getElementById("forgotSecAnswer").style.border = "";
         notEmpty = true;
     }
     if (document.forms["resetForm"]["updatePassword"].value == "") {
-        document.getElementById("updatePassword").style.border = "3px solid #732222";
+        document.getElementById("updatePassword").style.border = "3px solid #B3746F";
         notEmpty = false;
     } else {
         document.getElementById("updatePassword").style.border = "";
         notEmpty = true;
-    }
+    }/*
     if (notEmpty == false) {
         document.getElementById("errorMessage").innerHTML = "*** Please provide the required information ***";
-    }
+    }*/
     
     return notEmpty;
 }
@@ -123,9 +111,55 @@ function validatePassReset() {
 function logOut() {
 	window.location.href = "login.html";
 }
-
-
-
+/*---------------------------------------------VALIDATE CREATE GOAL-----------------------------------------------*/
+function validateNewGoal() {
+    var notEmpty = true;
+    
+    if (document.forms["newGoalForm"]["newGoalTitle"].value == "") {
+        document.getElementById("newGoalTitle").style.border = "3px solid #B3746F";
+        notEmpty = false;
+    } else {
+        document.getElementById("newGoalTitle").style.border = "";
+        notEmpty = true;
+    }
+    if (document.forms["newGoalForm"]["newGoalTarget"].value == "") {
+        document.getElementById("newGoalTarget").style.border = "3px solid #B3746F";
+        notEmpty = false;
+    } else {
+        document.getElementById("newGoalTarget").style.border = "";
+        notEmpty = true;
+    }
+    
+    return notEmpty;
+}
+/*---------------------------------------------VALIDATE UPDATE GOAL-----------------------------------------------*/
+function validateUpdateGoal() {
+    var notEmpty = true;
+    
+    if (document.forms["updateGoalForm"]["updateGoalCompleted"].value == "") {
+        document.getElementById("updateGoalCompleted").style.border = "3px solid #B3746F";
+        notEmpty = false;
+    } else {
+        document.getElementById("updateGoalCompleted").style.border = "";
+        notEmpty = true;
+    }
+    
+    return notEmpty;
+}
+/*---------------------------------------------VALIDATE CREATE SHELF-----------------------------------------------*/
+function validateCreateShelf() {
+    var notEmpty = true;
+    
+    if (document.forms["newShelfForm"]["newShelfName"].value == "") {
+        document.getElementById("newShelfName").style.border = "3px solid #B3746F";
+        notEmpty = false;
+    } else {
+        document.getElementById("newShelfName").style.border = "";
+        notEmpty = true;
+    }
+    
+    return notEmpty;
+}
 
 
 

@@ -40,16 +40,18 @@ public class UpdateGoals extends HttpServlet {
         return conn;
     }
     
-    public Boolean updateGoal(String name, String numRead, int id) {
-		String updatesql = "UPDATE Goal SET CompletedBooks=? WHERE UserID=? AND GoalName=?";
-		String selectsql = "SELECT CompletedBooks FROM Goal WHERE UserID=? AND GoalName=?";
+    public Boolean updateGoal(String goal, String numRead, int id) {
+		String updatesql = "UPDATE Goal SET CompletedBooks=? WHERE UserID=? AND GoalID=?";
+		String selectsql = "SELECT CompletedBooks FROM Goal WHERE UserID=? AND GoalID=?";
 		Boolean result = false;
 		int completed = 0;
 		
 		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(selectsql)){
             
-            pstmt.setInt(1,id);
-            pstmt.setString(2,name);
+			int goalid =Integer.parseInt(goal);  
+			
+			pstmt.setInt(1,id);
+            pstmt.setInt(2,goalid);
             
             ResultSet rs  = pstmt.executeQuery();
             
@@ -65,10 +67,11 @@ public class UpdateGoals extends HttpServlet {
 		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(updatesql)){
 	            
 				int booksRead =Integer.parseInt(numRead);  
+				int goalid =Integer.parseInt(goal);  
 				int newTotal = booksRead + completed;
 				pstmt.setInt(1,newTotal);
 	            pstmt.setInt(2,id);
-	            pstmt.setString(3,name);
+	            pstmt.setInt(3,goalid);
 	            
 	            int rowsAffected = pstmt.executeUpdate();
 	         
@@ -88,19 +91,15 @@ public class UpdateGoals extends HttpServlet {
 		ServletContext servletContext = getServletContext();
 		int id = (int) servletContext.getAttribute("userID");
     	
-		String name = request.getParameter("updateGoalTitle");
+		String goalId = request.getParameter("updateGoalTitle");
 		String numRead = request.getParameter("updateGoalCompleted");
 		
-		System.out.println("name: " + name);
+		System.out.println("goal id: " + goalId);
 		System.out.println("num read: " + numRead);
 		
-		if (updateGoal.updateGoal(name, numRead, id)) {
+		if (updateGoal.updateGoal(goalId, numRead, id)) {
 			System.out.println("goal updated");
-			response.sendRedirect("mygoals.jsp");
-		} else {
-			PrintWriter writer = response.getWriter();
-			writer.println("failed");
-		}
+		} 
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

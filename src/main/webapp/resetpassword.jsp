@@ -14,14 +14,45 @@
         
         <script>
 			$(document).on("click", "#getQuestionBtn", function() { 
+				event.preventDefault();
 				var username = $("#forgotUsername").val();
-				alert(username);
-				$.get("VerifyUser", { forgotUsername: username }, function(responseText) {  
-					alert("before response text");
-					$("#forgotSecQuestion").html(responseText); 
-					document.getElementById("enterQuesAndPass").style.display = "inherit";
-				});
-				return false;
+				var error = $("#invalidUserReset");
+				
+				if (username != "") {
+					$.get("VerifyUser", { forgotUsername: username }, function(responseText) {  
+						if (responseText == "Invalid username") {
+							error.html(responseText);
+						} else {
+							$("#forgotSecQuestion").html(responseText); 
+							document.getElementById("enterQuesAndPass").style.display = "inherit";
+							error.html("");
+						}
+						
+					});
+					return false;
+				} else {
+					$("#forgotUsername").css("border", "3px solid #B3746F");
+				}
+				
+			});
+			
+			$(document).on("click", "#updatePassBtn", function() { 
+				event.preventDefault();
+				var answer = $("#forgotSecAnswer").val();
+				var password = $("#updatePassword").val();
+				var error = $("#invalidAnswerReset");
+				
+				if (validatePassReset()) {
+					$.get("UpdatePassword", { forgotSecAnswer: answer, updatePassword: password }, function(responseText) {  
+						if (responseText == "Invalid answer") {
+							error.html(responseText);
+						} else {
+							window.location.href = "login.jsp";
+						}
+						
+					});
+					return false;
+				} 
 			});
 		</script>
         
@@ -36,7 +67,7 @@
                     <div class="col col-xl-8">
                         <div class="card" style="border-radius: 1rem;">
                             <div class="card-body p-4 p-lg-5 text-black">
-                            	<form name="verifyUsername" method="post" action="VerifyUser">
+                            	<form name="verifyUsername">
                             		<div class="card-title" style="letter-spacing: 1px;">Forgot your password?</div>
                                     <h6 class="fw-normal mb-3 pb-3">Enter the username associated with your account to retrieve your security question.</h6>
                           
@@ -44,13 +75,14 @@
                                         <input type="text" class="form-control form-control-lg" name="forgotUsername" id="forgotUsername"/>
                                         <label class="form-label" for="forgotUsername">Username</label>
                                     </div>
+                                    <div id="invalidUserReset" style="color: #B3746F; margin-bottom: 10px; font-weight: 500;"></div>
                                      <div class="pt-1 mb-4">
                                         <button class="btn btn-md" id="getQuestionBtn">Submit</button>
                                     </div>
                                     <div id="forgotSecQuestion"></div>
                             	</form>
                            		 <div id="enterQuesAndPass" style="display: none;"><br>
-                                <form name="resetForm" method="post" action="UpdatePassword">
+                                <form name="resetForm">
                                     
 										<h6 class="fw-normal mb-3 pb-3">Please answer the security question that you created to reset your password.</h6>
 	                                     
@@ -58,11 +90,12 @@
 	                                        <input type="text" class="form-control form-control-lg" name="forgotSecAnswer" id="forgotSecAnswer"/>
 	                                        <label class="form-label" for="forgotSecAnswer">Your Answer</label>
 	                                    </div>
+	                                    <div id="invalidAnswerReset" style="color: #B3746F; margin-bottom: 10px; margin-top: 10px; font-weight: 500;"></div>
 	                                    <div class="form-outline mb-4">
 	                                        <input type="text" class="form-control form-control-lg" name="updatePassword" id="updatePassword"/>
 	                                        <label class="form-label" for="updatePassword">New Password</label>
 	                                    </div>
-	                                    <div id="errorMessage" style="color: #732222;"></div>
+	                                    
 	                                    <div class="pt-1 mb-4">
                                         	<button class="btn btn-md" id="updatePassBtn">Reset Password</button>
                                     	</div>

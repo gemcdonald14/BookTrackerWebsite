@@ -12,26 +12,55 @@
         <title>My Goals</title>
         
         <script>
-			$(document).on("click", "#addNewGoalBtn", function() { 
+			$(document).on("click", "#addNewGoalBtn", function(event) { 
+				event.preventDefault();
 				var title = $("#newGoalTitle").val();
 				var target = $("#newGoalTarget").val();
 				var type = $("#newGoalType").val();
 				
-				console.log("Button clicked. Sending AJAX request.");
-				$.get("AddGoal?timestamp=" + new Date().getTime(), { newGoalTitle: title, newGoalTarget: target, newGoalType: type }, function(responseText) {  
-					console.log("Received response from server:", responseText);
-					if (type == 1) {
-						var ul = $("#monthGoalsList");
-						ul.append(responseText);
-					} else {
-						var ul = $("#yearGoalsList");
-						ul.append(responseText);
-					}
-					
-					//document.getElementById("monthGoalsList").append = responseText;
-				});
-				return false;
+				var errorName = "Goal name already used";
+				
+				if (validateNewGoal()) {
+					console.log("Button clicked. Sending AJAX request.");
+					$.get("AddGoal?timestamp=" + new Date().getTime(), { newGoalTitle: title, newGoalTarget: target, newGoalType: type }, function(responseText) {  
+						console.log("Received response from server:", responseText);
+						
+						if (responseText == errorName) {
+							$("#newGoalTitle").val("");
+							var placeholder = $("#newGoalTitle").attr("placeholder", responseText);
+							$("#newGoalTitle").css("border", "3px solid #B3746F");
+							
+						} else {
+							if (type == 1) {
+								var ul = $("#monthGoalsList");
+								ul.append(responseText);
+							} else {
+								var ul = $("#yearGoalsList");
+								ul.append(responseText);
+							}
+							$("#newGoalTitle").val("");
+							$("#newGoalTarget").val("");
+						}
+					});
+					return false;
+				} 
 			});
+			
+			$(document).on("click", "#updateGoalBtn", function(event) { 
+				event.preventDefault();
+				var numbooks = $("#updateGoalCompleted").val();
+				var title = $("#updateGoalTitle").val();
+				
+				if (validateUpdateGoal()) {
+					console.log("Button clicked. Sending AJAX request.");
+					$.get("UpdateGoals?timestamp=" + new Date().getTime(), { updateGoalCompleted: numbooks, updateGoalTitle: title }, function(responseText) {  
+						console.log("Received response from server:", responseText);
+					});
+					return false;
+				} 
+			});
+			
+			
 		</script>
     </head>
     <body style="background-color: #F2EDE4;">
@@ -83,7 +112,7 @@
                     <div class="card" style="border-radius: 1rem;">
                         <div class="card-body" style="display: inline-flex; justify-content: space-evenly;">
 							<h5 class="card-title">Create New Goal</h5>
-                            <form name="newGoalForm" method="post" action="AddGoal">
+                            <form name="newGoalForm">
                             	<!--<label class="my-1 mr-2" for="newGoalType" id="goalTypeLabel">Select a Goal Type:</label>-->
 								<select class="custom-select" id="newGoalType" name="newGoalType">
 								    <option value="1">Monthly Goal</option>
@@ -106,12 +135,14 @@
                     <div class="card mt-2 mb-2" style="border-radius: 1rem;">
                         <div class="card-body" style="display: inline-flex; justify-content: space-evenly;">
 							<h5 class="card-title">Update A Goal</h5>
-                            <form name="updateGoalForm" method="post" action="UpdateGoals">
-                                <div class="form-outline" style="display: inline-flex;">
+                            <form name="updateGoalForm">
+                                <!-- <div class="form-outline" style="display: inline-flex;">
                                     <input type="text" id="updateGoalTitle" name="updateGoalTitle" class="form-control form-control-lg" placeholder="Goal Name"/>
-                                </div>
+                                </div>-->
+                                <select class="custom-select" id="updateGoalTitle" name="updateGoalTitle">
+								 </select>
                                 <div class="form-outline" style="display: inline-flex;">
-                                    <input type="text" id="updateGoalCompleted" name="updateGoalCompleted" class="form-control form-control-lg" placeholder="# of Books Read" />
+                                    <input type="text" id="updateGoalCompleted" name="updateGoalCompleted" class="form-control form-control-lg" placeholder="# of books to add to goal" />
                                 </div>
                                 <button class="btn btn-primary" id="updateGoalBtn">Update Goal</button>
                             </form>
@@ -122,9 +153,14 @@
 							$(document).ready(function() { 
 								$.get("DisplayGoals?timestamp=" + new Date().getTime(), function(responseText) {  
 									console.log("Received response from server:", responseText);
-									//alert("before response text");
 									var div = $("#myGoalsRow");
 									div.html(responseText);
+								});
+								
+								$.get("DisplayGoalsDropDown?timestamp=" + new Date().getTime(), function(responseText) {  
+									console.log("Received response from server:", responseText);
+									var options = $("#updateGoalTitle");
+									options.html(responseText);
 								});
 								return false;
 							});

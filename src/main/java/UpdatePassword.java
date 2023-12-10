@@ -135,10 +135,8 @@ public class UpdatePassword extends HttpServlet {
 			System.out.println("answer: " + secAnswer);
 			System.out.println("password: " + safePass);
 			
-			response.sendRedirect("login.html");
 		} else {
-			PrintWriter writer = response.getWriter();
-			writer.println("failed");
+			response.getWriter().write("Invalid answer");
 		}
 		
 		

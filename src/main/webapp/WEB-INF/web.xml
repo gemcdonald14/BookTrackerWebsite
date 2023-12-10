@@ -2,15 +2,15 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://jakarta.ee/xml/ns/jakartaee" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd" id="WebApp_ID" version="6.0">
   <display-name>BookWebsite</display-name>
   <welcome-file-list>
+    <welcome-file>login.jsp</welcome-file>
+    <welcome-file>login.htm</welcome-file>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.jsp</welcome-file>
     <welcome-file>index.htm</welcome-file>
     <welcome-file>default.html</welcome-file>
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
-    <welcome-file>login.html</welcome-file>
-    <welcome-file>login.jsp</welcome-file>
-    <welcome-file>login.htm</welcome-file>
+    
   </welcome-file-list>
   <servlet>
     <description></description>
@@ -331,5 +331,15 @@
   <servlet-mapping>
     <servlet-name>DisplayShelfPic</servlet-name>
     <url-pattern>/DisplayShelfPic</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DisplayGoalsDropDown</display-name>
+    <servlet-name>DisplayGoalsDropDown</servlet-name>
+    <servlet-class>DisplayGoalsDropDown</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DisplayGoalsDropDown</servlet-name>
+    <url-pattern>/DisplayGoalsDropDown</url-pattern>
   </servlet-mapping>
 </web-app>

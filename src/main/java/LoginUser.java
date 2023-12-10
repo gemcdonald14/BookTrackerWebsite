@@ -24,7 +24,6 @@ public class LoginUser extends HttpServlet {
 	
     public LoginUser() {
         super();
-        // TODO Auto-generated constructor stub
     }
     
     public String PasswordHash(String password) {
@@ -33,22 +32,17 @@ public class LoginUser extends HttpServlet {
 
 	    try 
 	    {
-	      // Create MessageDigest instance for MD5
 	      MessageDigest md = MessageDigest.getInstance("MD5");
 
-	      // Add password bytes to digest
 	      md.update(passwordToHash.getBytes());
 
-	      // Get the hash's bytes
 	      byte[] bytes = md.digest();
 
-	      // This bytes[] has bytes in decimal format. Convert it to hexadecimal format
 	      StringBuilder sb = new StringBuilder();
 	      for (int i = 0; i < bytes.length; i++) {
 	        sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
 	      }
 
-	      // Get complete hashed password in hex format
 	      generatedPassword = sb.toString();
 	    } catch (NoSuchAlgorithmException e) {
 	      e.printStackTrace();
@@ -76,11 +70,6 @@ public class LoginUser extends HttpServlet {
 		int userID = 0;
 		getServletContext().setAttribute("userID", userID);
     }
-		
-	
-	public void destroy() {
-		// TODO Auto-generated method stub
-	}
 	
 	public Boolean verifyUser(String providedUsername, String providedPassword) {
 		String sql = "SELECT Username,Password,UserID FROM User WHERE Username=? AND Password=?";
@@ -158,28 +147,10 @@ public class LoginUser extends HttpServlet {
         	id = returningUser.getID(username, safePass);
         	System.out.println(id);
         	servletContext.setAttribute("userID", id);
-			
-			response.sendRedirect("homepage.jsp");
+        	response.getWriter().write("True");
 		} else {
-			PrintWriter writer = response.getWriter();
-			writer.println("failed");
+			response.getWriter().write("False");
 		}
-		
-		/*
-		
-		String username = request.getParameter("inputUsername");
-		String password = request.getParameter("inputPassword");
-		
-		PrintWriter writer = response.getWriter();
-		
-		String htmlResponse = "<html>";
-		htmlResponse += "<h2>username is " + username + "</h2>";
-		htmlResponse += "<h2>password is " + password + "</h2>";
-		htmlResponse += "</html>";
-		
-		writer.println(htmlResponse);
-		*/
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

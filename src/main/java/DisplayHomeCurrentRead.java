@@ -74,16 +74,14 @@ public class DisplayHomeCurrentRead extends HttpServlet {
 	    				+ "<ul><li>" + title + "</li>"
 	    				+"<li>" + author + "</li>"
 	    				+ "<li>" + readpages + " / " + numpages + " pages </li></ul>"
-	    				
-	    				//+ "<p class=\"card-text\">" + title + "</p>"
-	    				//+ "<p class=\"card-text\">" + author + "</p>"
 	    				+ "<div class='progress' style='height: 1.2rem; margin-top: 20px; margin-bottom: 20px;'>"
 	    				+ "<div class='progress-bar' role='progressbar' style='width:" + percent + "%' aria-valuenow='" + readpages + "' aria-valuemin='0' aria-valuemax='" + numpages + "'></div></div>"
 	    				+ "<form name=\"updateCurrentBook\" id=\"updateCurrentBook\">"
 	    				+ "<div class=\"form-outline\" style=\"display: inline-flex;\">"
 	    				+ "<input type=\"text\" id=\"updateCurrentRead\" name=\"updateCurrentRead\" class=\"form-control form-control-sm\" placeholder=\"I'm on page...\"/></div>"
-	    				+ "<button class=\"btn btn-primary\" id=\"updateCurrentBookBtn\">Update Progress</button>"
-	    				+ "<button class=\"btn btn-primary\" id=\"finishBookBtn\">I finished my book!</button>"
+	    				+ "<div id=\"updateBookError\"></div>"
+	    				+ "<button class=\"btn btn-primary\" id=\"updateCurrentBookBtn\">Update Progress</button><br>"
+	    				+ "<button class=\"btn btn-primary\" id=\"finishBookBtn\">I finished my book</button>"
 	    				+ "</form></div></div></div></div>";
 
 	            resultCurrent +=currentReadItem;
@@ -92,7 +90,7 @@ public class DisplayHomeCurrentRead extends HttpServlet {
 	    				+ "<div class=\"col-md-8\"><div class=\"card-body\">"
 	    				+ "<h5 class=\"card-title\">Currently Reading</h5>"
 	    				+ "<p class=\"card-text\">You are currently not reading any book.</p>"
-	    				+ "<p class=\"card-text\">Set a book as a current book to track your progress.</p>"
+	    				+ "<p class=\"card-text\">Set a book as a currently reading on the My Shelves to track your progress.</p>"
 	    				+ "</div></div></div></div>";
             	
             	resultCurrent +=currentReadItem;

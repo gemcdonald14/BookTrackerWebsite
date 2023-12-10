@@ -64,9 +64,18 @@ public class DisplayProfilePicture extends HttpServlet {
                     out.write(imageData);
                 }
             } else {
-                // If no image data is found, you can set a default image or handle it as needed
-                response.setContentType("text/plain");
-                response.getWriter().write("No profile picture available");
+                // If no image data is found, set a default image
+                try (InputStream defaultImageStream = servletContext.getResourceAsStream("/images/ella.png")) {
+                    byte[] defaultImageData = defaultImageStream.readAllBytes();
+
+                    // Set the content type to image/png
+                    response.setContentType("image/png");
+
+                    // Write the default image data to the response output stream
+                    try (OutputStream out = response.getOutputStream()) {
+                        out.write(defaultImageData);
+                    }
+                }
             }
          
 	     } catch (SQLException e) {

@@ -58,26 +58,57 @@ public class DisplayShelfPic extends HttpServlet {
 			ResultSet rs = pstmt.executeQuery();
 			
 			if (rs.next()) {
-                // Retrieve the image data from the database
-                byte[] imageData = rs.getBytes("ShelfPic");
+	            // Retrieve the image data from the database
+	            byte[] imageData = rs.getBytes("ShelfPic");
 
-                // Set the content type to image/png
-                response.setContentType("image/png");
+	            // Set the content type to image/png
+	            response.setContentType("image/png");
 
-                // Write the image data to the response output stream
-                try (OutputStream out = response.getOutputStream()) {
-                    out.write(imageData);
-                }
-            } else {
-                // If no image data is found, you can set a default image or handle it as needed
-                response.setContentType("text/plain");
-                response.getWriter().write("No profile picture available");
-            }
-         
-	     } catch (SQLException e) {
-	            System.out.println(e.getMessage());
-	            e.printStackTrace();
-	     }
+	            // Write the image data to the response output stream if not null
+	            if (imageData != null) {
+	                try (OutputStream out = response.getOutputStream()) {
+	                    out.write(imageData);
+	                }
+	            } else {
+	            	try (InputStream defaultImageStream = servletContext.getResourceAsStream("/images/bookpile.png")) {
+		                if (defaultImageStream != null) {
+		                    byte[] defaultImageData = defaultImageStream.readAllBytes();
+
+		                    // Set the content type to image/png
+		                    response.setContentType("image/png");
+
+		                    // Write the default image data to the response output stream if not null
+		                    if (defaultImageData != null) {
+		                        try (OutputStream out = response.getOutputStream()) {
+		                            out.write(defaultImageData);
+		                        }
+		                    }
+		                }
+	            }
+	            }
+	        } else {
+	            // If no image data is found, set a default image
+	            try (InputStream defaultImageStream = servletContext.getResourceAsStream("/images/bookpile.png")) {
+	                if (defaultImageStream != null) {
+	                    byte[] defaultImageData = defaultImageStream.readAllBytes();
+
+	                    // Set the content type to image/png
+	                    response.setContentType("image/png");
+
+	                    // Write the default image data to the response output stream if not null
+	                    if (defaultImageData != null) {
+	                        try (OutputStream out = response.getOutputStream()) {
+	                            out.write(defaultImageData);
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	        
+	    } catch (SQLException e) {
+	        System.out.println(e.getMessage());
+	        e.printStackTrace();
+	    }
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

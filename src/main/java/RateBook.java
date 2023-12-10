@@ -214,6 +214,10 @@ public class RateBook extends HttpServlet {
 		System.out.println("book mood: " + mood);
 		System.out.println("book pace: " + pace);
 		
+		if (rating == "") {
+			rating = "0";
+		}
+		
 		newRating.rateBook(id, rating, genre, mood, pace); //rate book
 		newRating.finishBook(id); //finish book, update info & make not current read
 		newRating.updateShelf(id,shelfid); //update the numbooks for shelf 

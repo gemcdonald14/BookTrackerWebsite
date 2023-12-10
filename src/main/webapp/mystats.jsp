@@ -69,7 +69,6 @@
 	        	//display my reading stats 
 	        	$.get("DisplayReadingStats?timestamp=" + new Date().getTime(), function(responseText) {  
 					console.log("Received response from server:", responseText);
-					alert("before response text");
 					var div = $("#readingStats");
 					div.html(responseText);
 				});

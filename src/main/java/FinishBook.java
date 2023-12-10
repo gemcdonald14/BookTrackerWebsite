@@ -66,7 +66,7 @@ public class FinishBook extends HttpServlet {
 						+ "<option value=\"14\">Sad</option>"
 						+ "</select><br>"
 						+ "<label class=\"form-label\" for=\"bookPace\" style=\"font-size: 1.1rem; font-weight:500; margin-right: 20px;\">Pace:</label>"
-						+ "<input type=\"radio\" id=\"slow\" name=\"bookPace\" value=\"1\">"
+						+ "<input type=\"radio\" id=\"slow\" name=\"bookPace\" value=\"1\" checked>"
 						+ "<label for=\"slow\" style=\"font-size: 1.1rem; margin-right: 10px;\">Slow</label>"
 						+ "<input type=\"radio\" id=\"medium\" name=\"bookPace\" value=\"2\">"
 						+ "<label for=\"medium\" style=\"font-size: 1.1rem; margin-right: 10px;\">Medium</label>"

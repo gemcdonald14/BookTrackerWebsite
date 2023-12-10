@@ -44,22 +44,46 @@ public class AddGoal extends HttpServlet {
     }
 	
 	public Boolean insert(String name, String type, int id, String targetBooks) {
-		String sql = "INSERT INTO Goal(GoalName,GoalType,UserID,TargetBooks) VALUES(?,?,?,?)";
+		String insertsql = "INSERT INTO Goal(GoalName,GoalType,UserID,TargetBooks) VALUES(?,?,?,?)";
+		String checksql = "SELECT COUNT(GoalName) FROM Goal WHERE UserID=? AND GoalName=?";
 		Boolean result = false;
+		Boolean checkresult = false;
+		
+		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(checksql)){
+			 
+			pstmt.setInt(1, id);
+			pstmt.setString(2, name);
+	        ResultSet rs = pstmt.executeQuery();
 
-        try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, name);
-            pstmt.setString(2, type);
-            pstmt.setInt(3, id);
-            pstmt.setString(4, targetBooks);
-            pstmt.executeUpdate();
-            
-            result = true;
-            
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        
+	        if (rs.next()) {
+	            int num = rs.getInt(1);
+	            
+	            if (num == 0) {
+	            	checkresult = false; //no goal same goal name
+	            } else {
+	            	checkresult = true; //same goal name; already have 
+	            }
+	        }
+	     } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            e.printStackTrace();
+	     }
+		
+		if (checkresult == false) {
+			try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(insertsql)) {
+	            pstmt.setString(1, name);
+	            pstmt.setString(2, type);
+	            pstmt.setInt(3, id);
+	            pstmt.setString(4, targetBooks);
+	            pstmt.executeUpdate();
+	            
+	            result = true;
+	            
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	        }
+		} 
+		
         return result;
 	}
 
@@ -88,72 +112,10 @@ public class AddGoal extends HttpServlet {
 			response.setContentType("text/html");
 			response.getWriter().write(newGoalListItem);
 		} else {
-				response.getWriter().write("failed");
+			response.getWriter().write("Goal name already used");
 		}
 	}
-		/*
-		AddGoal newGoal = new AddGoal();
-    	
-    	String name = request.getParameter("newGoalTitle");
-		String type = request.getParameter("newGoalType");
-		String target = request.getParameter("newGoalTarget");
-		
-		ServletContext servletContext = getServletContext();
-    	int id = (int) servletContext.getAttribute("userID");
-    	System.out.println(id);
-    	
-		newGoal.insert(name, type, id, target);
-		System.out.println(name);
-		System.out.println(type);
-		System.out.println(target);*/
-		/*
-		
-		String newGoalListItem = "<li class='list-group-item'>" 
-								+ "<h6>" + name + "</h6>" 
-								+ "<div class='progress' style='height: 1.2rem;'>"
-								+ "<div class='progress-bar w-75' role='progressbar' aria-valuenow='10' aria-valuemin='0' aria-valuemax='100'></div>"
-								+ "</div>"
-								+ "</li>";*/
-		/*
-		
-		if (type.equals("1")) {
-			String monthGoalDiv = "<div class='col-md-6 p-4' id='monthGoalCol'>"
-								+ "<div class='card' style='border-radius: 1rem;'>"
-								+ "<div class='card-header' style='font-size: larger;'>"
-								+ "Monthly Reading Goals</div>"
-								+ "<ul class='list-group list-group-flush'>"
-								+ newGoalListItem
-								+ "</ul>"
-								+ "</div>"
-								+ "</div>";
-			
-			response.setContentType("text/html");
-			response.setCharacterEncoding("UTF-8");
-			response.getWriter().write(monthGoalDiv);
-			
-		} else if (type.equals("2")) {
-			String yearGoalDiv = "<div class='col-md-6 p-4' id='yearGoalCol'>"
-								+ "<div class='card' style='border-radius: 1rem;'>"
-								+ "<div class='card-header' style='font-size: larger;'>"
-								+ "Yearly Reading Goals</div>"
-								+ "<ul class='list-group list-group-flush'>"
-								+ newGoalListItem
-								+ "</ul>"
-								+ "</div>"
-								+ "</div>";
-			
-			response.setContentType("text/html");
-			response.setCharacterEncoding("UTF-8");
-			response.getWriter().write(yearGoalDiv);
-		}*/
-			
-		//response.sendRedirect("mygoals.html");
-		/*
-		response.setContentType("text/plain");
-		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(newGoalListItem);*/
 	
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}

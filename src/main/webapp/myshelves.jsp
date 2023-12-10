@@ -8,31 +8,42 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
         <link href="mystyles.css" rel="stylesheet">
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" ></script>
+        <script src="javascript.js"></script>
         <title>My Shelves</title>
         
         <script>
-			$(document).on("click", "#addNewShelfBtn", function() { 
+			$(document).on("click", "#addNewShelfBtn", function(event) { 
+				event.preventDefault();
 				var name = $("#newShelfName").val();
-				//alert(name);
 				
-				console.log("Button clicked. Sending AJAX request.");
-				$.get("AddShelf?timestamp=" + new Date().getTime(), { newShelfName: name }, function(responseText) {  
-					console.log("Received response from server:", responseText);
-					//alert("before response text");
-					var ul = $("#shelfList");
-					ul.append(responseText);
-				});
-				return false;
+				var errorName = "Shelf name already used";
+				
+				if (validateCreateShelf()) {
+					console.log("Button clicked. Sending AJAX request.");
+					$.get("AddShelf?timestamp=" + new Date().getTime(), { newShelfName: name }, function(responseText) {  
+						console.log("Received response from server:", responseText);
+						
+						if (responseText == errorName) {
+							$("#newShelfName").val("");
+							var placeholder = $("#newShelfName").attr("placeholder", responseText);
+							$("#newShelfName").css("border", "3px solid #B3746F");
+							
+						} else {
+							var ul = $("#shelfList");
+							ul.append(responseText);
+							$("#newShelfName").val("");
+						}
+					});
+					return false;
+				} 
 			});
 			
 			$(document).on("click", ".listTitleShelf", function() { 
 				var shelfName = $(this).text();
-				//alert(shelfName);
 				
 				console.log("Button clicked. Sending AJAX request.");
 				$.get("DisplayBooks?timestamp=" + new Date().getTime(), { listTitleShelf: shelfName }, function(responseText) {  
 					console.log("Received response from server:", responseText);
-					//alert("before response text");
 					var ul = $("#bookList");
 					ul.html(responseText);
 				});

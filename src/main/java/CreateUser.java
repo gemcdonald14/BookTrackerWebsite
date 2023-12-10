@@ -73,23 +73,53 @@ public class CreateUser extends HttpServlet {
         return conn;
     }
 	
-	public void insert(String username, String password, String email, String secQuestion, String secAnswer, String bio, String book, String author) {
-		String sql = "INSERT INTO User(Username,Password,Email,SecurityQuestion,SecurityAnswer,Bio,FavBook,FavAuthor) VALUES(?,?,?,?,?,?,?,?)";
+	public String insert(String username, String password, String email, String secQuestion, String secAnswer, String bio, String book, String author) {
+		String checksql = "SELECT COUNT(Username) FROM User WHERE Username=?";
+		String insertsql = "INSERT INTO User(Username,Password,Email,SecurityQuestion,SecurityAnswer,Bio,FavBook,FavAuthor) VALUES(?,?,?,?,?,?,?,?)";
+		Boolean checkresult = null;
+		String result = "";
+		
+		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(checksql)){
+			 
+			pstmt.setString(1, username);
+	        ResultSet rs = pstmt.executeQuery();
 
-        try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, username);
-            pstmt.setString(2, password);
-            pstmt.setString(3, email);
-            pstmt.setString(4, secQuestion);
-            pstmt.setString(5, secAnswer);
-            pstmt.setString(6, bio);
-            pstmt.setString(7, book);
-            pstmt.setString(8, author);
-            pstmt.executeUpdate();
-            System.out.println("inserting user");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+	        if (rs.next()) {
+	            int num = rs.getInt(1);
+	            
+	            if (num == 0) {
+	            	checkresult = false; //no username same 
+	            } else {
+	            	checkresult = true; //same username; already have 
+	            }
+	        }
+	     } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            e.printStackTrace();
+	     }
+		
+		if (checkresult == false) {
+			try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(insertsql)) {
+	            pstmt.setString(1, username);
+	            pstmt.setString(2, password);
+	            pstmt.setString(3, email);
+	            pstmt.setString(4, secQuestion);
+	            pstmt.setString(5, secAnswer);
+	            pstmt.setString(6, bio);
+	            pstmt.setString(7, book);
+	            pstmt.setString(8, author);
+	            pstmt.executeUpdate();
+	            System.out.println("inserting user");
+	        } catch (SQLException e) {
+	            System.out.println(e.getMessage());
+	            result = "Error inserting user";
+	        }
+		} else {
+			result = "Username already taken";
+		}
+		
+		return result;
+        
 	}
 	
 	public void readShelf(String username) {
@@ -127,22 +157,20 @@ public class CreateUser extends HttpServlet {
     	String username = request.getParameter("newUsername");
 		String email = request.getParameter("newEmail");
 		String password = request.getParameter("newPassword");
-		String repassword = request.getParameter("retypePassword");
 		String question = request.getParameter("securityQuestion");
 		String answer = request.getParameter("securityAnswer");
 		String bio = request.getParameter("newBio");
 		String book = request.getParameter("newFavBook");
 		String author = request.getParameter("newFavAuthor");
+		String result = "";
 		
-		if (repassword.equals(password)) {
-			String safePass = PasswordHash(password);
+		String safePass = PasswordHash(password);
 			
-			newUser.insert(username, safePass, email, question, answer, bio, book, author);
+		result = newUser.insert(username, safePass, email, question, answer, bio, book, author);
 			
-			newUser.readShelf(username);
+		newUser.readShelf(username);
 			
-			response.sendRedirect("login.html");
-		}
+		response.getWriter().write(result);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

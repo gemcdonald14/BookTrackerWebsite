@@ -55,9 +55,25 @@
 
 		<script>
 			$(document).ready(function() { 
+				
+				
+				$.get("DisplayHomeGoals?timestamp=" + new Date().getTime(), function(responseText) {  
+					console.log("Received response from server:", responseText);
+					var div = $("#homeGoals");
+					div.html(responseText);
+				});
+				$.get("DisplayHomeCurrentRead?timestamp=" + new Date().getTime(), function(responseText) {  
+					console.log("Received response from server:", responseText);
+					var div = $("#progressRow");
+					div.html(responseText);
+				});
+				$.get("DisplayHomeShelves?timestamp=" + new Date().getTime(), function(responseText) {  
+					console.log("Received response from server:", responseText);
+					var div = $("#rightColHome");
+					div.html(responseText);
+				});
+				
 				function updateShelfPictures() {
-			        // Make an AJAX request to get the latest shelf pictures
-					// Assuming your base URL is something like "http://localhost:8443/BookWebsite/"
 					var baseUrl = "http://localhost:8443/BookWebsite/";
 
 					$.ajax({
@@ -65,15 +81,12 @@
 					    type: "GET",
 					    dataType: "html",
 					    success: function (responseText) {
-					        // Create a temporary element to parse the HTML response
 					        var tempElement = $('<div>').html(responseText);
 
-					        // Find the "shelfPic" elements within each list item
 					        tempElement.find('.listImgHome img').each(function () {
 					            var shelfId = $(this).attr('name');
 					            var shelfPicData = $(this).attr('src');
 
-					            // Update the corresponding image on the page using the shelfId
 					            $("img[name='" + shelfId + "']").attr('src', baseUrl + shelfPicData);
 					        });
 					    },
@@ -84,43 +97,26 @@
 
 			    }
 
-			    // Call the function to update shelf pictures on page load
 			    updateShelfPictures();
-				
-				$.get("DisplayHomeGoals?timestamp=" + new Date().getTime(), function(responseText) {  
-					console.log("Received response from server:", responseText);
-					//alert("before response text");
-					var div = $("#homeGoals");
-					div.html(responseText);
-				});
-				$.get("DisplayHomeCurrentRead?timestamp=" + new Date().getTime(), function(responseText) {  
-					console.log("Received response from server:", responseText);
-					//alert("before response text");
-					var div = $("#progressRow");
-					div.html(responseText);
-				});
-				$.get("DisplayHomeShelves?timestamp=" + new Date().getTime(), function(responseText) {  
-					console.log("Received response from server:", responseText);
-					//alert("before response text");
-					var div = $("#rightColHome");
-					div.html(responseText);
-				});
 				return false;
 			});
 		
 			$(document).on("click", "#updateCurrentBookBtn", function() { 
 				var numPages = $("#updateCurrentRead").val();
-				//alert(numPages);
 				
 				console.log("Button clicked. Sending AJAX request.");
 				$.get("UpdateCurrentRead?timestamp=" + new Date().getTime(), { updateCurrentRead:numPages }, function(responseText) {  
 					console.log("Received response from server:", responseText);
 					
+					if (responseText != "True") {
+						var errorDiv = $("#updateBookError");
+						errorDiv.html(responseText);
+					}
+					
 				});
 			});
 			
 			$(document).on("click", "#finishBookBtn", function() { 
-				//alert("Button clicked. Sending AJAX request.");
 				$.get("FinishBook?timestamp=" + new Date().getTime(), function(responseText) {  
 					console.log("Received response from server:", responseText);
 					var form = $("#updateCurrentBook");
@@ -135,9 +131,6 @@
 				var mood = $("#bookMood").val();
 				var pace = $("input[name='bookPace']:checked").val();
 				
-				//alert(rating);
-				//alert(genre);
-				//alert("Button clicked. Sending AJAX request.");
 				$.get("RateBook?timestamp=" + new Date().getTime(), { bookRating:rating, bookGenre:genre, bookMood:mood, bookPace:pace }, function(responseText) {  
 					console.log("Received response from server:", responseText);
 					var form = $("#progressRow");

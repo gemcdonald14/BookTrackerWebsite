@@ -174,8 +174,6 @@ public class RateBook extends HttpServlet {
 
     public Boolean finishBook(int id) {
 		String finishsql = "UPDATE Book SET ReadPages=NumPages, IsCurrentRead=0 WHERE UserID=? AND IsCurrentRead=1";
-		//String finishsql = "UPDATE Book SET ReadPages=NumPages, IsCurrentRead=0, ShelfID=? WHERE UserID=? AND IsCurrentRead=1";
-		//String shelfsql = "UPDATE Book SET ShelfID=? WHERE UserID=? AND IsCurrentRead=1";
 		Boolean result = false;
 		
 		 try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(finishsql)){

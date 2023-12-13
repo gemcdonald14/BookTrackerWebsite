@@ -113,18 +113,15 @@
                         <div class="card-body" style="display: inline-flex; justify-content: space-evenly;">
 							<h5 class="card-title">Create New Goal</h5>
                             <form name="newGoalForm">
-                            	<!--<label class="my-1 mr-2" for="newGoalType" id="goalTypeLabel">Select a Goal Type:</label>-->
 								<select class="custom-select" id="newGoalType" name="newGoalType">
 								    <option value="1">Monthly Goal</option>
 								    <option value="2">Yearly Goal</option>
 								 </select>
                                 <div class="form-outline" style="display: inline-flex;">
                                     <input type="text" id="newGoalTitle" name="newGoalTitle" class="form-control form-control-lg" placeholder="Goal Name"/>
-                                    <!--<label class="form-label" for="newGoalTitle" style="font-size: 1.1rem;">Goal Title:&nbsp;</label>-->
                                 </div>
                                 <div class="form-outline" style="display: inline-flex;">
                                     <input type="text" id="newGoalTarget" name="newGoalTarget" class="form-control form-control-lg" placeholder="# of Books To Read" />
-                                    <!--<label class="form-label" for="newGoalTarget" style="font-size: 1.1rem;"># of Books:&nbsp;</label>-->
                                 </div>
                                 <button class="btn btn-primary" id="addNewGoalBtn">Add Goal</button>
                             </form>
@@ -136,9 +133,6 @@
                         <div class="card-body" style="display: inline-flex; justify-content: space-evenly;">
 							<h5 class="card-title">Update A Goal</h5>
                             <form name="updateGoalForm">
-                                <!-- <div class="form-outline" style="display: inline-flex;">
-                                    <input type="text" id="updateGoalTitle" name="updateGoalTitle" class="form-control form-control-lg" placeholder="Goal Name"/>
-                                </div>-->
                                 <select class="custom-select" id="updateGoalTitle" name="updateGoalTitle">
 								 </select>
                                 <div class="form-outline" style="display: inline-flex;">

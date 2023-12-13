@@ -60,11 +60,6 @@ public class AddShelfPicture extends HttpServlet {
 	            e.printStackTrace();
 	     }
     }
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	}
-
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		AddShelfPicture newImage = new AddShelfPicture();
@@ -92,15 +87,12 @@ public class AddShelfPicture extends HttpServlet {
         	System.out.println("After decoding: " + Arrays.toString(imageData));
             // Insert the image data into the database
             newImage.insert(id, shelfid, imageData);
-            //response.setContentType("image/png");
 
-            //response.getWriter().write("<img id='" + shelfid + "Img' src='data:image/png;base64," + Base64.getEncoder().encodeToString(imageData) + "' class='shelfPic'>");
             request.setCharacterEncoding("UTF-8");
 
             response.getWriter().write("<img class='shelfPic' name='" + shelfid + "' src='data:image/png;base64," + Base64.getEncoder().encodeToString(imageData) + "'>");
 
         } catch (IllegalArgumentException e) {
-            // Handle the case where decoding fails
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid Base64 encoding: " + e.getMessage());
         }
 	}

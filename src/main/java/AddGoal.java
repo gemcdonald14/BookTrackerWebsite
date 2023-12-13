@@ -34,7 +34,6 @@ public class AddGoal extends HttpServlet {
 		String url = "jdbc:sqlite:C:/sqlite/db/capstone.db";
 		
         try {
-            // create a connection to the database
             conn = DriverManager.getConnection(url);
             System.out.println("Connection to SQLite has been established.");
         } catch (SQLException e) {

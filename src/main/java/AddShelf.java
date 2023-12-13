@@ -123,7 +123,7 @@ public class AddShelf extends HttpServlet {
 					+ " <div class=\"d-flex align-items-center\">"
 					+ "<div class=\"listImgShelf\">"
 					+ "<img src='./images/bookpile.png' class='shelfPic' style=\"border-radius: 1rem;  width: 100px; height: 150px;\"></div>"
-					+ "</div>"
+					
 					+ "<div class=\"listTitleShelf\"><p>" + name + "</p></div>"
 					+ "<div class=\"listNumBooksShelf\"><p>0 books</p></div>"
 					+ " </div></div></li>";

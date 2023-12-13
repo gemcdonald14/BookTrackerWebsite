@@ -11,19 +11,7 @@
         <link href="mystyles.css" rel="stylesheet">
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" ></script>
 		<script type="text/javascript">
-		/*
-		$(document).on("click", "#searchBtn", function() { 
-	   		 $.get("DisplayShelvesSearch?timestamp=" + new Date().getTime(), function(responseText) {  
-					console.log("Received response from server:", responseText);
-					var select = $(".custom-select");
-					console.log("Selected element:", select);
-					select.html(responseText);
-				});
-	   		 return false;
-		 });*/
-		
-		
-		
+
 		function uploadFile(inputElement) {
 			  var file = inputElement.files[0];
 			  var reader = new FileReader();
@@ -37,13 +25,7 @@
 			  }
 			  reader.readAsDataURL(file);
 		}
-		
-		/**
-	     * This function is the call-back function for the JSON scripts which
-	     * executes a Google book search response.
-	     *
-	     * @param {JSON} booksInfo is the JSON object pulled from the Google books service.
-	     */
+
 	     function listEntries(booksInfo) {
 	    	 
 	    	// Clear any old data to prepare to display the Loading... message.
@@ -95,18 +77,7 @@
 	    		 }
 
 	    		 thumbnailDiv.appendChild(p3);
-	    		 /*
-	    		 var form = document.createElement("form");
-	    		 form.setAttribute("name", "addToShelfForm");
-	    		 var shelfName = document.createElement("input");
-	    		 shelfName.setAttribute("type", "text");
-	    		 shelfName.setAttribute("class", "shelf form-control form-control-md");
-	    		 shelfName.setAttribute("placeholder", "Enter shelf name...");
-	    		 shelfName.style.width = "60%";
-	    		 shelfName.style.margin = "auto";
-	    		 form.appendChild(shelfName);
-	    		 */
-	    		 //------
+	
 	    		 var form = document.createElement("form");
 	    		 form.setAttribute("name", "addToShelfForm");
 	    		 var shelfName = document.createElement("select");
@@ -117,7 +88,6 @@
 	    		 
 	    		 form.appendChild(shelfName);
 	    		 form.appendChild(document.createElement("br"));
-	    		 //------
 	    		 
 	    		 var addbutton = document.createElement("button");
 	    		 addbutton.className = "addToShelfBtn";
@@ -141,14 +111,7 @@
 				});
 	     }
 	     
-	     
-	     
-	     /**
-	     *
-	     * @param {DOM object} query The form element containing the
-	     *                     input parameters "isbns"
-	     */
-	     
+
 	     function search(query) {
 	         // Clear any old data to prepare to display the Loading... message.
 	         var div = document.getElementById("data");
@@ -228,36 +191,6 @@
 	    	        return null; // Return null or handle the error appropriately
 	    	    }
 	     }
-
-	     /*
-	     $(document).on("click", ".addToShelfBtn", function() {
-	    	 
-	    	var parent = this.parentElement; // get the parent element
-		    if (parent) {
-		        var parentId = parent.id; // get the parent element id
-		        
-		        var title = parent.querySelector(".title").innerHTML;
-		        var author = parent.querySelector(".author").innerHTML;
-		        var shelfInput = parent.querySelector("input.shelf");
-		        var shelf = shelfInput ? shelfInput.value : null;
-		        
-		        var numPagesElement = parent.querySelector(".pageCount");
-		        var numPages = numPagesElement ? parseInt(numPagesElement.innerHTML.replace(/\D/g, ''), 10) : null;
-		        
-		        console.log("Title: " + title);
-		        console.log("Author: " + author);
-		        console.log("Number of Pages: " + numPages);
-		        console.log("Shelf name: " + shelf);
-		        
-		        console.log("Button clicked. Sending AJAX request.");
-				$.get("AddBook?timestamp=" + new Date().getTime(), { bookTitle: title, bookAuthor: author, bookNumPages: numPages, bookShelf: shelf }, function(responseText) {  
-					console.log("Received response from server:", responseText);
-				});
-				return false;
-		    } else {
-		        console.error("Parent element is undefined");
-		    }
-		});*/
 		</script>
 	</head>
 	

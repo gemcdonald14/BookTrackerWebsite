@@ -32,7 +32,6 @@ public class DisplayBooks extends HttpServlet {
 		String url = "jdbc:sqlite:C:/sqlite/db/capstone.db";
 		
         try {
-            // create a connection to the database
             conn = DriverManager.getConnection(url);
             System.out.println("Connection to SQLite has been established.");
         } catch (SQLException e) {
@@ -68,7 +67,6 @@ public class DisplayBooks extends HttpServlet {
     	int id = (int) servletContext.getAttribute("userID");
     	System.out.println(id);
     	
-    	//String shelf = request.getParameter("ShelfID");
     	String shelfName = request.getParameter("listTitleShelf");
     	int shelfID = getShelfId(shelfName, id);
     	
@@ -94,19 +92,6 @@ public class DisplayBooks extends HttpServlet {
 	            
 	            int bookid = rs.getInt("BookID");
 	            System.out.println("BookID: " + bookid);
-
-	            /*String bookListItem = "<li class=\"list-group-item d-flex justify-content-between align-items-center\" id=" + bookid + ">"
-	            					+ "<div class=\"listItemDisplayShelf\"style=\"display: inline-flex; justify-content: space-between; width: 100%;\">"
-	            					+ "<div class=\"d-flex align-items-center\">"
-	            					+ "<div class=\"listBookImgDisplayShelf\">"
-	            					+ "<img src=\"./images/openbook.png\" style=\"width: 50px; height: 50px;\">"
-	            					+ "</div>"
-	            					+ "<div class=\"listBookTitleDisplayShelf\"><p>" + title + "</p></div>"
-	            					+ "<div class=\"listBookAuthorDisplayShelf\"><p>" + author + "</p></div>"
-	            					+ "<div class=\"listBookRatingDisplayShelf\"><p>" + rating + "&#9734;</p></div>"
-	            					+ "<button class=\"btn btn-md btn-block setAsCurrentBook\">Currently<br>Reading</button>"
-	            					+ "<div class=\"error\"></div>"
-	            					+ "</div></div></li></ul>";*/
 	            
 	            String bookListItem = "<li class=\"list-group-item d-flex justify-content-between align-items-center\" id=" + bookid + ">"
     					+ "<div class=\"listItemDisplayShelf\"style=\"display: flex; justify-content: space-between; width: 100%;\">"

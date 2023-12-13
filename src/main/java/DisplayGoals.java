@@ -33,7 +33,6 @@ public class DisplayGoals extends HttpServlet {
 		String url = "jdbc:sqlite:C:/sqlite/db/capstone.db";
 		
         try {
-            // create a connection to the database
             conn = DriverManager.getConnection(url);
             System.out.println("Connection to SQLite has been established.");
         } catch (SQLException e) {
@@ -78,7 +77,6 @@ public class DisplayGoals extends HttpServlet {
 	            int completed = rs.getInt("CompletedBooks");
 	            System.out.println("Completed: " + completed);
 	            
-	            //int percent = (Math.floorDiv(completed, target))*100;
 	            int percent = (int) ((completed * 100.0) / target);
 	            System.out.println(percent);
 	            

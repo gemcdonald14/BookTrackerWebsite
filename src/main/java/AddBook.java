@@ -33,6 +33,8 @@ public class AddBook extends HttpServlet {
         super();
     }
     
+    private Connection conn;
+    
     private Connection connect() {
     	Connection conn = null;
 		String url = "jdbc:sqlite:C:/sqlite/db/capstone.db";
@@ -65,7 +67,7 @@ public class AddBook extends HttpServlet {
 	     } catch (SQLException e) {
 	            System.out.println(e.getMessage());
 	            e.printStackTrace();
-	     }
+	     } 
 		
 		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(updatesql)){
             

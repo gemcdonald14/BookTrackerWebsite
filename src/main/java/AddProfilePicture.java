@@ -58,11 +58,6 @@ public class AddProfilePicture extends HttpServlet {
 	     }
     }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-    }
-	
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		AddProfilePicture newImage = new AddProfilePicture();
 		String profilePictureData = request.getParameter("profilePicture");
@@ -73,7 +68,6 @@ public class AddProfilePicture extends HttpServlet {
     	System.out.println(id);
 
         if (profilePictureData == null || profilePictureData.isEmpty()) {
-            // Handle the case where the profilePictureData is missing or empty
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing or empty profilePicture parameter");
             return;
         }
@@ -84,12 +78,10 @@ public class AddProfilePicture extends HttpServlet {
 
             // Insert the image data into the database
             newImage.insert(id, imageData);
-            //response.setContentType("image/png");
 
             response.getWriter().write("<img src='data:image/png;base64," + Base64.getEncoder().encodeToString(imageData) + "' id='profilePic'>");
 
         } catch (IllegalArgumentException e) {
-            // Handle the case where decoding fails
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid Base64 encoding: " + e.getMessage());
         }
 	}

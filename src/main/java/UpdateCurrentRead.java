@@ -80,7 +80,6 @@ public class UpdateCurrentRead extends HttpServlet {
 		if (updateCurrentRead.updateBook(id, currentPage)) {
 			System.out.println("book updated");
 			response.getWriter().write("Updated");
-			//response.sendRedirect("homepage.jsp");
 		} else {
 			response.getWriter().write("Unable to update current read");
 		}

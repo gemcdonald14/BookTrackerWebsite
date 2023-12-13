@@ -142,8 +142,6 @@ public class HomeDisplay extends HttpServlet {
     						+ "<div class=\"card-body\">";
     	
     	String goalListItem = "";
-    	
-    	//String progressRowAndFinal = "";
 
         try (Connection conn = this.connect(); PreparedStatement pstmt = conn.prepareStatement(monthsql)) {
         	pstmt.setInt(1, id);
@@ -209,8 +207,6 @@ public class HomeDisplay extends HttpServlet {
         }
         
         finalResult = monthResult + yearResult;
-        
-        //finalResult += progressRowAndFinal;
         
         return finalResult;
     }

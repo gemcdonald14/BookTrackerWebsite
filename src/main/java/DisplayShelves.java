@@ -33,7 +33,6 @@ public class DisplayShelves extends HttpServlet {
 		String url = "jdbc:sqlite:C:/sqlite/db/capstone.db";
 		
         try {
-            // create a connection to the database
             conn = DriverManager.getConnection(url);
             System.out.println("Connection to SQLite has been established.");
         } catch (SQLException e) {
@@ -70,7 +69,6 @@ public class DisplayShelves extends HttpServlet {
 						+ "<div class=\"d-flex align-items-center\">"
 						+ "<div class=\"listImgShelf\">"
 						+"<img name=\'" + shelf + "\' src='DisplayShelfPic?shelfId=" + shelf + "\' class='shelfPic' style=\"border-radius: 1rem;  width: 100px; height: 150px;\"></div>"
-						//+ "<img src=\"DisplayShelfPic\" style=\"border-radius: 1rem;  width: 100px; height: 150px;\"></div>"
 						+ "<div class=\"listTitleShelf\">" + name + "</div>"
 						+ "<div class=\"listNumBooksShelf\">" + books + " books</div>"
 						+ "</div></div></li>";

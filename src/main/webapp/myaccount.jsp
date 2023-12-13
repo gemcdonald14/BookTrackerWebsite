@@ -13,17 +13,6 @@
         
         <script>
         	function uploadFile(inputElement, callback) {
-        	  /*var file = inputElement.files[0];
-        	  var reader = new FileReader();
-        	  
-        	  reader.onloadend = function() {
-        	    console.log('Encoded Base 64 File String:', reader.result);
-        	    var data = (reader.result).split(',')[1];
-        	    var binaryBlob = atob(data);
-        	    console.log('Encoded Binary File String:', binaryBlob);
-        	    callback(binaryBlob);
-        	  }
-        	  reader.readAsDataURL(file);*/
         		var file = inputElement.files[0];
                 var reader = new FileReader();
 
@@ -54,26 +43,14 @@
                             
                             // Update the profile picture on the page
                             $("#profilePic").attr("src", profilePicData);
-
-                            // You may also update other user information on the page if needed
-
-                            // Handle the response as needed
                         },
                         error: function (error) {
                             console.error("Error uploading profile picture:", error);
                         }
-                    });/*
-                    $.post("AddProfilePicture?timestamp=" + new Date().getTime(), { profilePicture:pic }, function(responseText) {  
-    					console.log("Received response from server:", responseText);
-    					// Extract profile picture data from the response
-                        //var profilePicData = $(responseText).find("#profilePic").attr("src");
-                        
-                        // Update the profile picture on the page
-                        //$("#profilePic").attr("src", profilePicData);
-    					
-    				});*/
+                    });
+                    return false;
                 });
-                return false;
+                //return false;
             });
         </script>
         
@@ -180,8 +157,6 @@
 												<button class="btn" id="addProfilePicture">Update Picture</button>
 											</form>
 										</div>
-	                                    <!--<button type="button" class="btn btn-primary" id="logOutBtn">Log Out</button>-->
-                          				
                                     </div>
                                 </div>
                             </div>

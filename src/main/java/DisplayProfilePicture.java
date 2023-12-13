@@ -59,10 +59,28 @@ public class DisplayProfilePicture extends HttpServlet {
                 // Set the content type to image/png
                 response.setContentType("image/png");
 
-                // Write the image data to the response output stream
-                try (OutputStream out = response.getOutputStream()) {
-                    out.write(imageData);
-                }
+             // Write the image data to the response output stream if not null
+	            if (imageData != null) {
+	                try (OutputStream out = response.getOutputStream()) {
+	                    out.write(imageData);
+	                }
+	            } else {
+	            	try (InputStream defaultImageStream = servletContext.getResourceAsStream("/images/ella.png")) {
+		                if (defaultImageStream != null) {
+		                    byte[] defaultImageData = defaultImageStream.readAllBytes();
+
+		                    // Set the content type to image/png
+		                    response.setContentType("image/png");
+
+		                    // Write the default image data to the response output stream if not null
+		                    if (defaultImageData != null) {
+		                        try (OutputStream out = response.getOutputStream()) {
+		                            out.write(defaultImageData);
+		                        }
+		                    }
+		                }
+	            	}
+	            }
             } else {
                 // If no image data is found, set a default image
                 try (InputStream defaultImageStream = servletContext.getResourceAsStream("/images/ella.png")) {
@@ -71,9 +89,11 @@ public class DisplayProfilePicture extends HttpServlet {
                     // Set the content type to image/png
                     response.setContentType("image/png");
 
-                    // Write the default image data to the response output stream
-                    try (OutputStream out = response.getOutputStream()) {
-                        out.write(defaultImageData);
+                 // Write the default image data to the response output stream if not null
+                    if (defaultImageData != null) {
+                        try (OutputStream out = response.getOutputStream()) {
+                            out.write(defaultImageData);
+                        }
                     }
                 }
             }

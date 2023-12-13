@@ -61,8 +61,7 @@ public class DisplayUserInfo extends HttpServlet {
     public int getTotalBooks(int id, int shelfid) {
     	String totalbookssql = "SELECT SUM(NumBooks) FROM Shelf WHERE UserID=?";
     	int totalBooks = 0;
-		
-		//get total saved books 
+		 
 		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(totalbookssql)){
 			 
 			pstmt.setInt(1, id);
@@ -130,8 +129,8 @@ public class DisplayUserInfo extends HttpServlet {
     	String emailVal = infoArr[1];
     	String bioVal = infoArr[2];
     	int totalVal = getTotalBooks(id, shelfid);
-    	String favBookVal = infoArr[4];
-    	String favAuthorVal = infoArr[5];
+    	String favBookVal = infoArr[3];
+    	String favAuthorVal = infoArr[4];
     	
     	servletContext.getAttribute("username");
     	servletContext.setAttribute("username", usernameVal);

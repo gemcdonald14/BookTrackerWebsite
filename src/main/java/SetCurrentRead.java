@@ -44,7 +44,6 @@ public class SetCurrentRead extends HttpServlet {
     public Boolean setBook(int id, String bookId) {
 		String updatesql = "UPDATE Book SET IsCurrentRead=1 WHERE UserID=? AND BookID=?";
 		String selectsql = "SELECT COUNT(*) FROM Book WHERE UserID=? AND IsCurrentRead=1";
-		//String selectsql = "SELECT SUM(IsCurrentRead) FROM Book";
 		Boolean hasCurrentRead = false;
 		Boolean result = false;
 		

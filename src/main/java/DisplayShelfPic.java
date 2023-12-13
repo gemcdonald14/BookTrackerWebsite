@@ -84,7 +84,7 @@ public class DisplayShelfPic extends HttpServlet {
 		                        }
 		                    }
 		                }
-	            }
+	            	}
 	            }
 	        } else {
 	            // If no image data is found, set a default image

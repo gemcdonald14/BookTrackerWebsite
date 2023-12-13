@@ -49,7 +49,7 @@
 			$(document).on("click", "#updateGoalBtn", function(event) { 
 				event.preventDefault();
 				var numbooks = $("#updateGoalCompleted").val();
-				var title = $("#updateGoalTitle").val();
+				var title = $("#updateGoalTitle").text();
 				
 				if (validateUpdateGoal()) {
 					console.log("Button clicked. Sending AJAX request.");
@@ -129,7 +129,7 @@
                       </div>
                 </div>
                 <div id="updateGoal">
-                    <div class="card mt-2 mb-2" style="border-radius: 1rem;">
+                    <div class="card mt-2 mb-1" style="border-radius: 1rem;">
                         <div class="card-body" style="display: inline-flex; justify-content: space-evenly;">
 							<h5 class="card-title">Update A Goal</h5>
                             <form name="updateGoalForm">

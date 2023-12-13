@@ -41,17 +41,17 @@ public class UpdateGoals extends HttpServlet {
     }
     
     public Boolean updateGoal(String goal, String numRead, int id) {
-		String updatesql = "UPDATE Goal SET CompletedBooks=? WHERE UserID=? AND GoalID=?";
-		String selectsql = "SELECT CompletedBooks FROM Goal WHERE UserID=? AND GoalID=?";
+		String updatesql = "UPDATE Goal SET CompletedBooks=? WHERE UserID=? AND GoalName=?";
+		String selectsql = "SELECT CompletedBooks FROM Goal WHERE UserID=? AND GoalName=?";
 		Boolean result = false;
 		int completed = 0;
 		
 		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(selectsql)){
             
-			int goalid =Integer.parseInt(goal);  
+			//int goalid =Integer.parseInt(goal);  
 			
 			pstmt.setInt(1,id);
-            pstmt.setInt(2,goalid);
+            pstmt.setString(2,goal);
             
             ResultSet rs  = pstmt.executeQuery();
             
@@ -67,11 +67,11 @@ public class UpdateGoals extends HttpServlet {
 		try (Connection conn = this.connect(); PreparedStatement pstmt  = conn.prepareStatement(updatesql)){
 	            
 				int booksRead =Integer.parseInt(numRead);  
-				int goalid =Integer.parseInt(goal);  
+				//int goalid =Integer.parseInt(goal);  
 				int newTotal = booksRead + completed;
 				pstmt.setInt(1,newTotal);
 	            pstmt.setInt(2,id);
-	            pstmt.setInt(3,goalid);
+	            pstmt.setString(3,goal);
 	            
 	            int rowsAffected = pstmt.executeUpdate();
 	         
@@ -91,13 +91,13 @@ public class UpdateGoals extends HttpServlet {
 		ServletContext servletContext = getServletContext();
 		int id = (int) servletContext.getAttribute("userID");
     	
-		String goalId = request.getParameter("updateGoalTitle");
+		String goalname = request.getParameter("updateGoalTitle");
 		String numRead = request.getParameter("updateGoalCompleted");
 		
-		System.out.println("goal id: " + goalId);
+		System.out.println("goal id: " + goalname);
 		System.out.println("num read: " + numRead);
 		
-		if (updateGoal.updateGoal(goalId, numRead, id)) {
+		if (updateGoal.updateGoal(goalname, numRead, id)) {
 			System.out.println("goal updated");
 		} 
 	}

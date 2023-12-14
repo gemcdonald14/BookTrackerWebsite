@@ -49,7 +49,7 @@
 			$(document).on("click", "#updateGoalBtn", function(event) { 
 				event.preventDefault();
 				var numbooks = $("#updateGoalCompleted").val();
-				var title = $("#updateGoalTitle").text();
+				var title = $("#updateGoalTitle").val();
 				
 				if (validateUpdateGoal()) {
 					console.log("Button clicked. Sending AJAX request.");

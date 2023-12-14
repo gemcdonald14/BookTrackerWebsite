@@ -57,7 +57,7 @@ public class DisplayGoalsDropDown extends HttpServlet {
             	String name = rs.getString("GoalName");
 	            System.out.println("Name: " + name);
 	            
-	            String goalListItem = "<option value=\'" + i + "\'>" + name + "</option>";
+	            String goalListItem = "<option value=\'" + name + "\'>" + name + "</option>";
 	            
 	            resultList +=goalListItem;
 	            i++;

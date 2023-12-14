@@ -94,7 +94,7 @@ public class UpdateGoals extends HttpServlet {
 		String goalname = request.getParameter("updateGoalTitle");
 		String numRead = request.getParameter("updateGoalCompleted");
 		
-		System.out.println("goal id: " + goalname);
+		System.out.println("goal name: " + goalname);
 		System.out.println("num read: " + numRead);
 		
 		if (updateGoal.updateGoal(goalname, numRead, id)) {

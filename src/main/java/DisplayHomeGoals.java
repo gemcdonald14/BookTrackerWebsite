@@ -76,7 +76,7 @@ public class DisplayHomeGoals extends HttpServlet {
 
 	            goalListItem = "<h5 class=\"card-title\">" + name + "</h5><div class='progress' style='height: 1rem;'>"
 		    				+ "<div class=\"progress-bar\" role=\"progressbar\" style='width:" + percent + "%' aria-valuenow='" + completed + "' aria-valuemin=\"0\" aria-valuemax='" + target + "'></div>"
-		    				+ "</div></div></div>";
+		    				+ "</div></div></div></div>";
 	       
 
 	            monthResult += goalListItem;
@@ -84,7 +84,7 @@ public class DisplayHomeGoals extends HttpServlet {
             	goalListItem = "<h5 class=\"card-title\">Monthly Goal</h5>"
             						+ "<p class=\"card-text\">You currently do not have any monthly goals set.</p>"
             						+ "<p class=\"card-text\">Set goals on the My Goals tab!</p>"
-            						+ "</div></div><div>";
+            						+ "</div></div></div></div>";
             	 monthResult += goalListItem;
             }
         } catch (SQLException e) {
@@ -114,14 +114,14 @@ public class DisplayHomeGoals extends HttpServlet {
 	            
 	            goalListItem = "<h5 class=\"card-title\">" + name + "</h5><div class='progress' style='height: 1rem;'>"
 	    				+ "<div class=\"progress-bar\" role=\"progressbar\" style='width:" + percent + "%' aria-valuenow='" + completed + "' aria-valuemin=\"0\" aria-valuemax='" + target + "'></div>"
-	    				+ "</div></div></div>";
+	    				+ "</div></div></div></div>";
 	            	
 	            yearResult += goalListItem;
             } else {
             	goalListItem = "<h5 class=\"card-title\">Yearly Goal</h5>"
 						+ "<p class=\"card-text\">You currently do not have any yearly goals set.</p>"
 						+ "<p class=\"card-text\">Set goals on the My Goals tab!</p>"
-						+ "</div></div></div>";
+						+ "</div></div></div></div>";
             	yearResult += goalListItem;
             }
         } catch (SQLException e) {

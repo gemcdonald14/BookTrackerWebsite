@@ -143,7 +143,7 @@
 
         <div class="container-fluid">
             <div class="row m-3" id="homepageRow">
-                <div class="col-md-6 p-4" id="leftColHome">
+                <div class="col-xl-6 col-md-12 p-4" id="leftColHome">
                 	<div id="homeGoals">
 	                    <div class="row mb-4" id="goalMRow">
 	                        <div class="card mt-2 mb-2" style="border-radius: 1rem;">
@@ -166,7 +166,6 @@
                         <div class="card" style="border-radius: 1rem;">
                             <div class="row g-0">
                               <div class="col-md-4">
-                                <img src="dark-bookshelf.jpg" class="img-fluid" style="border-radius: 1rem;">
                               </div>
                               <div class="col-md-8">
                                 <div class="card-body">
@@ -189,7 +188,7 @@
                           </div>
                     </div>
                 </div>
-                <div class="col-md-6 p-4" id="rightColHome">
+                <div class="col-xl-6 col-md-12 p-4" id="rightColHome">
                     <div class="card" style="border-radius: 1rem;">
                         <div class="card-body">
                             <h5 class="card-title">My Bookshelves</h5>

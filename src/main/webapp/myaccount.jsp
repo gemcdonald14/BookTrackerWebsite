@@ -24,7 +24,7 @@
                 reader.readAsDataURL(file);
         	}
         
-        	$(document).on("click", "#addProfilePicture", function () {
+        	$(document).on("click", "#addProfilePicture", function (event) {
         		event.preventDefault(); 
         		var inputElement = document.getElementById("uploadPic");
                 uploadFile(inputElement, function (pic) {
@@ -40,6 +40,7 @@
 
                             // Extract profile picture data from the response
                             var profilePicData = $(responseText).find("#profilePic").attr("src");
+
                             
                             // Update the profile picture on the page
                             $("#profilePic").attr("src", profilePicData);
@@ -48,9 +49,9 @@
                             console.error("Error uploading profile picture:", error);
                         }
                     });
-                    return false;
+                    //return false;
                 });
-                //return false;
+                return false;
             });
         </script>
         

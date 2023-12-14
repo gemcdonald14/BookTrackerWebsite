@@ -109,7 +109,7 @@ function validatePassReset() {
 
 /*---------------------------------------------LOG OUT USER-----------------------------------------------*/
 function logOut() {
-	window.location.href = "login.html";
+	window.location.href = "login.jsp";
 }
 /*---------------------------------------------VALIDATE CREATE GOAL-----------------------------------------------*/
 function validateNewGoal() {

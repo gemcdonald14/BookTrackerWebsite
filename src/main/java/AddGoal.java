@@ -103,7 +103,7 @@ public class AddGoal extends HttpServlet {
 		System.out.println("target: " + target);
 		
 		String newGoalListItem = "<li class='list-group-item'><h6>" + title + "</h6><div class='progress' style='height: 1.2rem;'>"
-				+ "<div class='progress-bar w-75' role='progressbar' aria-valuenow='10' aria-valuemin='0' aria-valuemax='100'></div></div></li>";
+				+ "<div class='progress-bar' role='progressbar' aria-valuenow='' aria-valuemin='0' aria-valuemax=''></div></div></li>";
 			
 		if (newGoal.insert(title, type, id, target)) {
 			System.out.println("return true");
